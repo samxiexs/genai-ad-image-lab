@@ -1,67 +1,100 @@
 {
   "Product-oriented": {
     "label_zh": "产品功能概念导向素材",
-    "prompt_version": "v5",
+    "prompt_version": "v6",
     "brand_concept": "functional",
-    "goal": "Functional brand concept only: link the product to externally generated consumption needs.",
-    "primary_route": "functional brand concept definition",
-    "prompt_file": "prompts/product_oriented_ad_image_prompt.v5.txt",
-    "review_file_zh": "prompts/product_oriented_ad_image_prompt.v5.zh.md",
+    "goal": "Functional brand concept with grounded product identity and concept-image linkage.",
+    "primary_route": "functional problem/task linkage",
+    "prompt_file": "prompts/product_oriented_ad_image_prompt.v6.txt",
+    "review_file_zh": "prompts/product_oriented_ad_image_prompt.v6.zh.md",
     "literature": [
-      "Park, Jaworski, & MacInnis (1986)"
+      "Park, Jaworski, & MacInnis (1986)",
+      "ControlNet (ICCV 2023)",
+      "T2I-Adapter (AAAI 2024)",
+      "GLIGEN (CVPR 2023)",
+      "BoxDiff (ICCV 2023)",
+      "DenseDiffusion (ICCV 2023)",
+      "Prompt-to-Prompt (ICLR 2023)",
+      "Attend-and-Excite (SIGGRAPH 2023)",
+      "DreamBooth (CVPR 2023)",
+      "Textual Inversion (ICLR 2023)",
+      "OPT2I (ICLR 2025)",
+      "RePrompt (ICLR 2026)"
     ],
-    "prompt_en": "Brand concept definition:\nA brand concept is a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, or supporting a practical task.\n",
-    "prompt_zh": "# Product-oriented Advertising Image Prompt v5 中文说明\n\nBrand concept definition：\nBrand concept 是基于消费者需求而选择的品牌意义。生成 Product-oriented 图像，表达 functional brand concept。Functional 指商品与外部产生的消费需求相连，例如解决当前问题、预防潜在问题、降低阻力或支持实践任务。\n",
-    "prompt": "Brand concept definition:\nA brand concept is a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, or supporting a practical task.\n"
+    "prompt_en": "You are generating controlled experimental stimuli for a consumer advertising study.\n\nUse the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.\n\nProduct metadata:\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition:\nPark, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.\n\nShared experimental controls:\nUse only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.\nKeep the product visually prominent and recognizable. Any background, prop, hand, setting, lighting, or style must support the functional concept and must not contradict source product facts.\nPrefer broad, category-appropriate concept cues over detailed invented micro-scenes.\n\nConcept-image linkage:\nMake the viewer infer the practical role of the product. Show a general, visually plausible relation between the product and a consumption problem, task, or affordance. Use visual evidence rather than text claims. If functional evidence is uncertain, choose a simple controlled product-demonstration relation instead of fabricating a specific feature.\nKeep symbolic self-image and experiential stimulation secondary; the dominant reading should be functional problem solving or task support.\n",
+    "prompt_zh": "# Product-oriented Advertising Image Prompt v6 中文说明\n\n你正在为消费者广告实验生成受控刺激材料。\n\n使用输入的白底商品图作为 grounded source product。保持商品身份不变，包括可见形状、颜色、材质、包装、logo 和物理结构。\n\n商品元数据：\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition：\nPark, Jaworski, and MacInnis (1986) 将 brand concept 定义为基于消费者需求而选择的品牌意义。生成 Product-oriented 图像，表达 functional brand concept。Functional 指商品与外部产生的消费需求相连：解决或预防消费问题、降低阻力、支持实践任务，或让消费更可靠。\n\nShared experimental controls：\n只使用 source image 和商品元数据中的事实。不要虚构商品属性、机制、成分、健康或性能声明、奖项、认证、价格、广告语、评分、徽章、二维码、图表、箭头或新的可读广告文字。\n商品必须醒目且可识别。背景、道具、手部、场景、光线或风格只有在支持 functional concept 且不违背商品事实时才可以使用。\n优先使用宽泛、品类适配、可泛化的概念线索，不使用细碎虚构的小场景。\n\nConcept-image linkage：\n让观看者推断商品的实践作用。呈现商品与消费问题、任务或 affordance 之间一般且视觉上合理的关系。用视觉证据，而不是文字 claims。若功能证据不确定，选择简单、受控的商品展示关系，不要虚构具体功能。\nsymbolic self-image 和 experiential stimulation 应保持次要；主导理解应是 functional problem solving 或 task support。\n",
+    "prompt": "You are generating controlled experimental stimuli for a consumer advertising study.\n\nUse the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.\n\nProduct metadata:\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition:\nPark, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.\n\nShared experimental controls:\nUse only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.\nKeep the product visually prominent and recognizable. Any background, prop, hand, setting, lighting, or style must support the functional concept and must not contradict source product facts.\nPrefer broad, category-appropriate concept cues over detailed invented micro-scenes.\n\nConcept-image linkage:\nMake the viewer infer the practical role of the product. Show a general, visually plausible relation between the product and a consumption problem, task, or affordance. Use visual evidence rather than text claims. If functional evidence is uncertain, choose a simple controlled product-demonstration relation instead of fabricating a specific feature.\nKeep symbolic self-image and experiential stimulation secondary; the dominant reading should be functional problem solving or task support.\n"
   },
   "Symbolic-oriented": {
     "label_zh": "象征品牌概念导向素材",
-    "prompt_version": "v5",
+    "prompt_version": "v6",
     "brand_concept": "symbolic",
-    "goal": "Symbolic brand concept only: link the product to self-image, role, group, or ego-identification needs.",
-    "primary_route": "symbolic brand concept definition",
-    "prompt_file": "prompts/symbolic_oriented_ad_image_prompt.v5.txt",
-    "review_file_zh": "prompts/symbolic_oriented_ad_image_prompt.v5.zh.md",
+    "goal": "Symbolic brand concept with grounded product identity and self-image/role/group linkage.",
+    "primary_route": "symbolic self-image, role, or group meaning",
+    "prompt_file": "prompts/symbolic_oriented_ad_image_prompt.v6.txt",
+    "review_file_zh": "prompts/symbolic_oriented_ad_image_prompt.v6.zh.md",
     "literature": [
-      "Park, Jaworski, & MacInnis (1986)"
+      "Park, Jaworski, & MacInnis (1986)",
+      "ControlNet (ICCV 2023)",
+      "T2I-Adapter (AAAI 2024)",
+      "GLIGEN (CVPR 2023)",
+      "BoxDiff (ICCV 2023)",
+      "DenseDiffusion (ICCV 2023)",
+      "Prompt-to-Prompt (ICLR 2023)",
+      "Attend-and-Excite (SIGGRAPH 2023)",
+      "DreamBooth (CVPR 2023)",
+      "Textual Inversion (ICLR 2023)",
+      "OPT2I (ICLR 2025)",
+      "RePrompt (ICLR 2026)"
     ],
-    "prompt_en": "Brand concept definition:\nA brand concept is a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.\n",
-    "prompt_zh": "# Symbolic-oriented Advertising Image Prompt v5 中文说明\n\nBrand concept definition：\nBrand concept 是基于消费者需求而选择的品牌意义。生成 Symbolic-oriented 图像，表达 symbolic brand concept。Symbolic 指商品与自我提升、角色位置、群体归属、ego-identification 或理想自我形象等内部需求相连。\n",
-    "prompt": "Brand concept definition:\nA brand concept is a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.\n"
+    "prompt_en": "You are generating controlled experimental stimuli for a consumer advertising study.\n\nUse the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.\n\nProduct metadata:\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition:\nPark, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.\n\nShared experimental controls:\nUse only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.\nKeep the product visually prominent and recognizable. Any background, prop, person, setting, lighting, or style must support the symbolic concept and must not contradict source product facts.\nPrefer broad, category-appropriate concept cues over detailed invented micro-scenes or unsupported audience stereotypes.\n\nConcept-image linkage:\nMake the viewer infer what choosing, owning, displaying, or associating with the product says about self-image, role, group membership, ego-identification, or desired identity. Use general symbolic cues rather than demographic stereotypes or unsupported social claims. The product must be the meaning carrier, not a small decorative prop.\nKeep functional problem solving and experiential sensory stimulation secondary; the dominant reading should be symbolic self-image, role, or group meaning.\n",
+    "prompt_zh": "# Symbolic-oriented Advertising Image Prompt v6 中文说明\n\n你正在为消费者广告实验生成受控刺激材料。\n\n使用输入的白底商品图作为 grounded source product。保持商品身份不变，包括可见形状、颜色、材质、包装、logo 和物理结构。\n\n商品元数据：\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition：\nPark, Jaworski, and MacInnis (1986) 将 brand concept 定义为基于消费者需求而选择的品牌意义。生成 Symbolic-oriented 图像，表达 symbolic brand concept。Symbolic 指商品与自我提升、角色位置、群体归属、ego-identification 或理想自我形象等内部需求相连。\n\nShared experimental controls：\n只使用 source image 和商品元数据中的事实。不要虚构商品属性、机制、成分、健康或性能声明、奖项、认证、价格、广告语、评分、徽章、二维码、图表、箭头或新的可读广告文字。\n商品必须醒目且可识别。背景、道具、人物、场景、光线或风格只有在支持 symbolic concept 且不违背商品事实时才可以使用。\n优先使用宽泛、品类适配、可泛化的概念线索，不使用细碎虚构的小场景或无依据的受众刻板印象。\n\nConcept-image linkage：\n让观看者推断选择、拥有、展示或关联该商品意味着怎样的 self-image、role、group membership、ego-identification 或 desired identity。使用一般性的 symbolic cues，而不是人口统计刻板印象或无依据的社会 claims。商品必须是意义载体，而不是很小的装饰性道具。\nfunctional problem solving 和 experiential sensory stimulation 应保持次要；主导理解应是 symbolic self-image、role 或 group meaning。\n",
+    "prompt": "You are generating controlled experimental stimuli for a consumer advertising study.\n\nUse the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.\n\nProduct metadata:\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition:\nPark, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.\n\nShared experimental controls:\nUse only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.\nKeep the product visually prominent and recognizable. Any background, prop, person, setting, lighting, or style must support the symbolic concept and must not contradict source product facts.\nPrefer broad, category-appropriate concept cues over detailed invented micro-scenes or unsupported audience stereotypes.\n\nConcept-image linkage:\nMake the viewer infer what choosing, owning, displaying, or associating with the product says about self-image, role, group membership, ego-identification, or desired identity. Use general symbolic cues rather than demographic stereotypes or unsupported social claims. The product must be the meaning carrier, not a small decorative prop.\nKeep functional problem solving and experiential sensory stimulation secondary; the dominant reading should be symbolic self-image, role, or group meaning.\n"
   },
   "Experiential-oriented": {
     "label_zh": "体验品牌概念导向素材",
-    "prompt_version": "v5",
+    "prompt_version": "v6",
     "brand_concept": "experiential",
-    "goal": "Experiential brand concept only: link the product to sensory pleasure, variety, cognitive stimulation, or felt consumption experience.",
-    "primary_route": "experiential brand concept definition",
-    "prompt_file": "prompts/experiential_oriented_ad_image_prompt.v5.txt",
-    "review_file_zh": "prompts/experiential_oriented_ad_image_prompt.v5.zh.md",
+    "goal": "Experiential brand concept with grounded product identity and felt-experience linkage.",
+    "primary_route": "experiential sensory, variety, stimulation, immersion, or felt experience",
+    "prompt_file": "prompts/experiential_oriented_ad_image_prompt.v6.txt",
+    "review_file_zh": "prompts/experiential_oriented_ad_image_prompt.v6.zh.md",
     "literature": [
-      "Park, Jaworski, & MacInnis (1986)"
+      "Park, Jaworski, & MacInnis (1986)",
+      "ControlNet (ICCV 2023)",
+      "T2I-Adapter (AAAI 2024)",
+      "GLIGEN (CVPR 2023)",
+      "BoxDiff (ICCV 2023)",
+      "DenseDiffusion (ICCV 2023)",
+      "Prompt-to-Prompt (ICLR 2023)",
+      "Attend-and-Excite (SIGGRAPH 2023)",
+      "DreamBooth (CVPR 2023)",
+      "Textual Inversion (ICLR 2023)",
+      "OPT2I (ICLR 2025)",
+      "RePrompt (ICLR 2026)"
     ],
-    "prompt_en": "Brand concept definition:\nA brand concept is a selected brand meaning based on consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.\n",
-    "prompt_zh": "# Experiential-oriented Advertising Image Prompt v5 中文说明\n\nBrand concept definition：\nBrand concept 是基于消费者需求而选择的品牌意义。生成 Experiential-oriented 图像，表达 experiential brand concept。Experiential 指商品与感官愉悦、多样性、认知刺激、刺激感、沉浸或被感受到的消费体验等内部需求相连。\n",
-    "prompt": "Brand concept definition:\nA brand concept is a selected brand meaning based on consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.\n"
+    "prompt_en": "You are generating controlled experimental stimuli for a consumer advertising study.\n\nUse the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.\n\nProduct metadata:\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition:\nPark, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.\n\nShared experimental controls:\nUse only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, sensory attributes, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.\nKeep the product visually prominent and recognizable. Any background, prop, person, setting, lighting, or style must support the experiential concept and must not contradict source product facts.\nPrefer broad, category-appropriate concept cues over detailed invented micro-scenes.\n\nConcept-image linkage:\nMake the viewer infer the felt consumption experience associated with the product. Visually link the product to sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt experience. A usage scene is acceptable only when it expresses the experience, not merely where the product is used.\nKeep functional problem solving and symbolic self-image secondary; the dominant reading should be experiential value.\n",
+    "prompt_zh": "# Experiential-oriented Advertising Image Prompt v6 中文说明\n\n你正在为消费者广告实验生成受控刺激材料。\n\n使用输入的白底商品图作为 grounded source product。保持商品身份不变，包括可见形状、颜色、材质、包装、logo 和物理结构。\n\n商品元数据：\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition：\nPark, Jaworski, and MacInnis (1986) 将 brand concept 定义为基于消费者需求而选择的品牌意义。生成 Experiential-oriented 图像，表达 experiential brand concept。Experiential 指商品与感官愉悦、多样性、认知刺激、刺激感、沉浸或被感受到的消费体验等内部需求相连。\n\nShared experimental controls：\n只使用 source image 和商品元数据中的事实。不要虚构商品属性、机制、成分、感官属性、健康或性能声明、奖项、认证、价格、广告语、评分、徽章、二维码、图表、箭头或新的可读广告文字。\n商品必须醒目且可识别。背景、道具、人物、场景、光线或风格只有在支持 experiential concept 且不违背商品事实时才可以使用。\n优先使用宽泛、品类适配、可泛化的概念线索，不使用细碎虚构的小场景。\n\nConcept-image linkage：\n让观看者推断商品相关的 felt consumption experience。视觉上把商品与 sensory pleasure、variety、cognitive stimulation、stimulation、immersion 或 felt experience 相连。使用场景只有在表达体验时才可以使用，而不是仅仅展示商品在哪里被使用。\nfunctional problem solving 和 symbolic self-image 应保持次要；主导理解应是 experiential value。\n",
+    "prompt": "You are generating controlled experimental stimuli for a consumer advertising study.\n\nUse the provided white-background product image as the grounded source product. Preserve the product identity: visible shape, color, material, packaging, logo, and physical structure.\n\nProduct metadata:\n- Title: {ori_title}\n- Brand: {creative_id_brand}\n- Category: {level_one_category_name}\n- Price: {creative_id_price}\n- Promotion: {creative_id_promotion}\n\nBrand concept definition:\nPark, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning based on consumer needs. Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential means the product is linked to internally generated needs for sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt consumption experience.\n\nShared experimental controls:\nUse only source-image and metadata facts. Do not invent product attributes, mechanisms, ingredients, sensory attributes, health or performance claims, awards, certifications, prices, slogans, ratings, badges, QR codes, diagrams, arrows, or new readable ad text.\nKeep the product visually prominent and recognizable. Any background, prop, person, setting, lighting, or style must support the experiential concept and must not contradict source product facts.\nPrefer broad, category-appropriate concept cues over detailed invented micro-scenes.\n\nConcept-image linkage:\nMake the viewer infer the felt consumption experience associated with the product. Visually link the product to sensory pleasure, variety, cognitive stimulation, stimulation, immersion, or felt experience. A usage scene is acceptable only when it expresses the experience, not merely where the product is used.\nKeep functional problem solving and symbolic self-image secondary; the dominant reading should be experiential value.\n"
   },
   "Context-oriented": {
     "alias_of": "Experiential-oriented",
     "deprecated": true,
-    "prompt_version": "v5 alias",
-    "label_zh": "使用场景导向素材（旧名，v5 中并入体验品牌概念导向）",
-    "goal": "Deprecated v5 alias. Use Experiential-oriented for Park-theory-grounded runs.",
+    "prompt_version": "v6 alias",
+    "label_zh": "使用场景导向素材（旧名，v6 中并入体验品牌概念导向）",
+    "goal": "Deprecated v6 alias. Use Experiential-oriented for Park-theory-grounded runs.",
     "primary_route": "alias of experiential brand concept definition",
-    "prompt_file": "prompts/experiential_oriented_ad_image_prompt.v5.txt",
-    "review_file_zh": "prompts/experiential_oriented_ad_image_prompt.v5.zh.md"
+    "prompt_file": "prompts/experiential_oriented_ad_image_prompt.v6.txt",
+    "review_file_zh": "prompts/experiential_oriented_ad_image_prompt.v6.zh.md"
   },
   "Affect-oriented": {
     "alias_of": "Symbolic-oriented",
     "deprecated": true,
-    "prompt_version": "v5 alias",
+    "prompt_version": "v6 alias",
     "label_zh": "情感导向素材（旧名，已并入象征品牌概念导向）",
     "goal": "Deprecated alias. Use Symbolic-oriented for new runs.",
     "primary_route": "alias of symbolic brand concept definition",
-    "prompt_file": "prompts/symbolic_oriented_ad_image_prompt.v5.txt",
-    "review_file_zh": "prompts/symbolic_oriented_ad_image_prompt.v5.zh.md"
+    "prompt_file": "prompts/symbolic_oriented_ad_image_prompt.v6.txt",
+    "review_file_zh": "prompts/symbolic_oriented_ad_image_prompt.v6.zh.md"
   }
 }
