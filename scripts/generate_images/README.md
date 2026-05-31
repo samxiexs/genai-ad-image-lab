@@ -11,13 +11,13 @@ Expected workflow:
    - `Product-oriented`
    - `Context-oriented`
    - `Symbolic-oriented`
-   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, and `v15` use the Park-theory-grounded set:
+   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, and `v17` use the Park-theory-grounded set:
    - `Product-oriented`
    - `Symbolic-oriented`
    - `Experiential-oriented`
 5. Save generated images to `outputs/`.
 
-`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, or `v15`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
+`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, or `v17`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
 
 Recommended output naming:
 
@@ -150,6 +150,24 @@ OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
   --limit 14
 ```
 
+Use the v16 prompt set for the full-English version of the v15 two-stage flow:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v16 \
+  --selection-mode sequential \
+  --limit 14
+```
+
+Use the v17 prompt set for the full-English orientation-specific prompt-generation flow. The script first generates one Product/Symbolic/Experiential-specific image prompt per product per orientation, then sends that generated prompt to the image model:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v17 \
+  --selection-mode sequential \
+  --limit 14
+```
+
 Run the previous fixed sample explicitly:
 
 ```bash
@@ -225,14 +243,14 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 - `--csv`: input product CSV.
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
-- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3` uses a longer Park-theory-grounded prompt, `v4` uses a concise definition-first prompt with grounding/generalization discipline, `v5` keeps only the brand-concept definition, `v6` restores compact experimental and quality controls, `v7` combines Park definitions with function_v2-style image quality/fidelity controls, `v8` returns to Park's original definition plus minimal quality controls, `v9` adds selected function_v2-style detail controls to the v8 logic, `v10` integrates Park with later prompt-alignment, artifact-control, and discriminant-validity guidance, `v11` further strengthens source-image grounding by explicitly extracting visible facts from the white-background image before concept inference, `v12` uses function_v2-style visual direction, reasoning steps, and verification discipline while replacing the old route meanings with Park's functional, symbolic, and experiential definitions, `v13` keeps the strong execution discipline while sharpening source-image-first grounding and three-way discriminant separation, `v14` is the Chinese version of v13, and `v15` first generates a neutral product-specific prompt from metadata plus the source image before applying each orientation's style definition.
-- `--base-prompt-file`: v15 neutral product prompt template, defaults to `prompts/neutral_product_ad_image_prompt.v15.txt`.
-- `--base-prompt-model`: text/vision model used by v15 for the neutral prompt, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-4o-mini`.
-- `--base-prompt-endpoint`: chat completions endpoint used by v15, defaults to `{api-base-url}/chat/completions`.
-- `--base-prompt-dir`: directory for saved neutral prompts, defaults to `{run-dir}/base_prompts`.
+- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3` uses a longer Park-theory-grounded prompt, `v4` uses a concise definition-first prompt with grounding/generalization discipline, `v5` keeps only the brand-concept definition, `v6` restores compact experimental and quality controls, `v7` combines Park definitions with function_v2-style image quality/fidelity controls, `v8` returns to Park's original definition plus minimal quality controls, `v9` adds selected function_v2-style detail controls to the v8 logic, `v10` integrates Park with later prompt-alignment, artifact-control, and discriminant-validity guidance, `v11` further strengthens source-image grounding by explicitly extracting visible facts from the white-background image before concept inference, `v12` uses function_v2-style visual direction, reasoning steps, and verification discipline while replacing the old route meanings with Park's functional, symbolic, and experiential definitions, `v13` keeps the strong execution discipline while sharpening source-image-first grounding and three-way discriminant separation, `v14` is the Chinese version of v13, `v15` first generates a neutral product-specific prompt from metadata plus the source image before applying each orientation's style definition, `v16` is the full-English version of v15, and `v17` generates an orientation-specific English image prompt before image generation.
+- `--base-prompt-file`: v15/v16/v17 product prompt-generation template; defaults to the matching version file, and v17 uses orientation-specific generator files.
+- `--base-prompt-model`: text/vision model used by v15/v16/v17 for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-4o-mini`.
+- `--base-prompt-endpoint`: chat completions endpoint used by v15/v16/v17, defaults to `{api-base-url}/chat/completions`.
+- `--base-prompt-dir`: directory for saved generated prompts, defaults to `{run-dir}/base_prompts`.
 - `--prompt`: inline prompt template; overrides `--prompt-file`.
-- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, or `v15`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
-- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, or `v15`, `context` and `usage` resolve to `Experiential-oriented`.
+- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, or `v17`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
+- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, or `v17`, `context` and `usage` resolve to `Experiential-oriented`.
 - `--orientations`: comma-separated orientations, or `all`; defaults to all three canonical orientations for the selected prompt version.
 - `--selection-mode`: `previous-random10`, `sequential`, or `random`; defaults to `previous-random10`.
 - `--limit`: maximum rows to process. Sequential mode defaults to 1 if `--limit` is omitted.
@@ -266,7 +284,10 @@ python3 scripts/generate_images/generate_from_csv.py \
 - v13 run root: `outputs/{model}_{selection_label}_{orientation_label}_v13_{timestamp}/`
 - v14 run root: `outputs/{model}_{selection_label}_{orientation_label}_v14_{timestamp}/`
 - v15 run root: `outputs/{model}_{selection_label}_{orientation_label}_v15_{timestamp}/`
-- v15 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
+- v16 run root: `outputs/{model}_{selection_label}_{orientation_label}_v16_{timestamp}/`
+- v17 run root: `outputs/{model}_{selection_label}_{orientation_label}_v17_{timestamp}/`
+- v15/v16 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
+- v17 orientation-specific generated prompts: `{run-dir}/base_prompts/{id}_{orientation}_prompt.txt`
 - Generated images: `{run-dir}/generated/{orientation}/{id}_{orientation}.png`
 - Downloaded source images: `{run-dir}/source_images/{id}.{ext}`
 - Manifest JSONL: `{run-dir}/generation_manifest.jsonl`

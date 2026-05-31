@@ -74,6 +74,11 @@ DEFAULT_BASE_PROMPT_MODEL = "gpt-4o-mini"
 DEFAULT_BASE_PROMPT_FILES = {
     "v15": "prompts/neutral_product_ad_image_prompt.v15.txt",
     "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
+    "v17": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt_generator.v17.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt_generator.v17.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt_generator.v17.txt",
+    },
 }
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
@@ -81,6 +86,7 @@ DEFAULT_PROMPT_VERSION = "current"
 GENERATED_BASE_PROMPT_PLACEHOLDERS = {
     "v15": "[v15 dry-run：正式运行时会先根据商品元数据和白底源图生成这里的商品专属中性 prompt。]",
     "v16": "[v16 dry-run: in a real run, this section will be generated from product metadata and the white-background source image.]",
+    "v17": "[v17 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
 }
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
@@ -176,11 +182,17 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v16.txt",
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v16.txt",
     },
+    "v17": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v17.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v17.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v17.txt",
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
-    {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16"}
+    {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v17"}
 )
-GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15", "v16"})
+GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15", "v16", "v17"})
+ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset({"v17"})
 
 
 @dataclass(frozen=True)
@@ -216,7 +228,7 @@ def parse_args() -> argparse.Namespace:
         choices=ORIENTATION_CHOICES,
         help=(
             "Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for "
-            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16, "
+            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -236,7 +248,7 @@ def parse_args() -> argparse.Namespace:
         choices=sorted(PROMPT_VERSION_FILES),
         help=(
             "Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused; "
-            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16 use Park et al. functional/symbolic/experiential brand concepts."
+            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17 use Park et al. functional/symbolic/experiential brand concepts."
         ),
     )
     parser.add_argument(
@@ -275,34 +287,34 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-file",
         default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE"),
-        help="Neutral product prompt template used by v15/v16 before orientation-specific image generation.",
+        help="Product prompt-generation template used by v15/v16/v17 before image generation.",
     )
     parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
-        help="Text/vision model used by v15/v16 to generate the neutral product prompt.",
+        help="Text/vision model used by v15/v16/v17 to generate the product prompt.",
     )
     parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Chat completions endpoint for v15/v16 neutral prompt generation. If omitted, {api-base-url}/chat/completions is used.",
+        help="Chat completions endpoint for v15/v16/v17 prompt generation. If omitted, {api-base-url}/chat/completions is used.",
     )
     parser.add_argument(
         "--base-prompt-dir",
         default=None,
-        help="Directory for saved v15/v16 neutral product prompts. Defaults to {run-dir}/base_prompts.",
+        help="Directory for saved v15/v16/v17 generated product prompts. Defaults to {run-dir}/base_prompts.",
     )
     parser.add_argument(
         "--base-prompt-max-tokens",
         type=int,
         default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
-        help="Maximum output tokens for v15/v16 neutral prompt generation.",
+        help="Maximum output tokens for v15/v16/v17 prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-temperature",
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
-        help="Temperature for v15/v16 neutral prompt generation.",
+        help="Temperature for v15/v16/v17 prompt generation.",
     )
     parser.add_argument(
         "--api-key",
@@ -526,8 +538,18 @@ def uses_generated_base_prompt(prompt_version: str) -> bool:
     return prompt_version in GENERATED_BASE_PROMPT_VERSIONS
 
 
+def uses_orientation_specific_generated_prompt(prompt_version: str) -> bool:
+    return prompt_version in ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS
+
+
 def generated_base_prompt_placeholder(prompt_version: str) -> str:
     return GENERATED_BASE_PROMPT_PLACEHOLDERS.get(prompt_version, "[dry-run: generated neutral product prompt placeholder.]")
+
+
+def generated_prompt_template_field(prompt_version: str) -> str:
+    if uses_orientation_specific_generated_prompt(prompt_version):
+        return "generated_orientation_prompt"
+    return "neutral_product_prompt"
 
 
 def orientation_label(plans: list[OrientationPlan]) -> str:
@@ -839,33 +861,50 @@ def call_openai_chat_completion(
     raise RuntimeError(f"OpenAI chat completion failed after {retries + 1} attempts: {last_error}")
 
 
-def base_prompt_output_path(args: argparse.Namespace, product_id: str) -> pathlib.Path:
+def base_prompt_output_path(args: argparse.Namespace, product_id: str, orientation: str | None = None) -> pathlib.Path:
+    if uses_orientation_specific_generated_prompt(args.prompt_version):
+        orientation_label_value = safe_name((orientation or "unknown").lower().replace("-", "_"))
+        return pathlib.Path(args.base_prompt_dir) / f"{product_id}_{orientation_label_value}_prompt.txt"
     return pathlib.Path(args.base_prompt_dir) / f"{product_id}_neutral_prompt.txt"
 
 
-def load_base_prompt_template(args: argparse.Namespace) -> tuple[str, str]:
-    prompt_file = args.base_prompt_file or DEFAULT_BASE_PROMPT_FILES.get(args.prompt_version)
+def load_base_prompt_template(args: argparse.Namespace, orientation: str | None = None) -> tuple[str, str]:
+    prompt_file_config = args.base_prompt_file or DEFAULT_BASE_PROMPT_FILES.get(args.prompt_version)
+    if isinstance(prompt_file_config, dict):
+        if not orientation:
+            raise ValueError(f"Prompt version {args.prompt_version!r} requires an orientation-specific base prompt template.")
+        prompt_file = prompt_file_config.get(orientation)
+    else:
+        prompt_file = prompt_file_config
     if not prompt_file:
         raise ValueError(f"No default base prompt file is configured for prompt version {args.prompt_version!r}.")
     prompt_path = pathlib.Path(prompt_file)
     return prompt_path.read_text(encoding="utf-8"), str(prompt_path)
 
 
-def get_neutral_product_prompt(
+def generated_prompt_cache_key(args: argparse.Namespace, product_id: str, orientation: str) -> str:
+    if uses_orientation_specific_generated_prompt(args.prompt_version):
+        return f"{product_id}:{orientation}"
+    return product_id
+
+
+def get_generated_product_prompt(
     *,
     row: dict[str, str],
     product_id: str,
+    orientation: str,
     source_path: pathlib.Path,
     args: argparse.Namespace,
     api_key: str,
     base_prompt_template: str,
     cache: dict[str, dict[str, object]],
 ) -> dict[str, object]:
-    if product_id in cache:
-        return cache[product_id]
+    cache_key = generated_prompt_cache_key(args, product_id, orientation)
+    if cache_key in cache:
+        return cache[cache_key]
 
-    request_prompt = render_prompt(base_prompt_template, row, "Neutral")
-    output_path = base_prompt_output_path(args, product_id)
+    request_prompt = render_prompt(base_prompt_template, row, orientation)
+    output_path = base_prompt_output_path(args, product_id, orientation)
     request_path = output_path.with_name(f"{output_path.stem}.request.txt")
 
     if output_path.exists() and output_path.stat().st_size > 0 and not args.overwrite:
@@ -877,7 +916,7 @@ def get_neutral_product_prompt(
             "source": "cache",
             "request_prompt": request_prompt,
         }
-        cache[product_id] = result
+        cache[cache_key] = result
         return result
 
     response = call_openai_chat_completion(
@@ -904,7 +943,7 @@ def get_neutral_product_prompt(
         "request_prompt": request_prompt,
         "api_usage": response.get("usage") or {},
     }
-    cache[product_id] = result
+    cache[cache_key] = result
     return result
 
 
@@ -945,7 +984,7 @@ def iter_records(
             output_prefix = pathlib.Path(args.output_dir) / plan.orientation / f"{product_id}_{orientation}"
             extra_values = {}
             if uses_generated_base_prompt(args.prompt_version):
-                extra_values["neutral_product_prompt"] = generated_base_prompt_placeholder(args.prompt_version)
+                extra_values[generated_prompt_template_field(args.prompt_version)] = generated_base_prompt_placeholder(args.prompt_version)
             prompt = render_prompt(plan.prompt_template, row, plan.orientation, extra_values)
             yield {
                 "row": row,
@@ -966,10 +1005,10 @@ def main() -> int:
     plans = resolve_orientation_plans(args)
     rows = select_rows(read_rows(pathlib.Path(args.csv)), args)
     resolve_output_paths(args, rows, plans)
-    base_prompt_template = ""
-    base_prompt_source = ""
+    base_prompt_templates: dict[str, tuple[str, str]] = {}
     if uses_generated_base_prompt(args.prompt_version):
-        base_prompt_template, base_prompt_source = load_base_prompt_template(args)
+        for plan in plans:
+            base_prompt_templates[plan.orientation] = load_base_prompt_template(args, plan.orientation)
 
     if not rows:
         print("No rows selected.", file=sys.stderr)
@@ -993,7 +1032,7 @@ def main() -> int:
 
     total_records = len(rows) * len(plans)
     progress = ProgressTracker(total_records, enabled=not args.no_progress)
-    neutral_prompt_cache: dict[str, dict[str, object]] = {}
+    generated_prompt_cache: dict[str, dict[str, object]] = {}
 
     for record in iter_records(rows, args, plans):
         row = record["row"]
@@ -1026,12 +1065,14 @@ def main() -> int:
             "prompt": record["prompt"],
         }
         if uses_generated_base_prompt(args.prompt_version):
-            base_request_prompt = render_prompt(base_prompt_template, row, "Neutral")
+            base_prompt_template, base_prompt_source = base_prompt_templates[record["orientation"]]
+            generated_prompt_field = generated_prompt_template_field(args.prompt_version)
+            base_request_prompt = render_prompt(base_prompt_template, row, record["orientation"])
             manifest_record["base_prompt_source"] = base_prompt_source
             manifest_record["base_prompt_model"] = args.base_prompt_model
             manifest_record["base_prompt_endpoint"] = args.base_prompt_endpoint
             manifest_record["base_prompt_generation_prompt"] = base_request_prompt
-            manifest_record["neutral_product_prompt"] = generated_base_prompt_placeholder(args.prompt_version)
+            manifest_record[generated_prompt_field] = generated_base_prompt_placeholder(args.prompt_version)
 
         try:
             if all(path.exists() for path in expected_outputs) and not args.overwrite:
@@ -1068,29 +1109,33 @@ def main() -> int:
                 continue
 
             if uses_generated_base_prompt(args.prompt_version):
-                neutral_prompt = get_neutral_product_prompt(
+                base_prompt_template, _base_prompt_source = base_prompt_templates[record["orientation"]]
+                generated_prompt = get_generated_product_prompt(
                     row=row,
                     product_id=record["product_id"],
+                    orientation=record["orientation"],
                     source_path=source_path,
                     args=args,
                     api_key=api_key or "",
                     base_prompt_template=base_prompt_template,
-                    cache=neutral_prompt_cache,
+                    cache=generated_prompt_cache,
                 )
-                neutral_prompt_text = str(neutral_prompt["text"])
+                generated_prompt_text = str(generated_prompt["text"])
+                generated_prompt_field = generated_prompt_template_field(args.prompt_version)
                 record["prompt"] = render_prompt(
                     record["prompt_template"],
                     row,
                     record["orientation"],
-                    {"neutral_product_prompt": neutral_prompt_text},
+                    {generated_prompt_field: generated_prompt_text},
                 )
                 manifest_record["prompt"] = record["prompt"]
-                manifest_record["neutral_product_prompt"] = neutral_prompt_text
-                manifest_record["neutral_product_prompt_path"] = neutral_prompt["path"]
-                manifest_record["base_prompt_request_path"] = neutral_prompt.get("request_path")
-                manifest_record["base_prompt_cache_status"] = neutral_prompt["source"]
-                if neutral_prompt.get("api_usage"):
-                    manifest_record["base_prompt_api_usage"] = neutral_prompt["api_usage"]
+                manifest_record[generated_prompt_field] = generated_prompt_text
+                manifest_record["generated_product_prompt"] = generated_prompt_text
+                manifest_record["generated_product_prompt_path"] = generated_prompt["path"]
+                manifest_record["base_prompt_request_path"] = generated_prompt.get("request_path")
+                manifest_record["base_prompt_cache_status"] = generated_prompt["source"]
+                if generated_prompt.get("api_usage"):
+                    manifest_record["base_prompt_api_usage"] = generated_prompt["api_usage"]
 
             response = call_openai_image_edit(
                 api_key=api_key or "",

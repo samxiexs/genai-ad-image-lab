@@ -8,7 +8,22 @@ The following content has already been generated from the product metadata and t
 Part 2: Functional style definition and generation requirements
 The advertising image style is based on the functional brand concept from Park, Jaworski, and MacInnis (1986). A functional concept links the product to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.
 
-While preserving the product facts from Part 1, transform the image into a Product-oriented / functional advertising image. The dominant message should be what the product does, what practical task it supports, what consumption problem it solves, or how it makes use more reliable. Visual evidence should come from the product itself, reasonable neutral props, realistic operating relationships, scale, storage, compatibility, protection, cleaning, durability, portability, setup, use steps, or other function cues reasonably supported by the category.
+While preserving the product facts from Part 1, transform the image into a Product-oriented / functional advertising image. The dominant message should be what the product does, what practical task it supports, what consumption problem it solves, or how it makes use more reliable. The image must feel like a controlled commercial product-function demonstration, not a single beautified product shot.
+
+Function reasoning requirements:
+- First infer the product type, practical user problem, likely use task, material or mechanism, and the main functional reason a consumer would buy it.
+- Do not show only one generic function. Present at least three concrete functional evidence dimensions reasonably supported by the category, such as operation/interface, assembly/setup, fit/fastening, scale reference, portability, storage, cleaning, protection, compatibility, freshness, application, organization, comfort, durability, care, ease of use, or gift-readiness.
+- For electronics, tools, appliances, sports products, home goods, beauty devices, toys, pet products, food, medicine, books, accessories, fashion, jewelry, and gifts, select the most category-appropriate functional cues. Do not mechanically include every dimension.
+- For decorative, wearable, luxury, or giftable products with limited mechanical function, express practical function through fit, fastening, scale, wearing support, safe storage, material handling, packaging protection, pairing, care, or gift-readiness. Do not turn these products into status, glamour, romance, or abstract aspiration images.
+- When uncertain, use generic category affordances rather than fake features.
+
+Visual direction:
+- Make the product the dominant subject and show at least three concrete functional evidence cues. Multiple dimensions may be integrated into one realistic commercial photograph rather than an infographic.
+- Prefer a controlled product-demonstration composition: neutral tabletop, clean studio work surface, organized component layout, realistic open/closed state, visible mechanism, scale reference, accessory relationship, safe storage, material surface contrast, before/after state, or a hand form used only to clarify grip, fit, fastening, application, or scale.
+- A secondary close-detail area or layered composition is acceptable if it feels like part of one commercial product photograph and contains no labels, arrows, callouts, or text.
+- Include relevant neutral props only when they explain function. Props must behave like functional evidence, not lifestyle decoration or symbolic atmosphere.
+- Lighting, shadows, reflections, and background should clarify shape, material, operating parts, affordance, and usability. Aesthetic polish should serve functional understanding.
+- Avoid a plain white or near-white packshot as the dominant visual solution. The image must provide more functional information than a cleaner product photo.
 
 Strict requirements:
 - The product must be clearly visible and identifiable, while preserving the source image's core shape, color, logo, packaging, materials, and physical structure.
@@ -16,3 +31,4 @@ Strict requirements:
 - Do not generate new readable text, slogans, prices, promotions, labels, arrows, charts, QR codes, or badges.
 - Do not let premiumness, identity signaling, emotional atmosphere, gifting mood, or sensory experience become the dominant message.
 - The image should look like realistic commercial photography, not a screenshot, low-quality collage, meme, cluttered e-commerce mockup, or unnatural composite.
+- If the image mainly reads as a premium still life, symbolic mood image, experiential atmosphere image, or the same packshot with nicer lighting, the generation has failed.
