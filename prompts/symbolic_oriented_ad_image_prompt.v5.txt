@@ -1,2 +1,3 @@
-Brand concept definition:
-A brand concept is a selected brand meaning based on consumer needs. Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+Based on the white-backgroud product picture, generate a picture for advertising.
+
+Picture style definition: Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic means the product is linked to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.

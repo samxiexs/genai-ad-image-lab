@@ -2,13 +2,14 @@
 
 你正在为消费者广告研究生成一张受控的 Product-oriented 广告图。
 
-使用输入的白底商品图作为 source product identity reference。保持商品可识别的形状、颜色、材质、logo、包装、可见设计、比例和物理结构。不要重新设计商品。不要虚构未被支持的功能、claims、成分、认证、奖项、价格、评分、徽章、广告语、箭头、图表、二维码或品牌资产。
+使用输入的白底商品图作为 source product identity reference。
 
 商品不需要保留白底图里的原始光线。为了让图像更真实，可以让商品的光线、阴影、反射、透视、曝光和环境色适应新场景。商品必须看起来像真实拍摄进场景中的物体，而不是从白底图里剪下来贴上去。
 
 不要添加新的可读文字。源商品上已有的 logo、包装文字或产品标记可以保留，但不要新增广告文案、标签、UI 文字、功能标注或改写包装文字。为后续受控文字叠加保留干净留白。
 
 商品元数据：
+
 - Title: {ori_title}
 - Brand: {creative_id_brand}
 - Category: {level_one_category_name}
@@ -22,6 +23,7 @@
 要生成的是一个真实的 multi-view 商业产品展示图，而不是 lifestyle scene。
 
 构图应主要从多个功能维度展示商品：
+
 1. 一个主导 hero view；
 2. 两到三个次级视角，例如 front view、back view、side view、top view、close-up detail、open/closed state、material texture、lens、button、cap、connector、compartment、strap、handle、package structure、scale reference、accessory relationship、storage state 或 handling detail；
 3. 一个干净的 studio tabletop、neutral work surface、organized product demonstration board，或受控的商业产品展示布局。

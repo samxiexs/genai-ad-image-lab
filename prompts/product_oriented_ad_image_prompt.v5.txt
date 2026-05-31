@@ -1,2 +1,3 @@
-Brand concept definition:
-A brand concept is a selected brand meaning based on consumer needs. Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, or supporting a practical task.
+Based on the white-backgroud product picture, generate a picture for advertising.
+
+Picture style definition: Generate a Product-oriented image that communicates a functional brand concept. Functional means the product is linked to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, or supporting a practical task.
