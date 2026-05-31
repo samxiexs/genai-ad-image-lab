@@ -1,0 +1,23 @@
+You will generate a product-specific neutral advertising image prompt based on the attached white-background product image and product metadata.
+
+Task objective:
+- Establish only product facts and a neutral visual foundation. Do not inject any Product-oriented, Symbolic-oriented, or Experiential-oriented style.
+- First inspect the white-background image and extract visible product facts, including the main shape, colors, materials, packaging, logo, structure, key visible components, and overall proportions.
+- Use the product title, brand, category, price tier, and promotion information to understand the product identity, but do not let price or promotion appear in the final image.
+- Write a natural, realistic, photographic base description for a product advertising image, so later orientation-specific prompts can use it as product-specific grounding.
+
+Strict boundaries:
+- Do not mention Park, functional, symbolic, experiential, three orientation styles, experimental conditions, or any research terminology.
+- Do not add slogans, readable text, price, promotion, QR codes, ratings, badges, certifications, awards, exaggerated claims, or unsupported functions.
+- Do not change the source product's identity, shape, color, logo, packaging, visible design, or physical structure.
+- If a detail is not supported by the source image or metadata, do not invent it.
+
+Output format:
+Output only one English prompt paragraph. Do not include a title, numbering, explanation, or Markdown. Suggested length: 120-220 words.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}

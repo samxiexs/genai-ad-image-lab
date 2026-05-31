@@ -71,11 +71,17 @@ DEFAULT_API_BASE_URL = "https://api.vectorengine.cn/v1"
 DEFAULT_IMAGES_EDIT_PATH = "/images/edits"
 DEFAULT_CHAT_COMPLETIONS_PATH = "/chat/completions"
 DEFAULT_BASE_PROMPT_MODEL = "gpt-4o-mini"
-DEFAULT_V15_BASE_PROMPT_FILE = "prompts/neutral_product_ad_image_prompt.v15.txt"
+DEFAULT_BASE_PROMPT_FILES = {
+    "v15": "prompts/neutral_product_ad_image_prompt.v15.txt",
+    "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
+}
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
 DEFAULT_PROMPT_VERSION = "current"
-V15_NEUTRAL_PROMPT_PLACEHOLDER = "[v15 dry-run：正式运行时会先根据商品元数据和白底源图生成这里的商品专属中性 prompt。]"
+GENERATED_BASE_PROMPT_PLACEHOLDERS = {
+    "v15": "[v15 dry-run：正式运行时会先根据商品元数据和白底源图生成这里的商品专属中性 prompt。]",
+    "v16": "[v16 dry-run: in a real run, this section will be generated from product metadata and the white-background source image.]",
+}
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
     "1562371",
@@ -165,11 +171,16 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v15.txt",
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v15.txt",
     },
+    "v16": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v16.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v16.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v16.txt",
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
-    {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15"}
+    {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16"}
 )
-GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15"})
+GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15", "v16"})
 
 
 @dataclass(frozen=True)
@@ -205,7 +216,7 @@ def parse_args() -> argparse.Namespace:
         choices=ORIENTATION_CHOICES,
         help=(
             "Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for "
-            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15, "
+            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -225,7 +236,7 @@ def parse_args() -> argparse.Namespace:
         choices=sorted(PROMPT_VERSION_FILES),
         help=(
             "Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused; "
-            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15 use Park et al. functional/symbolic/experiential brand concepts."
+            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16 use Park et al. functional/symbolic/experiential brand concepts."
         ),
     )
     parser.add_argument(
@@ -263,35 +274,35 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--base-prompt-file",
-        default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE", DEFAULT_V15_BASE_PROMPT_FILE),
-        help="Neutral product prompt template used by v15 before orientation-specific image generation.",
+        default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE"),
+        help="Neutral product prompt template used by v15/v16 before orientation-specific image generation.",
     )
     parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
-        help="Text/vision model used by v15 to generate the neutral product prompt.",
+        help="Text/vision model used by v15/v16 to generate the neutral product prompt.",
     )
     parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Chat completions endpoint for v15 neutral prompt generation. If omitted, {api-base-url}/chat/completions is used.",
+        help="Chat completions endpoint for v15/v16 neutral prompt generation. If omitted, {api-base-url}/chat/completions is used.",
     )
     parser.add_argument(
         "--base-prompt-dir",
         default=None,
-        help="Directory for saved v15 neutral product prompts. Defaults to {run-dir}/base_prompts.",
+        help="Directory for saved v15/v16 neutral product prompts. Defaults to {run-dir}/base_prompts.",
     )
     parser.add_argument(
         "--base-prompt-max-tokens",
         type=int,
         default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
-        help="Maximum output tokens for v15 neutral prompt generation.",
+        help="Maximum output tokens for v15/v16 neutral prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-temperature",
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
-        help="Temperature for v15 neutral prompt generation.",
+        help="Temperature for v15/v16 neutral prompt generation.",
     )
     parser.add_argument(
         "--api-key",
@@ -513,6 +524,10 @@ def chat_endpoint_from_base_url(base_url: str) -> str:
 
 def uses_generated_base_prompt(prompt_version: str) -> bool:
     return prompt_version in GENERATED_BASE_PROMPT_VERSIONS
+
+
+def generated_base_prompt_placeholder(prompt_version: str) -> str:
+    return GENERATED_BASE_PROMPT_PLACEHOLDERS.get(prompt_version, "[dry-run: generated neutral product prompt placeholder.]")
 
 
 def orientation_label(plans: list[OrientationPlan]) -> str:
@@ -829,7 +844,10 @@ def base_prompt_output_path(args: argparse.Namespace, product_id: str) -> pathli
 
 
 def load_base_prompt_template(args: argparse.Namespace) -> tuple[str, str]:
-    prompt_path = pathlib.Path(args.base_prompt_file)
+    prompt_file = args.base_prompt_file or DEFAULT_BASE_PROMPT_FILES.get(args.prompt_version)
+    if not prompt_file:
+        raise ValueError(f"No default base prompt file is configured for prompt version {args.prompt_version!r}.")
+    prompt_path = pathlib.Path(prompt_file)
     return prompt_path.read_text(encoding="utf-8"), str(prompt_path)
 
 
@@ -927,7 +945,7 @@ def iter_records(
             output_prefix = pathlib.Path(args.output_dir) / plan.orientation / f"{product_id}_{orientation}"
             extra_values = {}
             if uses_generated_base_prompt(args.prompt_version):
-                extra_values["neutral_product_prompt"] = V15_NEUTRAL_PROMPT_PLACEHOLDER
+                extra_values["neutral_product_prompt"] = generated_base_prompt_placeholder(args.prompt_version)
             prompt = render_prompt(plan.prompt_template, row, plan.orientation, extra_values)
             yield {
                 "row": row,
@@ -1013,7 +1031,7 @@ def main() -> int:
             manifest_record["base_prompt_model"] = args.base_prompt_model
             manifest_record["base_prompt_endpoint"] = args.base_prompt_endpoint
             manifest_record["base_prompt_generation_prompt"] = base_request_prompt
-            manifest_record["neutral_product_prompt"] = V15_NEUTRAL_PROMPT_PLACEHOLDER
+            manifest_record["neutral_product_prompt"] = generated_base_prompt_placeholder(args.prompt_version)
 
         try:
             if all(path.exists() for path in expected_outputs) and not args.overwrite:

@@ -1,0 +1,18 @@
+You are generating controlled experimental stimuli for a consumer advertising study. Use the provided white-background product image as the exact source product. You may adjust the presentation style, but keep the image natural and photographic. Do not show any price-related information.
+
+Part 1: Product-specific neutral prompt
+The following content has already been generated from the product metadata and the white-background source image. It provides only product facts, visible features, and a neutral photographic foundation. It does not contain any of the three orientation styles. Use it as product grounding, but the final image must be dominated by the functional definition in Part 2.
+
+{neutral_product_prompt}
+
+Part 2: Functional style definition and generation requirements
+The advertising image style is based on the functional brand concept from Park, Jaworski, and MacInnis (1986). A functional concept links the product to externally generated consumption needs: solving or preventing a consumption problem, reducing friction, supporting a practical task, or making consumption more reliable.
+
+While preserving the product facts from Part 1, transform the image into a Product-oriented / functional advertising image. The dominant message should be what the product does, what practical task it supports, what consumption problem it solves, or how it makes use more reliable. Visual evidence should come from the product itself, reasonable neutral props, realistic operating relationships, scale, storage, compatibility, protection, cleaning, durability, portability, setup, use steps, or other function cues reasonably supported by the category.
+
+Strict requirements:
+- The product must be clearly visible and identifiable, while preserving the source image's core shape, color, logo, packaging, materials, and physical structure.
+- Do not invent functions, ingredients, certifications, awards, ratings, comparative conclusions, or brand assets that are unsupported by the source image or category.
+- Do not generate new readable text, slogans, prices, promotions, labels, arrows, charts, QR codes, or badges.
+- Do not let premiumness, identity signaling, emotional atmosphere, gifting mood, or sensory experience become the dominant message.
+- The image should look like realistic commercial photography, not a screenshot, low-quality collage, meme, cluttered e-commerce mockup, or unnatural composite.
