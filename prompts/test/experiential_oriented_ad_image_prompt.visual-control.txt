@@ -1,0 +1,25 @@
+You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the source product identity reference. Preserve the product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product. Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+
+Do not add new readable text. Existing logos, package text, or product markings already present on the source product may remain, but do not create new ad copy, labels, UI text, feature callouts, or rewritten package text. Leave clean negative space for later controlled text overlay.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate an Experiential-oriented image where felt consumption experience is the dominant message.
+
+Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, communicate an experiential brand concept. An experiential concept links the product to internally generated needs for sensory pleasure, variety, cognitive stimulation, immersion, or felt consumption experience.
+
+First infer one plausible consumption experience from the product image, title, category, and metadata. The image should answer: what enjoyable, immersive, memorable, sensory, creative, relaxing, playful, exploratory, or meaningful experience does this product help create?
+
+Create one realistic candid or immersive advertising photograph in which the product actively participates in the experience. Show the relationship among the user, the source product, and the surrounding experience, activity, or moment that the product helps the user access, enjoy, create, share, or explore. The experience must be shown through believable interaction, not through decorative atmosphere alone.
+
+Use natural, physically consistent light and shadow, realistic contact, authentic environmental texture, slight real-camera imperfections, natural depth of field, and believable object scale. Avoid postcard fantasy, fake cinematic glow, product cutout effects, overprocessed HDR, plastic skin, or uncanny AI polish.
+
+Failure rule:
+If the image mainly reads as a neutral product demo, a symbolic status scene, a generic lifestyle pose, or a product merely held up without truly enabling the experience, generation has failed.

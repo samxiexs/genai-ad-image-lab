@@ -1,0 +1,31 @@
+# Definition-only / Experiential-oriented
+
+- Condition: `definition-only`
+- Role: `single-stage prompt`
+- Alias runtime file: `prompts/aliases/def-experiential.txt`
+- Original file: `prompts/experiential_oriented_ad_image_prompt.definition-only.txt`
+
+## Prompt
+
+```txt
+You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the source product reference.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate an Experiential-oriented image that communicates an experiential brand concept.
+
+Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is experiential brand meaning. An experiential concept links the product to internally generated needs for sensory pleasure, variety, cognitive stimulation, immersion, or felt consumption experience.
+
+Let this experiential meaning be the main reason the image is persuasive. The image should make viewers infer what the encounter with the product feels like, what kind of sensory or immersive experience it creates, or what enjoyable moment it enables, rather than mainly reading the image as a functional demonstration or identity signal.
+
+Failure rule:
+If the image mainly reads as practical utility or symbolic self-expression instead of felt consumption experience, generation has failed.
+
+```

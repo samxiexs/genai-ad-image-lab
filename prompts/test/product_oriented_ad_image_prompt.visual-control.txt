@@ -1,0 +1,25 @@
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the source product identity reference. Preserve the product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product. Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+
+Do not add new readable text. Existing logos, package text, or product markings already present on the source product may remain, but do not create new ad copy, labels, UI text, feature callouts, or rewritten package text. Leave clean negative space for later controlled text overlay.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate a Product-oriented image where functional utility and product understanding are the dominant message.
+
+Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, communicate a functional brand concept. A functional concept links the product to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, supporting a practical task, or making consumption more reliable.
+
+First infer the product type, practical task, material, structure, and the main functional reason a consumer would buy it. Show only plausible functions and affordances supported by the product image, title, category, and metadata. When uncertain, use generic category-appropriate affordances rather than fake features.
+
+Create one realistic commercial product-demonstration scene, not a lifestyle story. Make the product the dominant subject and show concrete functional evidence, such as operation, interface, material detail, scale reference, accessory relationship, storage state, fit, fastening, application, compatibility, care, or protection. People, hands, or props may appear only when they clarify function, scale, handling, or use.
+
+Adapt lighting, shadows, reflections, perspective, exposure, and ambient color to the new scene so the product looks physically photographed, not pasted from a cutout. The image should look like real commercial product photography, not CGI, not a 3D render, not an illustration, and not an AI-art-like collage.
+
+Failure rule:
+If the image mainly reads as symbolic identity expression, experiential atmosphere, a plain white packshot, or the same source photo with nicer lighting, generation has failed.

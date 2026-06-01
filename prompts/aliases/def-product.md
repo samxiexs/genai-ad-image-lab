@@ -1,0 +1,31 @@
+# Definition-only / Product-oriented
+
+- Condition: `definition-only`
+- Role: `single-stage prompt`
+- Alias runtime file: `prompts/aliases/def-product.txt`
+- Original file: `prompts/product_oriented_ad_image_prompt.definition-only.txt`
+
+## Prompt
+
+```txt
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the source product reference.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate a Product-oriented image that communicates a functional brand concept.
+
+Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, supporting a practical task, or making consumption more reliable.
+
+Let this functional meaning be the main reason the image is persuasive. The image should make viewers infer what practical task the product supports or what concrete problem it helps solve, rather than mainly reading the product as a status signal, identity marker, or sensory experience.
+
+Failure rule:
+If the image mainly reads as symbolic identity expression or experiential pleasure instead of practical utility, generation has failed.
+
+```

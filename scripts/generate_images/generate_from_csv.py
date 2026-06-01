@@ -79,6 +79,11 @@ DEFAULT_BASE_PROMPT_FILES = {
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt_generator.v17.txt",
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt_generator.v17.txt",
     },
+    "genprompt-control": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt_generator.genprompt-control.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt_generator.genprompt-control.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt_generator.genprompt-control.txt",
+    },
 }
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
@@ -87,6 +92,7 @@ GENERATED_BASE_PROMPT_PLACEHOLDERS = {
     "v15": "[v15 dry-run：正式运行时会先根据商品元数据和白底源图生成这里的商品专属中性 prompt。]",
     "v16": "[v16 dry-run: in a real run, this section will be generated from product metadata and the white-background source image.]",
     "v17": "[v17 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "genprompt-control": "[genprompt-control dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
 }
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
@@ -187,12 +193,46 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v17.txt",
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v17.txt",
     },
+    "definition-only": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.definition-only.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.definition-only.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.definition-only.txt",
+    },
+    "visual-control": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.visual-control.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.visual-control.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.visual-control.txt",
+    },
+    "genprompt-control": {
+        "Product-oriented": "prompts/product_oriented_ad_image_prompt.genprompt-control.txt",
+        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.genprompt-control.txt",
+        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.genprompt-control.txt",
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
-    {"v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v17"}
+    {
+        "v3",
+        "v4",
+        "v5",
+        "v6",
+        "v7",
+        "v8",
+        "v9",
+        "v10",
+        "v11",
+        "v12",
+        "v13",
+        "v14",
+        "v15",
+        "v16",
+        "v17",
+        "definition-only",
+        "visual-control",
+        "genprompt-control",
+    }
 )
-GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15", "v16", "v17"})
-ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset({"v17"})
+GENERATED_BASE_PROMPT_VERSIONS = frozenset({"v15", "v16", "v17", "genprompt-control"})
+ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset({"v17", "genprompt-control"})
 
 
 @dataclass(frozen=True)
@@ -228,7 +268,8 @@ def parse_args() -> argparse.Namespace:
         choices=ORIENTATION_CHOICES,
         help=(
             "Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for "
-            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17, "
+            "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17/"
+            "definition-only/visual-control/genprompt-control, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -248,7 +289,9 @@ def parse_args() -> argparse.Namespace:
         choices=sorted(PROMPT_VERSION_FILES),
         help=(
             "Prompt set to use. Defaults to current; function_v2 keeps Product-oriented more function-focused; "
-            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17 use Park et al. functional/symbolic/experiential brand concepts."
+            "v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17 use Park et al. functional/symbolic/experiential brand concepts; "
+            "definition-only is the theory-first research alias derived from v5, visual-control is the minimal-control research alias "
+            "derived from v8, and genprompt-control is the two-stage orientation-specific research alias derived from v17."
         ),
     )
     parser.add_argument(
@@ -287,34 +330,34 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-file",
         default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE"),
-        help="Product prompt-generation template used by v15/v16/v17 before image generation.",
+        help="Product prompt-generation template used by v15/v16/v17/genprompt-control before image generation.",
     )
     parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
-        help="Text/vision model used by v15/v16/v17 to generate the product prompt.",
+        help="Text/vision model used by v15/v16/v17/genprompt-control to generate the product prompt.",
     )
     parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Chat completions endpoint for v15/v16/v17 prompt generation. If omitted, {api-base-url}/chat/completions is used.",
+        help="Chat completions endpoint for v15/v16/v17/genprompt-control prompt generation. If omitted, {api-base-url}/chat/completions is used.",
     )
     parser.add_argument(
         "--base-prompt-dir",
         default=None,
-        help="Directory for saved v15/v16/v17 generated product prompts. Defaults to {run-dir}/base_prompts.",
+        help="Directory for saved v15/v16/v17/genprompt-control generated product prompts. Defaults to {run-dir}/base_prompts.",
     )
     parser.add_argument(
         "--base-prompt-max-tokens",
         type=int,
         default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
-        help="Maximum output tokens for v15/v16/v17 prompt generation.",
+        help="Maximum output tokens for v15/v16/v17/genprompt-control prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-temperature",
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
-        help="Temperature for v15/v16/v17 prompt generation.",
+        help="Temperature for v15/v16/v17/genprompt-control prompt generation.",
     )
     parser.add_argument(
         "--api-key",
