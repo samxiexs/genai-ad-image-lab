@@ -21,6 +21,11 @@ Product metadata:
 - Category: {level_one_category_name}
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
 
 Task:
 - Keep the same dominant construct and persuasive logic as the base definition-only prompt.

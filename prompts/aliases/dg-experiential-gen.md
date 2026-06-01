@@ -21,6 +21,13 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
 Task:
 - Keep the same dominant construct and persuasive logic as the base definition-only prompt.
 - Use the attached white-background product image and the product metadata to make the prompt specific to the actual product.

@@ -22,21 +22,4 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
-Task:
-- Keep the same dominant construct and persuasive logic as the base definition-only prompt.
-- Use the attached white-background product image and the product metadata to make the prompt specific to the actual product.
-- Keep the source product recognizable and consistent with visible facts from the source image.
-- Do not ask the image model to show price or promotion.
-- Output one complete English image-generation prompt that can be sent directly to an image editing model with the same source product image.
-- The final prompt should make viewers infer symbolic meaning rather than practical problem solving or experiential pleasure.
-
-Output format:
-Output only one complete English image-generation prompt. Do not include a title, explanation, bullets, numbering, or Markdown. Suggested length: 120-220 words.
-
-Product metadata:
-- Title: {ori_title}
-- Brand: {creative_id_brand}
-- Category: {level_one_category_name}
-- Price: {creative_id_price}
-- Promotion: {creative_id_promotion}
 ```
