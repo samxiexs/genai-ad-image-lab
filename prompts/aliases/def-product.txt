@@ -1,1 +1,1 @@
-../product_oriented_ad_image_prompt.definition-only.txt
+../test/product_oriented_ad_image_prompt.definition-only.txt

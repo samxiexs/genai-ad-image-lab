@@ -1,0 +1,1 @@
+../test/symbolic_oriented_ad_image_prompt_generator.definition-genprompt.txt

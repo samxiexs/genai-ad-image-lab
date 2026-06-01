@@ -1,1 +1,1 @@
-../symbolic_oriented_ad_image_prompt.definition-only.txt
+../test/symbolic_oriented_ad_image_prompt.definition-only.txt

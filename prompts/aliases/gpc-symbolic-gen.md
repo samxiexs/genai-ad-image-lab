@@ -1,45 +1,19 @@
-# Genprompt-control / Symbolic-oriented / Generator
+# gpc / symbolic / gen
 
 - Condition: `genprompt-control`
-- Role: `stage-1 generator prompt`
+- Role: `legacy compatibility generator alias for definition-control-genprompt`
 - Alias runtime file: `prompts/aliases/gpc-symbolic-gen.txt`
-- Original file: `prompts/symbolic_oriented_ad_image_prompt_generator.genprompt-control.txt`
+- Original file: `prompts/test/symbolic_oriented_ad_image_prompt_generator.definition-control-genprompt.txt`
 
 ## Prompt
 
 ```txt
-You will generate one final image-generation prompt for a Symbolic-oriented advertising image.
+You will convert the following definition-only Symbolic-oriented advertising prompt into one final image-generation prompt for the exact source product.
 
-Use the attached white-background product image and product metadata as inputs. The output prompt must already fuse the product facts with the Symbolic-oriented brand-concept style. It will be sent directly to an image editing model with the same source product image.
+Base definition-only prompt:
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.
 
-Target orientation:
-Symbolic-oriented. The dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
-
-Prompt-generation task:
-- First inspect the source image and extract visible facts about the exact product: shape, color, material, packaging, logo, visible components, structure, and proportions.
-- Use the metadata to understand the product identity, category, brand context, price tier, and purchase situation, but do not ask the image model to show price or promotion.
-- Choose one dominant symbolic territory that fits this specific product and brand, such as confidence, refinement, expertise, status without explicit luxury excess, naturalness, vitality, belonging, individuality, celebration, taste, care, aspiration, or desired self-image.
-- Translate that symbolic territory into visual direction using composition, light, color, texture, negative space, reflection, scale, metaphor, atmosphere, or campaign-like staging.
-- The generated prompt must make the product a recognizable meaning carrier, not a functional demonstration object.
-- The prompt must explicitly transform the original white-background packshot into a new symbolic campaign composition. Do not choose a minimalist white background, plain packshot, simple centered product still life, or generic premium product render.
-- Include one clear symbolic visual device that changes the scene around the product, such as elevation, horizon, architectural framing, sculptural geometry, reflective stage, organic forms, ceremonial light, constellation-like arrangement, threshold or portal composition, or another brand-compatible metaphor.
-- Require the product to remain central and recognizable while the surrounding composition visibly communicates the chosen symbolic territory.
-- The prompt must follow a high-quality image-prompt structure: exact subject description, concrete scene description, realistic commercial photography style, camera or lens language, atmosphere, and detail refinements.
-- Include physically plausible photographic details: shot type, camera angle, focal length or lens feel, depth of field, key light direction, soft fill light, realistic contact shadows, coherent reflections, material texture, and true-to-life scale.
-- Specify that the final image should look like a real campaign photograph captured in-camera, not a CGI render, mockup, AI-looking composite, plastic-looking object, over-smoothed surface, or impossible lighting setup.
-
-Strict boundaries:
-- Preserve the source product identity, core shape, color, logo, packaging, visible design, and physical structure.
-- Do not invent unsupported functions, ingredients, certifications, awards, claims, ratings, comparisons, or brand assets.
-- Do not add readable text, slogans, price, promotion, QR codes, labels, arrows, charts, callouts, or badges.
-- Do not make concrete functional evidence, operation steps, component explanation, compatibility, storage, durability, or practical affordance the dominant visual information.
-- Do not make the image mainly about sensory pleasure, immersion, stimulation, or felt consumption experience.
-- Unless the product category and symbolic meaning clearly require it, avoid frontal human faces or overly strong identity cues.
-- The final prompt must include a failure-prevention instruction: the output should not look like the original white-background product photo with nicer lighting.
-- The final prompt must also include a realism failure-prevention instruction: avoid artificial gloss, inconsistent shadows, floating objects, distorted geometry, warped logos, fake reflections, unreadable text artifacts, and any synthetic or uncanny visual feel.
-
-Output format:
-Output only one complete English image-generation prompt. Do not include a title, explanation, bullets, numbering, or Markdown. Suggested length: 180-320 words.
+Generate a Symbolic-oriented image that communicates a symbolic brand concept. Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
 
 Product metadata:
 - Title: {ori_title}
@@ -48,4 +22,21 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
+Task:
+- Keep the same dominant construct and persuasive logic as the base definition-only prompt.
+- Use the attached white-background product image and the product metadata to make the prompt specific to the actual product.
+- Keep the source product recognizable and consistent with visible facts from the source image.
+- Do not ask the image model to show price or promotion.
+- Output one complete English image-generation prompt that can be sent directly to an image editing model with the same source product image.
+- The final prompt should make viewers infer symbolic meaning rather than practical problem solving or experiential pleasure.
+
+Output format:
+Output only one complete English image-generation prompt. Do not include a title, explanation, bullets, numbering, or Markdown. Suggested length: 120-220 words.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
 ```

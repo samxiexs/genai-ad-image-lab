@@ -1,1 +1,1 @@
-../experiential_oriented_ad_image_prompt.definition-only.txt
+../test/experiential_oriented_ad_image_prompt.definition-only.txt

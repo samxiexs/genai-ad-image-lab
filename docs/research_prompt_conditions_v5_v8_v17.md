@@ -1,155 +1,175 @@
-# 研究条件化 Prompt 方案：`definition-only`、`visual-control` 与 `genprompt-control`
+# 研究条件化 Prompt 方案：四格结构
 
-本文档把历史 `v5`、`v8`、`v17` 重构为三套可直接用于实验的研究条件。目标不是逐字复制历史版本，而是在保留各版本理论内核与控制强度的前提下，形成三套结构平行、命名稳定、便于 manipulation check 的运行 prompt。
+注：这个文件名保留了历史命名，但文档内容已经按你现在确认的四格逻辑重写。
 
-## 总体映射
+## 核心原则
 
-| 研究条件 | 历史来源 | 运行形态 | 核心作用 |
+当前研究条件不应再被理解成“三个并列理论条件”。更准确的结构是：
+
+- `definition-only` 是基础理论核。
+- `visual control` 是附加的 visual execution / manipulation-fidelity 组件。
+- `generated prompt` 是附加的 prompt decomposition / manipulation-fidelity 组件。
+
+因此，真正的四格条件是：
+
+| 条件 | canonical version name | canonical alias family | 逻辑 |
 | --- | --- | --- | --- |
-| `definition-only` | `v5` | 单阶段 | 让操纵主要来自 Park 三定义本身，尽量少加视觉和工程限制。 |
-| `visual-control` | `v8` | 单阶段 | 在保留 Park 定义优先的前提下，加入最小但明确的视觉控制与保真要求。 |
-| `genprompt-control` | `v17` | 两阶段 | 先生成 orientation-specific 商品专属 prompt，再用 final wrapper 进行第二层理论与真实感约束。 |
+| 基线 | `definition-only` | `def-*` | 直接使用确认好的理论定义 prompt |
+| `def + vc` | `definition-control` | `dc-*` | 在确认好的 `def-*` 上追加 visual-control 段 |
+| `def -> generated prompt` | `definition-genprompt` | `dg-*` | 先把 `def-*` 转成 product-specific generated prompt，再直接生图 |
+| `def -> generated prompt -> vc wrapper` | `definition-control-genprompt` | `dcg-*` | 先把 `def-*` 转成 generated prompt，再嵌入 `dc-*` wrapper |
+
+兼容版本名说明：
+
+- `visual-control` 继续保留，但现在应当等价于 `definition-control`。
+- `genprompt-control` 继续保留，但现在应当等价于 `definition-control-genprompt`。
+
+## 现在的文件组织原则
+
+- 研究条件的运行入口应当走 `prompts/aliases/*.txt`。
+- 历史旧版 prompt 应当走 `prompts/test/*.txt`。
+- 不再要求 `prompts/` 根目录保留可运行的未归档 prompt 文件。
 
 ## `definition-only`
 
-### 条件定位
+### 定位
 
-`definition-only` 是 theory-first control。它保留三类取向最核心的 Park 定义，并只加入最基本的研究语境、source image 指向、metadata 段和失败规则。它的目标不是最大化成图稳定性，而是测试：如果主要操纵只来自 functional / symbolic / experiential brand concept 的理论定义，模型是否仍会自发生成可区分的三类广告图。
-
-### 文件
-
-- `prompts/product_oriented_ad_image_prompt.definition-only.txt`
-- `prompts/symbolic_oriented_ad_image_prompt.definition-only.txt`
-- `prompts/experiential_oriented_ad_image_prompt.definition-only.txt`
-
-### 证据依据
-
-| Prompt block | 作用 | 依据 |
-| --- | --- | --- |
-| 研究语境 + source image 指向 | 保证模型知道是在处理同一个白底商品，而不是开放式纯文生图。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401) 的 concept-image consistency 逻辑。 |
-| Park brand concept 定义段 | 让 functional / symbolic / experiential 成为主操纵。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401)。 |
-| “dominant message” 段 | 把品牌概念转成图像层面的第一阅读路径。 | [academic] Park 的 brand meaning 框架；[Keller (1993)](https://journals.sagepub.com/doi/10.1177/002224299305700101) 对 functional / symbolic / experiential benefits 的整理。 |
-| failure rule | 让实验判定基于 dominant construct，而不是纯审美。 | [academic] Park 的三路区分；本项目 `v13` 以后形成的 discriminant validity 逻辑。 |
-
-### 为什么这样写
-
-- Product 版只要求观众读到 practical task / problem solving，是因为 functional concept 的核心不是“看起来专业”，而是“和外部消费问题相连”。
-- Symbolic 版把“what the product expresses”写成中心句，是因为 symbolic concept 的关键在于意义承载，而不是使用功能。
-- Experiential 版把“what it feels like”写成中心句，是因为 experiential concept 的最小转译单位是 felt experience，而不是一般场景出现。
-
-## `visual-control`
-
-### 条件定位
-
-`visual-control` 在 `definition-only` 之上加入最小但明确的控制块。它仍然坚持 Park 定义优先，但不再完全依赖模型自行补全执行细节，而是最少限度地规定：商品身份要保持、不能新增不受支持的功能或文字、画面要有真实摄影感、取向必须可区分。
+`definition-only` 是确认过的理论基线。它承载的是 Product-oriented / Symbolic-oriented / Experiential-oriented 三类操纵最核心的 Park 定义，不再在这个条件里混入额外 visual-control 或 wrapper-control 逻辑。
 
 ### 文件
 
-- `prompts/product_oriented_ad_image_prompt.visual-control.txt`
-- `prompts/symbolic_oriented_ad_image_prompt.visual-control.txt`
-- `prompts/experiential_oriented_ad_image_prompt.visual-control.txt`
+- `prompts/aliases/def-product.txt`
+- `prompts/aliases/def-symbolic.txt`
+- `prompts/aliases/def-experiential.txt`
 
-### Shared scaffold 证据图
+### 理论来源
 
-| Shared block | 为什么需要 | 依据 |
-| --- | --- | --- |
-| Preserve source product identity | 三个条件应改变 brand meaning，而不是改变商品身份。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401); [DreamBooth](https://arxiv.org/abs/2208.12242); [Textual Inversion](https://arxiv.org/abs/2208.01618)。 |
-| Do not invent unsupported claims or functions | 品牌概念可以变化，但商品事实不能被虚构。 | [academic] [GLIGEN](https://arxiv.org/abs/2301.07093), [ControlNet](https://arxiv.org/abs/2302.05543), [T2I-Adapter](https://arxiv.org/abs/2302.08453) 对 grounded control 的思路。 |
-| Do not add new readable text | 操纵应主要活在图像概念，而不是额外 ad copy。 | [academic] controllable generation 的 prompt faithfulness 传统；[Dang et al. (2026)](https://doi.org/10.1177/00222437251373042) 对图文构成与一致性的提醒。 |
-| Realistic photographic integration | 减少 cutout、CGI、synthetic composite 对操纵的污染。 | [academic] grounded / faithful generation 传统；[Li & Xie (2020)](https://doi.org/10.1177/0022243719881113) 对图像质量的营销相关性。 |
-| Failure rule | 把失败定义为 concept contamination，而不是仅仅“不好看”。 | [academic] 本项目 `v13` 形成的 discriminant validity 逻辑；[Prompt-to-Prompt](https://arxiv.org/abs/2208.01626), [Attend-and-Excite](https://arxiv.org/abs/2301.13826) 所代表的 focused semantic control 思路。 |
+这部分的直接广告理论来源仍然是：
 
-### Orientation-specific 证据图
+- Park, Jaworski, and MacInnis (1986)
+- 辅助写作可用 Keller (1993)、Holbrook & Hirschman (1982)、Aaker (1997) 等
 
-#### Product-oriented
+但这些是广告取向理论，不是下面那些 control 段的依据。
 
-| 段落 | 为什么这样写 | 依据 |
-| --- | --- | --- |
-| infer product type / practical task / reason to buy | 让功能价值成为第一阅读。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401); [Keller (1993)](https://journals.sagepub.com/doi/10.1177/002224299305700101)。 |
-| concrete functional evidence cues | 用可见证据承载功能，而不是靠假文案。 | [academic] [Miniard et al. (1991)](https://econpapers.repec.org/RePEc:oup:jconrs:v:18:y:1991:i:1:p:92-107); [Houston et al. (1987)](https://jglobal.jst.go.jp/en/public/200902029854929496)。 |
-| no lifestyle story dominance | 防止 Product 漂到 experiential 或 symbolic。 | [academic] informational vs emotional appeal 传统；Park 的 route separation。 |
+## `definition-control`
 
-#### Symbolic-oriented
+### 定位
 
-| 段落 | 为什么这样写 | 依据 |
-| --- | --- | --- |
-| infer one symbolic meaning | 让图像先回答“这个产品意味着什么”。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401); [Keller (1993)](https://journals.sagepub.com/doi/10.1177/002224299305700101)。 |
-| product as visible meaning carrier | 象征意义必须依附于商品，而不是背景独立成立。 | [academic] [Scott (1994)](https://openurl.ebsco.com/contentitem/doi%3A10.1086%2F209396); [McQuarrie & Mick (1999)](https://academic.oup.com/jcr/article/26/1/37/1916388)。 |
-| restrained metaphor / atmosphere / role cues | 象征意义通常通过视觉修辞和身份线索显化。 | [academic] Scott; McQuarrie & Mick; [Aaker (1997)](https://journals.sagepub.com/doi/10.1177/002224379703400304)。 |
-| avoid generic luxury shortcuts | 避免把 Symbolic 误写成千篇一律的 glamour 模板。 | [academic] symbolic meaning 不等于 luxury；品牌人格和身份表达要 category-compatible。 |
+`definition-control` 不是新广告理论，而是：
 
-#### Experiential-oriented
+- 保留确认过的 `def-*`
+- 只追加一小段 visual-control block
 
-| 段落 | 为什么这样写 | 依据 |
-| --- | --- | --- |
-| infer one plausible consumption experience | 让图像先回答“接触这个产品是什么感觉”。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401); [Brakus et al. (2009)](https://journals.sagepub.com/doi/abs/10.1509/jmkg.73.3.052)。 |
-| product actively participates in the experience | 防止体验图退化成“产品摆在美景前”。 | [academic] [MacInnis & Price (1987)](https://academic.oup.com/jcr/article/13/4/473/1796774); [Elder & Krishna (2012)](https://academic.oup.com/jcr/article-pdf/38/6/988/19297006/38-6-988.pdf)。 |
-| interaction over pure atmosphere | 体验必须通过行动或接触变得可读。 | [academic] MacInnis & Price; [Escalas (2007)](https://academic.oup.com/jcr/article/33/4/421/1790292); [Holbrook & Hirschman (1982)](https://colab.ws/articles/10.1086%2F208906)。 |
-
-## `genprompt-control`
-
-### 条件定位
-
-`genprompt-control` 保留 `v17` 的两阶段结构，但把逻辑明确拆成两层：
-
-1. generator 负责“先把商品事实与目标取向融合成商品专属 prompt”；
-2. wrapper 负责“再用理论定义、执行边界与真实摄影要求把最终图钉死在目标 route 上”。
-
-这套条件的核心不是多写字，而是把 grounding、route control、realism control 分成两个阶段，让每一层只做一类决定。
+也就是：在不改动基础理论定义的前提下，补上最必要的 source-product preservation、unsupported-content suppression、no-new-readable-text、realistic photographic integration、以及 orientation-specific execution cue。
 
 ### 文件
 
-- `prompts/product_oriented_ad_image_prompt_generator.genprompt-control.txt`
-- `prompts/symbolic_oriented_ad_image_prompt_generator.genprompt-control.txt`
-- `prompts/experiential_oriented_ad_image_prompt_generator.genprompt-control.txt`
-- `prompts/product_oriented_ad_image_prompt.genprompt-control.txt`
-- `prompts/symbolic_oriented_ad_image_prompt.genprompt-control.txt`
-- `prompts/experiential_oriented_ad_image_prompt.genprompt-control.txt`
+- `prompts/aliases/dc-product.txt`
+- `prompts/aliases/dc-symbolic.txt`
+- `prompts/aliases/dc-experiential.txt`
 
-### 为什么 generator 与 wrapper 要分开
+### 为什么这些新增段可以成立
 
-- generator 更适合承载“商品专属事实抽取”“类别特定 cue selection”“镜头与场景骨架选择”，因为这些内容需要先根据 source image 和 metadata 做一次定制推断。
-- wrapper 更适合承载“理论 route 的 dominance 要求”“跨类污染抑制”“不得新增文字或虚假 claim”“真实摄影失败规则”，因为这些是所有商品共享的实验控制边界。
+| 新增段 | 作用 | 理论/文献性质 | 可用 CCF 文献支持 |
+| --- | --- | --- | --- |
+| preserve source product identity | 保持操纵只改变取向，不改变商品身份 | manipulation-fidelity control | [GLIGEN, CVPR 2023](https://openaccess.thecvf.com/content/CVPR2023/html/Li_GLIGEN_Open-Set_Grounded_Text-to-Image_Generation_CVPR_2023_paper.html); [ControlNet, ICCV 2023](https://openaccess.thecvf.com/content/ICCV2023/html/Zhang_Adding_Conditional_Control_to_Text-to-Image_Diffusion_Models_ICCV_2023_paper.html) |
+| do not invent unsupported claims/functions | 防止商品事实被模型随意虚构 | manipulation-fidelity control | GLIGEN; ControlNet |
+| do not add new readable text | 避免额外 ad copy 成为操纵主体 | manipulation-fidelity / execution control | [TIFA, ICCV 2023](https://openaccess.thecvf.com/content/ICCV2023/html/Hu_TIFA_Accurate_and_Interpretable_Text-to-Image_Faithfulness_Evaluation_with_Question_Answering_ICCV_2023_paper.html) 可支持“可解释 prompt-image faithfulness”要求；[MPS, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Zhang_Learning_Multi-Dimensional_Human_Preference_for_Text-to-Image_Generation_CVPR_2024_paper.html) 可支持 semantic alignment / detail quality 维度 |
+| realistic photographic integration | 降低 cutout / synthetic composite 噪声 | execution control | MPS; [Rich Human Feedback for Text-to-Image Generation, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Liang_Rich_Human_Feedback_for_Text-to-Image_Generation_CVPR_2024_paper.html) |
+| orientation-specific execution cue | 让 Product / Symbolic / Experiential 的主阅读路径更稳定 | manipulation-fidelity control | TIFA; ControlNet |
 
-如果把两类工作写在一个 prompt 里，模型容易在“理解商品”与“执行操纵”之间相互覆盖；两阶段设计正是为了减少这个问题。
+### 这里最重要的写法提醒
 
-### Generator evidence map
+这些段落最多只能被写成：
 
-| Generator block | 为什么放在 generator | 依据 |
-| --- | --- | --- |
-| inspect source image first | 商品专属事实应先从白底图中提取。 | [academic] grounded generation 传统；[GLIGEN](https://arxiv.org/abs/2301.07093), [ControlNet](https://arxiv.org/abs/2302.05543), [T2I-Adapter](https://arxiv.org/abs/2302.08453)。 |
-| use metadata as supporting context | metadata 帮助判断品类、价格带和购买语境，但不应覆盖 visible facts。 | [academic] 本项目 `v11` 以后形成的 source-image-first 逻辑。 |
-| choose orientation-specific display route | 每个商品需要一个具体的 functional / symbolic / experiential 执行骨架。 | [academic] Park 三定义；focused prompt control 文献如 [Prompt-to-Prompt](https://arxiv.org/abs/2208.01626), [Attend-and-Excite](https://arxiv.org/abs/2301.13826)。 |
-| require high-quality prompt structure | 把 prompt 写成“主体 + 场景 + 风格 + 镜头 + 光线 + 细节”，提升后续图像一致性。 | [engineering] [Alibaba Cloud text-to-image prompt guide](https://www.alibabacloud.com/help/doc-detail/2865312.html)。 |
-| realism failure-prevention terms | 在进入 image model 前先消除 cutout、plastic、uncanny 等常见失败模式。 | [engineering] Alibaba Cloud guide; [academic] faithful / grounded generation 传统。 |
+- visual execution control
+- manipulation fidelity control
+- prompt-to-image alignment control
 
-### Wrapper evidence map
+不要把它们包装成新的广告理论。
 
-| Wrapper block | 为什么放在 wrapper | 依据 |
-| --- | --- | --- |
-| Part 1 generated prompt injection | 把商品专属 plan 作为最终图的 grounding。 | [academic] grounded composition 逻辑。 |
-| Part 2 Park definition block | 第二次强调 dominant construct，避免 generator 只生成“好看 prompt”。 | [academic] [Park et al. (1986)](https://journals.sagepub.com/doi/10.1177/002224298605000401)。 |
-| route-specific reasoning requirements | 明确功能证据、象征意义或 felt experience 的主导性。 | [academic] Park; [Keller (1993)](https://journals.sagepub.com/doi/10.1177/002224299305700101); 各 orientation 对应消费者研究。 |
-| photographic quality requirements | 统一真实摄影标准，减少“生成器写得好但图像看起来像 AI mockup”的问题。 | [engineering] Alibaba Cloud guide；[academic] [Li & Xie (2020)](https://doi.org/10.1177/0022243719881113)。 |
-| strict requirements and contamination suppression | 明确什么不能成为 dominant message。 | [academic] discriminant validity 逻辑；[Dang et al. (2026)](https://doi.org/10.1177/00222437251373042) 对图文构成和一致性的提醒。 |
+## `definition-genprompt`
 
-### Orientation-specific 说明
+### 定位
 
-- Product generator 强调多维 functional evidence，是为了避免只生成“高级静物 + 一句功能暗示”。
-- Symbolic generator 强调 symbolic territory + symbolic visual device，是为了让 meaning 先被选定，再被视觉化。
-- Experiential generator 强调 felt route + experiential device，是为了让体验不退化成 generic lifestyle scene。
-- 三个 wrapper 都重复“不要只是把原白底图换个光”，因为两阶段流程最常见的失败就是 generator 给了新场景，但 final image 仍停留在轻微重拍。
+`definition-genprompt` 的目标是单独隔离“先把理论定义改写成 product-specific generated prompt”这个组件，而不额外再套 visual-control wrapper。
 
-## 使用建议
+也就是说它做的是：
 
-| 研究目的 | 推荐条件 |
-| --- | --- |
-| 想测试理论定义本身是否足以形成三类差异 | `definition-only` |
-| 想保持 definition-first，同时加入最少执行控制 | `visual-control` |
-| 想最大化商品 grounding、取向专属性和真实感控制 | `genprompt-control` |
+1. 读取确认好的 `def-*`
+2. 结合 source image 和 metadata，生成一个更具体的 image-generation prompt
+3. 直接把这个生成结果送去生图
 
-## 引用口径提醒
+### 文件
 
-- 本文档中的 `academic` 标签用于说明理论依据、消费者机制依据或 controllable generation 论文依据。
-- 本文档中的 `engineering` 标签用于说明 prompt engineering 指南、镜头词表、negative prompt 经验和真实摄影质感约束。
-- `genprompt-control` 中出现的 Alibaba Cloud 指南是工程参考，不应在论文里误写为广告理论文献。
+- `prompts/aliases/dg-product-gen.txt`
+- `prompts/aliases/dg-product.txt`
+- `prompts/aliases/dg-symbolic-gen.txt`
+- `prompts/aliases/dg-symbolic.txt`
+- `prompts/aliases/dg-experiential-gen.txt`
+- `prompts/aliases/dg-experiential.txt`
+
+### 为什么 generator 段可以成立
+
+| 新增段 | 作用 | 理论/文献性质 | 可用 CCF 文献支持 |
+| --- | --- | --- | --- |
+| “convert the confirmed def prompt into a final image-generation prompt” | 把理论定义转成 product-specific prompt | prompt rewriting / prompt optimization | [Tailored Visions, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/papers/Chen_Tailored_Visions_Enhancing_Text-to-Image_Generation_with_Personalized_Prompt_Rewriting_CVPR_2024_paper.pdf); [Dynamic Prompt Optimizing, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Mo_Dynamic_Prompt_Optimizing_for_Text-to-Image_Generation_CVPR_2024_paper.html) |
+| use source image + metadata to specialize the prompt | 让生成出的 prompt grounded 在具体商品上 | manipulation-fidelity control | GLIGEN; ControlNet; [Prompt Augmentation for Self-supervised Text-guided Image Manipulation, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Bodur_Prompt_Augmentation_for_Self-supervised_Text-guided_Image_Manipulation_CVPR_2024_paper.html) |
+| keep same dominant construct as base definition-only prompt | 确保生成步骤没有偷换理论操纵 | manipulation-fidelity control | TIFA |
+| pass-through final prompt | 故意隔离 generated-prompt 组件本身 | engineering isolation | 这是方法设计，不是广告理论 |
+
+### 如何在论文里写
+
+这一格最稳的写法是：
+
+- it isolates the prompt-generation component
+- it does not introduce the additional visual-control wrapper
+- it tests whether rewriting a confirmed definition-only prompt into a product-specific prompt already improves manipulability / specificity
+
+## `definition-control-genprompt`
+
+### 定位
+
+`definition-control-genprompt` 是最终完整版：
+
+1. 先从确认过的 `def-*` 生成 product-specific prompt
+2. 再把这个生成结果嵌入 `dc-*` wrapper
+3. 最终由 `dc-*` 里的 visual-control block 兜住 fidelity 和 contamination control
+
+### 文件
+
+- `prompts/aliases/dcg-product-gen.txt`
+- `prompts/aliases/dcg-product.txt`
+- `prompts/aliases/dcg-symbolic-gen.txt`
+- `prompts/aliases/dcg-symbolic.txt`
+- `prompts/aliases/dcg-experiential-gen.txt`
+- `prompts/aliases/dcg-experiential.txt`
+
+### 为什么 wrapper 段可以成立
+
+| 新增段 | 作用 | 理论/文献性质 | 可用 CCF 文献支持 |
+| --- | --- | --- | --- |
+| Part 1 generated prompt injection | 把 def-based generated prompt 作为 product-specific plan | prompt decomposition | Tailored Visions; Dynamic Prompt Optimizing |
+| Part 2 dc wrapper restatement | 再次强调理论定义 + visual-control constraints | manipulation-fidelity control | TIFA; MPS |
+| “If Part 1 and Part 2 conflict, follow Part 2” | 显式让 fidelity control 覆盖生成漂移 | self-correction / correction layer | [Self-correcting LLM-controlled Diffusion Models, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Wu_Self-correcting_LLM-controlled_Diffusion_Models_CVPR_2024_paper.html) |
+
+### 这里最需要区分的口径
+
+- 这一格不是“第三种广告理论条件”。
+- 它是完整的 def-based prompt decomposition + visual-control 条件。
+- 它的新增依据来自 CCF 视觉生成 / controllable generation 文献，而不是来自 Park 的广告理论本体。
+
+## 最后一句话怎么概括
+
+最清楚的论文方法写法应当是：
+
+- `definition-only` = theoretical baseline
+- `definition-control` = theoretical baseline + visual execution control
+- `definition-genprompt` = theoretical baseline + generated prompt component
+- `definition-control-genprompt` = theoretical baseline + both components
+
+也就是：
+
+- 三类广告取向仍然只有一套理论来源
+- 你后来加的 control 段，应该老老实实写成 controllability / fidelity / execution 组件
+- 不能再把 engineering control 包装成新的广告理论

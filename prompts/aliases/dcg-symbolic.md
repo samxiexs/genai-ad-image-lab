@@ -1,0 +1,41 @@
+# dcg / symbolic
+
+- Condition: `definition-control-genprompt`
+- Role: `stage-2 visual-control wrapper`
+- Alias runtime file: `prompts/aliases/dcg-symbolic.txt`
+- Original file: `prompts/test/symbolic_oriented_ad_image_prompt.definition-control-genprompt.txt`
+
+## Prompt
+
+```txt
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
+
+Part 1: Product-specific prompt generated from the confirmed definition-only Symbolic-oriented condition
+The following prompt was generated from the white-background source product image, the product metadata, and the confirmed definition-only prompt. Use it as the product-specific concept plan for the final image.
+
+{generated_orientation_prompt}
+
+Part 2: The final image must still satisfy the following definition-first prompt plus the added visual-control requirements.
+If Part 1 and Part 2 conflict, follow Part 2.
+
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.
+
+Generate a Symbolic-oriented image that communicates a symbolic brand concept. Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Additional visual-control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
+- Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+- Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
+- Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+- Make the product a visible meaning carrier by integrating it into a plausible person, role, space, style, or surrounding composition that signals identity, taste, belonging, aspiration, or self-image.
+
+Failure rule:
+If the image mainly reads as a functional demonstration, a pure experiential atmosphere, a generic attractive pose with no symbolic meaning, or an unrealistic synthetic composite, generation has failed.
+```

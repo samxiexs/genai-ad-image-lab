@@ -1,0 +1,1 @@
+symbolic_oriented_ad_image_prompt.visual-control.txt

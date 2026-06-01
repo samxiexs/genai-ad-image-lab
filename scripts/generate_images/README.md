@@ -11,13 +11,13 @@ Expected workflow:
    - `Product-oriented`
    - `Context-oriented`
    - `Symbolic-oriented`
-   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `visual-control`, and `genprompt-control` use the Park-theory-grounded set:
+   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, and `genprompt-control` use the Park-theory-grounded set:
    - `Product-oriented`
    - `Symbolic-oriented`
    - `Experiential-oriented`
 5. Save generated images to `outputs/`.
 
-`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `visual-control`, or `genprompt-control`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
+`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, or `genprompt-control`, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
 
 Recommended output naming:
 
@@ -168,30 +168,39 @@ OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
   --limit 14
 ```
 
-Use the `definition-only` research alias for the theory-first condition derived from `v5`:
+Use the `definition-only` research alias for the confirmed definition-first baseline:
 
 ```bash
-python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-version definition-only \
-  --api-key "sk-xxx"
+python3 scripts/generate_images/generate_from_csv.py --prompt-version definition-only --api-key "sk-xxx"
 ```
 
-Use the `visual-control` research alias for the minimal visual-control condition derived from `v8`:
+Use `definition-control` for `def + visual control`:
 
 ```bash
-python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-version visual-control \
-  --api-key "sk-xxx"
+python3 scripts/generate_images/generate_from_csv.py --prompt-version definition-control --api-key "sk-xxx"
 ```
 
-Use the `genprompt-control` research alias for the two-stage orientation-specific control condition derived from `v17`:
+Use `definition-genprompt` for `def -> generated prompt -> image`:
 
 ```bash
-OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-version genprompt-control \
-  --selection-mode sequential \
-  --limit 14
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py --prompt-version definition-genprompt --selection-mode sequential --limit 14
 ```
+
+Use `definition-control-genprompt` for `def -> generated prompt -> dc wrapper -> image`:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py --prompt-version definition-control-genprompt --selection-mode sequential --limit 14
+```
+
+Backward-compatible version names still work:
+
+- `visual-control` = `definition-control`
+- `genprompt-control` = `definition-control-genprompt`
+
+Prompt-file routing note:
+
+- Research-condition versions load from `prompts/aliases/*.txt`.
+- Historical archived versions are resolved from `prompts/test/*.txt` when root-level prompt files are absent.
 
 Run the previous fixed sample explicitly:
 
@@ -268,14 +277,14 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 - `--csv`: input product CSV.
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
-- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3` uses a longer Park-theory-grounded prompt, `v4` uses a concise definition-first prompt with grounding/generalization discipline, `v5` keeps only the brand-concept definition, `v6` restores compact experimental and quality controls, `v7` combines Park definitions with function_v2-style image quality/fidelity controls, `v8` returns to Park's original definition plus minimal quality controls, `v9` adds selected function_v2-style detail controls to the v8 logic, `v10` integrates Park with later prompt-alignment, artifact-control, and discriminant-validity guidance, `v11` further strengthens source-image grounding by explicitly extracting visible facts from the white-background image before concept inference, `v12` uses function_v2-style visual direction, reasoning steps, and verification discipline while replacing the old route meanings with Park's functional, symbolic, and experiential definitions, `v13` keeps the strong execution discipline while sharpening source-image-first grounding and three-way discriminant separation, `v14` is the Chinese version of v13, `v15` first generates a neutral product-specific prompt from metadata plus the source image before applying each orientation's style definition, `v16` is the full-English version of v15, `v17` generates an orientation-specific English image prompt before image generation, `definition-only` is the theory-first research alias derived from `v5`, `visual-control` is the minimal-control research alias derived from `v8`, and `genprompt-control` is the two-stage orientation-specific research alias derived from `v17`.
-- `--base-prompt-file`: v15/v16/v17/genprompt-control product prompt-generation template; defaults to the matching version file, and v17/genprompt-control use orientation-specific generator files.
-- `--base-prompt-model`: text/vision model used by v15/v16/v17/genprompt-control for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-4o-mini`.
-- `--base-prompt-endpoint`: chat completions endpoint used by v15/v16/v17/genprompt-control, defaults to `{api-base-url}/chat/completions`.
+- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3`-`v17` keep the historical Park-theory-grounded series, `definition-only` is the confirmed definition-first baseline, `definition-control` means `def + visual control`, `definition-genprompt` means `def -> generated prompt -> image`, `definition-control-genprompt` means `def -> generated prompt -> dc wrapper -> image`, and `visual-control` / `genprompt-control` remain backward-compatible names for `definition-control` / `definition-control-genprompt`.
+- `--base-prompt-file`: v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control prompt-generation template; defaults to the matching version file.
+- `--base-prompt-model`: text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-4o-mini`.
+- `--base-prompt-endpoint`: chat completions endpoint used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control, defaults to `{api-base-url}/chat/completions`.
 - `--base-prompt-dir`: directory for saved generated prompts, defaults to `{run-dir}/base_prompts`.
 - `--prompt`: inline prompt template; overrides `--prompt-file`.
-- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `visual-control`, or `genprompt-control`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
-- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `visual-control`, or `genprompt-control`, `context` and `usage` resolve to `Experiential-oriented`.
+- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, or `genprompt-control`, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
+- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, or `genprompt-control`, `context` and `usage` resolve to `Experiential-oriented`.
 - `--orientations`: comma-separated orientations, or `all`; defaults to all three canonical orientations for the selected prompt version.
 - `--selection-mode`: `previous-random10`, `sequential`, or `random`; defaults to `previous-random10`.
 - `--limit`: maximum rows to process. Sequential mode defaults to 1 if `--limit` is omitted.
@@ -312,10 +321,12 @@ python3 scripts/generate_images/generate_from_csv.py \
 - v16 run root: `outputs/{model}_{selection_label}_{orientation_label}_v16_{timestamp}/`
 - v17 run root: `outputs/{model}_{selection_label}_{orientation_label}_v17_{timestamp}/`
 - definition-only run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-only_{timestamp}/`
-- visual-control run root: `outputs/{model}_{selection_label}_{orientation_label}_visual-control_{timestamp}/`
-- genprompt-control run root: `outputs/{model}_{selection_label}_{orientation_label}_genprompt-control_{timestamp}/`
+- definition-control run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-control_{timestamp}/`
+- definition-genprompt run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-genprompt_{timestamp}/`
+- definition-control-genprompt run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-control-genprompt_{timestamp}/`
+- backward-compatible names still available: `visual-control`, `genprompt-control`
 - v15/v16 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
-- v17/genprompt-control orientation-specific generated prompts: `{run-dir}/base_prompts/{id}_{orientation}_prompt.txt`
+- v17/definition-genprompt/definition-control-genprompt/genprompt-control orientation-specific generated prompts: `{run-dir}/base_prompts/{id}_{orientation}_prompt.txt`
 - Generated images: `{run-dir}/generated/{orientation}/{id}_{orientation}.png`
 - Downloaded source images: `{run-dir}/source_images/{id}.{ext}`
 - Manifest JSONL: `{run-dir}/generation_manifest.jsonl`

@@ -1,8 +1,6 @@
-You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.
 
-Use the provided white-background product image as the source product identity reference. Preserve the product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product. Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
-
-Do not add new readable text. Existing logos, package text, or product markings already present on the source product may remain, but do not create new ad copy, labels, UI text, feature callouts, or rewritten package text. Leave clean negative space for later controlled text overlay.
+Generate a Symbolic-oriented image that communicates a symbolic brand concept. Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
 
 Product metadata:
 - Title: {ori_title}
@@ -11,15 +9,12 @@ Product metadata:
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
 
-Generate a Symbolic-oriented image where symbolic meaning and identity expression are the dominant message.
-
-Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, communicate a symbolic brand concept. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
-
-First infer one plausible symbolic meaning from the product image, title, category, and metadata. The image should answer: what kind of person chooses, owns, carries, wears, displays, gifts, uses, or values this product?
-
-Create one realistic editorial or campaign-style advertising photograph in which the product works as a visible meaning carrier. The product must be intentionally integrated into the person's style, role, space, routine, or surrounding symbolic composition. Use category-appropriate identity cues through composition, setting, light, scale, personal objects, restrained metaphor, or atmosphere, but do not let the product become an unrecognizable abstraction.
-
-Use believable natural light, physically consistent shadows, realistic contact, authentic material texture, true object scale, and natural color grading. Avoid generic luxury shortcuts, showroom fantasy, plastic skin, fake luxury glow, product cutout effects, or artificially cinematic polish.
+Additional visual-control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
+- Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+- Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
+- Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+- Make the product a visible meaning carrier by integrating it into a plausible person, role, space, style, or surrounding composition that signals identity, taste, belonging, aspiration, or self-image.
 
 Failure rule:
-If the image mainly reads as a functional demonstration, an experiential scene, a generic attractive model shot, or a product merely being held with no symbolic meaning, generation has failed.
+If the image mainly reads as a functional demonstration, a pure experiential atmosphere, a generic attractive pose with no symbolic meaning, or an unrealistic synthetic composite, generation has failed.

@@ -1,45 +1,41 @@
-# Genprompt-control / Symbolic-oriented / Final Wrapper
+# gpc / symbolic
 
 - Condition: `genprompt-control`
-- Role: `stage-2 final wrapper prompt`
+- Role: `legacy compatibility final wrapper alias for definition-control-genprompt`
 - Alias runtime file: `prompts/aliases/gpc-symbolic.txt`
-- Original file: `prompts/symbolic_oriented_ad_image_prompt.genprompt-control.txt`
+- Original file: `prompts/test/symbolic_oriented_ad_image_prompt.definition-control-genprompt.txt`
 
 ## Prompt
 
 ```txt
-You are generating controlled experimental stimuli for a consumer advertising study. Use the provided white-background product image as the exact source product. You may adjust the presentation style, but keep the image natural and photographic. Do not show any price-related information.
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
 
-Part 1: Product-specific Symbolic-oriented prompt
-The following content has already been generated from the product metadata, the white-background source image, and the Symbolic-oriented brand-concept orientation. It provides product facts plus an orientation-specific symbolic visual plan. Use it as product and execution grounding, but the final image must still be dominated by the symbolic definition in Part 2.
+Part 1: Product-specific prompt generated from the confirmed definition-only Symbolic-oriented condition
+The following prompt was generated from the white-background source product image, the product metadata, and the confirmed definition-only prompt. Use it as the product-specific concept plan for the final image.
 
 {generated_orientation_prompt}
 
-Part 2: Symbolic style definition and generation requirements
-The advertising image style is based on the symbolic brand concept from Park, Jaworski, and MacInnis (1986). A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+Part 2: The final image must still satisfy the following definition-first prompt plus the added visual-control requirements.
+If Part 1 and Part 2 conflict, follow Part 2.
 
-While preserving the product facts and visual plan from Part 1, transform the image into a Symbolic-oriented advertising image. The dominant message should be what the product means, what owning it expresses, and how it carries identity, self-image, taste, role, belonging, celebration, refinement, expertise, naturalness, vitality, confidence, or another symbolic meaning compatible with the brand and category.
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.
 
-Visual direction:
-- The product must remain a clear and recognizable meaning carrier, not a functional demonstration object.
-- Use composition, light, shadow, color, texture, negative space, scale, reflection, metaphor, or atmosphere to communicate symbolic meaning, but do not turn the product into an unrecognizable abstraction.
-- The image must visibly move beyond the original white-background packshot by adding a symbolic campaign composition around the product.
-- Include or preserve a clear symbolic visual device from Part 1, such as elevation, horizon, architectural framing, sculptural geometry, reflective stage, organic forms, ceremonial light, constellation-like arrangement, threshold or portal composition, or another brand-compatible metaphor.
+Generate a Symbolic-oriented image that communicates a symbolic brand concept. Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
 
-Photographic quality requirements:
-- Follow a complete high-quality image prompt structure in execution: clear subject, concrete scene, realistic commercial photography style, camera/lens language, atmosphere, and detail refinements.
-- Use realistic optical behavior: physically plausible key light and fill light, coherent cast shadows, visible contact shadows where objects touch surfaces, realistic reflections, natural material texture, accurate scale, and believable depth of field.
-- The image should look like a real campaign photograph captured in-camera with careful studio or location lighting, not a CGI render, plastic mockup, over-smoothed AI image, or synthetic composite.
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
 
-Strict requirements:
-- The product must be clearly visible and identifiable, while preserving the source image's core shape, color, logo, packaging, materials, and physical structure.
-- Do not invent functions, ingredients, certifications, awards, ratings, comparative conclusions, or brand assets that are unsupported by the source image or category.
-- Do not generate new readable text, slogans, prices, promotions, labels, arrows, charts, QR codes, callouts, or badges.
-- Do not let concrete functional evidence, operation steps, component explanation, compatibility relationships, durability, storage, or practical use affordance become the dominant visual information.
-- Do not make the image mainly about sensory pleasure, immersion, stimulation, or felt consumption experience.
-- Unless the product category and symbolic meaning clearly require it, avoid frontal human faces or overly strong identity cues.
-- Do not simply upscale, clean up, or restage the original white-background packshot. The output must visibly add the symbolic campaign composition requested above.
-- Avoid artificial gloss, inconsistent shadows, floating objects, distorted geometry, warped logos, fake reflections, unreadable text artifacts, and any synthetic or uncanny visual feel.
-- The image should look like realistic commercial photography or a credible campaign visual, not a screenshot, low-quality collage, meme, cluttered e-commerce mockup, or unnatural composite.
+Additional visual-control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
+- Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+- Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
+- Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+- Make the product a visible meaning carrier by integrating it into a plausible person, role, space, style, or surrounding composition that signals identity, taste, belonging, aspiration, or self-image.
 
+Failure rule:
+If the image mainly reads as a functional demonstration, a pure experiential atmosphere, a generic attractive pose with no symbolic meaning, or an unrealistic synthetic composite, generation has failed.
 ```
