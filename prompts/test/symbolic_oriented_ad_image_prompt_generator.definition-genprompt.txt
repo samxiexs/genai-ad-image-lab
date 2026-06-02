@@ -1,4 +1,4 @@
-You will convert the following definition-only Symbolic-oriented advertising prompt into one final image-generation prompt for the exact source product.
+You will convert the following definition-only Symbolic-oriented advertising prompt into one final image-generation prompt for the exact source product. Do not add new readable text.
 
 Base definition-only prompt:
 You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.

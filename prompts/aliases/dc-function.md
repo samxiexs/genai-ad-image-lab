@@ -1,6 +1,16 @@
-You are generating one controlled Product-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.
+# dc / function
 
-Generate a Product-oriented image that communicates a functional brand concept. Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, supporting a practical task, or making consumption more reliable. Make the product the dominant subject and show at least two concrete functional evidence cues. A secondary close-detail area is acceptable if it is integrated into one commercial product photograph and contains no labels, arrows, callouts, or text.
+- Condition: `definition-control`
+- Role: `single-stage prompt`
+- Alias runtime file: `prompts/aliases/dc-function.txt`
+- Original file: `prompts/test/function_oriented_ad_image_prompt.definition-control.txt`
+
+## Prompt
+
+```txt
+You are generating one controlled Function-oriented advertising image for a consumer advertising study. Use the provided white-background product image as the source product reference.
+
+Generate a Function-oriented image that communicates a functional brand concept. Park, Jaworski, and MacInnis (1986) define a brand concept as a selected brand meaning derived from basic consumer needs. For this prompt, the dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, such as solving a current problem, preventing a potential problem, reducing friction, supporting a practical task, or making consumption more reliable.
 
 Product metadata:
 - Title: {ori_title}
@@ -18,3 +28,4 @@ Additional visual-control requirements:
 
 Failure rule:
 If the image mainly reads as symbolic identity expression, experiential atmosphere, a plain white packshot, or an unrealistic synthetic composite, generation has failed.
+```

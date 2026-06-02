@@ -60,3 +60,8 @@ python3 scripts/generate_images/generate_from_csv.py --prompt-version definition
 - Research-condition runtime files live behind `prompts/aliases/*.txt`.
 - Historical archived prompts live in `prompts/test/*.txt`.
 - The script is now designed so research-condition versions load from `aliases`, while older historical versions can be resolved from `test` when root-level prompt files are absent.
+
+
+## Function-oriented alternative
+
+For the research-condition families, you can optionally replace the first functional dimension with `Function-oriented` while keeping the other two dimensions unchanged. Use `--functional-orientation-label Function-oriented` when you want the default three-orientation run to become `Function-oriented`, `Symbolic-oriented`, and `Experiential-oriented`.

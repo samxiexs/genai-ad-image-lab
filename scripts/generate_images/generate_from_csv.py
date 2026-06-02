@@ -43,19 +43,28 @@ REQUIRED_COLUMNS = [
 
 LEGACY_CANONICAL_ORIENTATIONS = ["Product-oriented", "Context-oriented", "Symbolic-oriented"]
 V3_CANONICAL_ORIENTATIONS = ["Product-oriented", "Symbolic-oriented", "Experiential-oriented"]
+FUNCTIONAL_LABEL_CHOICES = ["Product-oriented", "Function-oriented"]
+RESEARCH_FUNCTION_LABEL_VERSIONS = frozenset({
+    "definition-only",
+    "definition-control",
+    "visual-control",
+    "definition-genprompt",
+    "definition-control-genprompt",
+    "genprompt-control",
+})
 ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
 V3_ORIENTATION_ALIASES = {
     "Affect-oriented": "Symbolic-oriented",
     "Context-oriented": "Experiential-oriented",
 }
 ORIENTATION_CHOICES = sorted(
-    set(LEGACY_CANONICAL_ORIENTATIONS + V3_CANONICAL_ORIENTATIONS + list(ORIENTATION_ALIASES) + list(V3_ORIENTATION_ALIASES))
+    set(LEGACY_CANONICAL_ORIENTATIONS + V3_CANONICAL_ORIENTATIONS + FUNCTIONAL_LABEL_CHOICES + list(ORIENTATION_ALIASES) + list(V3_ORIENTATION_ALIASES))
 )
 IMAGE_TYPE_ALIASES = {
     "product": "Product-oriented",
     "product-oriented": "Product-oriented",
-    "function": "Product-oriented",
-    "functional": "Product-oriented",
+    "function": "Function-oriented",
+    "functional": "Function-oriented",
     "context": "Context-oriented",
     "context-oriented": "Context-oriented",
     "usage": "Context-oriented",
@@ -70,7 +79,7 @@ DEFAULT_MODEL = "gpt-image-2"
 DEFAULT_API_BASE_URL = "https://api.vectorengine.cn/v1"
 DEFAULT_IMAGES_EDIT_PATH = "/images/edits"
 DEFAULT_CHAT_COMPLETIONS_PATH = "/chat/completions"
-DEFAULT_BASE_PROMPT_MODEL = "gpt-4o-mini"
+DEFAULT_BASE_PROMPT_MODEL = "gpt-5.2"
 DEFAULT_BASE_PROMPT_FILES = {
     "v15": "prompts/neutral_product_ad_image_prompt.v15.txt",
     "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
@@ -81,16 +90,19 @@ DEFAULT_BASE_PROMPT_FILES = {
     },
     "definition-genprompt": {
         "Product-oriented": "prompts/aliases/dg-product-gen.txt",
+        "Function-oriented": "prompts/aliases/dg-function-gen.txt",
         "Symbolic-oriented": "prompts/aliases/dg-symbolic-gen.txt",
         "Experiential-oriented": "prompts/aliases/dg-experiential-gen.txt",
     },
     "definition-control-genprompt": {
         "Product-oriented": "prompts/aliases/dcg-product-gen.txt",
+        "Function-oriented": "prompts/aliases/dcg-function-gen.txt",
         "Symbolic-oriented": "prompts/aliases/dcg-symbolic-gen.txt",
         "Experiential-oriented": "prompts/aliases/dcg-experiential-gen.txt",
     },
     "genprompt-control": {
         "Product-oriented": "prompts/aliases/dcg-product-gen.txt",
+        "Function-oriented": "prompts/aliases/dcg-function-gen.txt",
         "Symbolic-oriented": "prompts/aliases/dcg-symbolic-gen.txt",
         "Experiential-oriented": "prompts/aliases/dcg-experiential-gen.txt",
     },
@@ -208,31 +220,37 @@ PROMPT_VERSION_FILES = {
     },
     "definition-only": {
         "Product-oriented": "prompts/aliases/def-product.txt",
+        "Function-oriented": "prompts/aliases/def-function.txt",
         "Symbolic-oriented": "prompts/aliases/def-symbolic.txt",
         "Experiential-oriented": "prompts/aliases/def-experiential.txt",
     },
     "definition-control": {
         "Product-oriented": "prompts/aliases/dc-product.txt",
+        "Function-oriented": "prompts/aliases/dc-function.txt",
         "Symbolic-oriented": "prompts/aliases/dc-symbolic.txt",
         "Experiential-oriented": "prompts/aliases/dc-experiential.txt",
     },
     "visual-control": {
         "Product-oriented": "prompts/aliases/dc-product.txt",
+        "Function-oriented": "prompts/aliases/dc-function.txt",
         "Symbolic-oriented": "prompts/aliases/dc-symbolic.txt",
         "Experiential-oriented": "prompts/aliases/dc-experiential.txt",
     },
     "definition-genprompt": {
         "Product-oriented": "prompts/aliases/dg-product.txt",
+        "Function-oriented": "prompts/aliases/dg-function.txt",
         "Symbolic-oriented": "prompts/aliases/dg-symbolic.txt",
         "Experiential-oriented": "prompts/aliases/dg-experiential.txt",
     },
     "definition-control-genprompt": {
         "Product-oriented": "prompts/aliases/dcg-product.txt",
+        "Function-oriented": "prompts/aliases/dcg-function.txt",
         "Symbolic-oriented": "prompts/aliases/dcg-symbolic.txt",
         "Experiential-oriented": "prompts/aliases/dcg-experiential.txt",
     },
     "genprompt-control": {
         "Product-oriented": "prompts/aliases/dcg-product.txt",
+        "Function-oriented": "prompts/aliases/dcg-function.txt",
         "Symbolic-oriented": "prompts/aliases/dcg-symbolic.txt",
         "Experiential-oriented": "prompts/aliases/dcg-experiential.txt",
     },
@@ -317,6 +335,12 @@ def parse_args() -> argparse.Namespace:
         "--orientations",
         default="all",
         help="Comma-separated orientations to generate, or 'all'. Defaults to all three canonical orientations.",
+    )
+    parser.add_argument(
+        "--functional-orientation-label",
+        default=os.environ.get("GENAI_AD_IMAGE_FUNCTIONAL_ORIENTATION_LABEL", "Product-oriented"),
+        choices=FUNCTIONAL_LABEL_CHOICES,
+        help="For research-condition runs, choose whether the first functional dimension is labeled Product-oriented or Function-oriented. Defaults to Product-oriented.",
     )
     parser.add_argument(
         "--prompt-version",
@@ -503,10 +527,21 @@ def normalize_image_type(image_type: str) -> str:
     return IMAGE_TYPE_ALIASES[normalized]
 
 
-def canonical_orientations_for_version(prompt_version: str) -> list[str]:
+def canonical_orientations_for_version(prompt_version: str, functional_orientation_label: str = "Product-oriented") -> list[str]:
+    if prompt_version in RESEARCH_FUNCTION_LABEL_VERSIONS:
+        return [functional_orientation_label, "Symbolic-oriented", "Experiential-oriented"]
     if prompt_version in PARK_PROMPT_VERSIONS:
         return V3_CANONICAL_ORIENTATIONS
     return LEGACY_CANONICAL_ORIENTATIONS
+
+
+def allowed_orientations_for_version(prompt_version: str, functional_orientation_label: str = "Product-oriented") -> list[str]:
+    allowed = list(canonical_orientations_for_version(prompt_version, functional_orientation_label))
+    if prompt_version in RESEARCH_FUNCTION_LABEL_VERSIONS:
+        for label in FUNCTIONAL_LABEL_CHOICES:
+            if label not in allowed:
+                allowed.append(label)
+    return allowed
 
 
 def orientation_aliases_for_version(prompt_version: str) -> dict[str, str]:
@@ -518,7 +553,8 @@ def orientation_aliases_for_version(prompt_version: str) -> dict[str, str]:
 def resolve_orientation_names(args: argparse.Namespace) -> list[tuple[str, str]]:
     if args.image_type and args.orientation:
         raise ValueError("Use either --image-type or --orientation, not both.")
-    canonical_orientations = canonical_orientations_for_version(args.prompt_version)
+    canonical_orientations = canonical_orientations_for_version(args.prompt_version, args.functional_orientation_label)
+    allowed_orientations = allowed_orientations_for_version(args.prompt_version, args.functional_orientation_label)
     if args.image_type:
         requested = [normalize_image_type(args.image_type)]
     elif args.orientation:
@@ -535,8 +571,8 @@ def resolve_orientation_names(args: argparse.Namespace) -> list[tuple[str, str]]
     seen: set[str] = set()
     for item in requested:
         canonical = canonical_orientation(item, args.prompt_version)
-        if canonical not in canonical_orientations:
-            allowed = ", ".join(canonical_orientations)
+        if canonical not in allowed_orientations:
+            allowed = ", ".join(allowed_orientations)
             aliases = ", ".join(sorted(orientation_aliases_for_version(args.prompt_version)))
             alias_hint = f" Deprecated aliases accepted for this version: {aliases}." if aliases else ""
             raise ValueError(f"Unsupported orientation {item!r} for prompt version {args.prompt_version!r}. Use one of: {allowed}.{alias_hint}")
