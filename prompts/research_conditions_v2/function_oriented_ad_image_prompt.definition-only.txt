@@ -1,0 +1,23 @@
+You are generating one controlled Function-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the source product reference.
+Do not add new readable text beyond product markings already present on the source product itself.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate a Function-oriented image that communicates a functional brand concept.
+
+The dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, especially solving a consumption-related problem, preventing a potential problem, reducing friction, or supporting a practical task.
+
+The image should make viewers primarily infer what concrete external problem the product solves, what practical task it supports, or why it is useful. The dominant reading must be utility, not identity meaning and not felt experience.
+
+Function reading test:
+A viewer's first response should be: "I understand what this product helps me do and why it is useful."
+
+Failure rule:
+If the image mainly communicates self-image, taste, role, belonging, mood, pleasure, immersion, or atmosphere rather than practical utility, generation has failed.

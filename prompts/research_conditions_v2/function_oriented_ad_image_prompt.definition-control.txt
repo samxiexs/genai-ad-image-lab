@@ -1,0 +1,36 @@
+You are generating one controlled Function-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product reference.
+
+Visual control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure.
+- Do not redesign the product.
+- Do not invent unsupported functions, ingredients, certifications, awards, claims, ratings, comparisons, slogans, labels, prices, promotions, QR codes, arrows, charts, badges, or brand assets.
+- Do not add new readable text inside the image.
+- Existing product markings already present on the source image may remain, but do not rewrite them.
+- Keep the product visually coherent with the new scene through realistic lighting, shadows, reflections, perspective, scale, and material behavior.
+- The final image must look photographic and physically plausible, not like a pasted cutout, CGI render, synthetic collage, screenshot, or template mockup.
+- Leave clean negative space if later text overlay is needed.
+- The manipulation must change the dominant concept route, not the product identity.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate a Function-oriented image that communicates a functional brand concept.
+
+The dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, especially solving a consumption-related problem, preventing a potential problem, reducing friction, or supporting a practical task.
+
+The dominant reading must be practical utility. The image should make viewers first infer what the product does, what problem it solves, or what task it supports.
+
+Execution guidance for this Function-oriented condition:
+Use visible product-function evidence rather than symbolic identity cues or experiential atmosphere. The scene may include product-relevant setup, handling, scale, open or closed state, accessory relation, material detail, storage, protection, or use evidence, but only when these cues clarify utility.
+
+Function reading test:
+A viewer's first response should be: "I understand what this product helps me do and why it is useful."
+
+Failure rule:
+If the image mainly communicates identity, taste, belonging, pleasure, immersion, or general lifestyle mood rather than practical utility, generation has failed.

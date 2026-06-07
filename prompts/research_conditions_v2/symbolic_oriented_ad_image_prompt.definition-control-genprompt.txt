@@ -1,0 +1,33 @@
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product reference.
+
+Part 1: Product-specific prompt generated from the confirmed Symbolic-oriented definition
+The following content has already been generated from the confirmed Symbolic-oriented definition, the source product image, and the product metadata. It provides a product-specific symbolic execution plan.
+
+{generated_orientation_prompt}
+
+Part 2: Visual control requirements
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure.
+- Do not redesign the product.
+- Do not invent unsupported functions, ingredients, certifications, awards, claims, ratings, comparisons, slogans, labels, prices, promotions, QR codes, arrows, charts, badges, or brand assets.
+- Do not add new readable text inside the image.
+- Existing product markings already present on the source image may remain, but do not rewrite them.
+- Keep the product visually coherent with the new scene through realistic lighting, shadows, reflections, perspective, scale, and material behavior.
+- The final image must look photographic and physically plausible, not like a pasted cutout, CGI render, synthetic collage, screenshot, or template mockup.
+- Leave clean negative space if later text overlay is needed.
+- The manipulation must change the dominant concept route, not the product identity.
+
+Part 3: Confirmed Symbolic-oriented definition
+The dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+The final image must primarily communicate what owning, choosing, or displaying the product says about the person, role, taste, belonging, aspiration, or desired self-image. The dominant reading must be identity meaning, not practical utility and not felt experience.
+
+Priority rule:
+If Part 1 and Part 3 suggest different dominant readings, follow Part 3.
+
+Symbolic reading test:
+A viewer's first response should be: "I understand what this product says about the person or identity."
+
+Failure rule:
+If the image mainly communicates functional utility, problem solving, pleasure, immersion, or general lifestyle atmosphere rather than identity meaning, generation has failed.

@@ -1,0 +1,36 @@
+You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product reference.
+
+Visual control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure.
+- Do not redesign the product.
+- Do not invent unsupported functions, ingredients, certifications, awards, claims, ratings, comparisons, slogans, labels, prices, promotions, QR codes, arrows, charts, badges, or brand assets.
+- Do not add new readable text inside the image.
+- Existing product markings already present on the source image may remain, but do not rewrite them.
+- Keep the product visually coherent with the new scene through realistic lighting, shadows, reflections, perspective, scale, and material behavior.
+- The final image must look photographic and physically plausible, not like a pasted cutout, CGI render, synthetic collage, screenshot, or template mockup.
+- Leave clean negative space if later text overlay is needed.
+- The manipulation must change the dominant concept route, not the product identity.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate an Experiential-oriented image that communicates an experiential brand concept.
+
+The dominant construct is experiential brand meaning. An experiential concept links the product to internally generated needs for sensory pleasure, variety, cognitive stimulation, novelty, or immediate felt experience.
+
+The dominant reading must be felt experience. The image should make viewers first infer what it feels like to encounter, use, or consume the product.
+
+Execution guidance for this Experiential-oriented condition:
+Use sensory and encounter cues rather than explicit function demonstration or identity signaling. The scene may include touch, motion, atmosphere, light, texture, temperature, freshness, immersion, anticipation, or a consumption moment, but only when these cues clarify what the product feels like.
+
+Experiential reading test:
+A viewer's first response should be: "I understand what it feels like to encounter or use this product."
+
+Failure rule:
+If the image mainly communicates practical utility, status, role, belonging, or self-image rather than felt experience, generation has failed.

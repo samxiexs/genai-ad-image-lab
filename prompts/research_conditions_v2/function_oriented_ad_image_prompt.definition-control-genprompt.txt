@@ -1,0 +1,33 @@
+You are generating one controlled Function-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product reference.
+
+Part 1: Product-specific prompt generated from the confirmed Function-oriented definition
+The following content has already been generated from the confirmed Function-oriented definition, the source product image, and the product metadata. It provides a product-specific functional execution plan.
+
+{generated_orientation_prompt}
+
+Part 2: Visual control requirements
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure.
+- Do not redesign the product.
+- Do not invent unsupported functions, ingredients, certifications, awards, claims, ratings, comparisons, slogans, labels, prices, promotions, QR codes, arrows, charts, badges, or brand assets.
+- Do not add new readable text inside the image.
+- Existing product markings already present on the source image may remain, but do not rewrite them.
+- Keep the product visually coherent with the new scene through realistic lighting, shadows, reflections, perspective, scale, and material behavior.
+- The final image must look photographic and physically plausible, not like a pasted cutout, CGI render, synthetic collage, screenshot, or template mockup.
+- Leave clean negative space if later text overlay is needed.
+- The manipulation must change the dominant concept route, not the product identity.
+
+Part 3: Confirmed Function-oriented definition
+The dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, especially solving a consumption-related problem, preventing a potential problem, reducing friction, or supporting a practical task.
+
+The final image must primarily communicate what concrete external problem the product solves, what practical task it supports, or why it is useful. The dominant reading must be utility, not identity meaning and not felt experience.
+
+Priority rule:
+If Part 1 and Part 3 suggest different dominant readings, follow Part 3.
+
+Function reading test:
+A viewer's first response should be: "I understand what this product helps me do and why it is useful."
+
+Failure rule:
+If the image mainly communicates identity, taste, belonging, pleasure, immersion, or general lifestyle mood rather than practical utility, generation has failed.
