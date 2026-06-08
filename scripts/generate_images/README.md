@@ -225,6 +225,72 @@ python3 scripts/generate_images/generate_from_csv.py --prompt-version definition
 OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py --prompt-version definition-control-genprompt-v3 --selection-mode sequential --limit 14
 ```
 
+HeyRoute final image-generation example:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version definition-control-v3 \
+  --image-type function \
+  --selection-mode sequential \
+  --limit 10 \
+  --model-provider heyroute \
+  --run-dir outputs/heyroute_definition-control-function-v3
+```
+
+API111 final image-generation example:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version definition-control-v3 \
+  --image-type function \
+  --selection-mode sequential \
+  --limit 10 \
+  --model-provider api111 \
+  --run-dir outputs/api111_definition-control-function-v3 \
+  --api-key "sk-xxx"
+```
+
+API111 raw image-generation endpoint example:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version definition-control-v3 \
+  --image-type function \
+  --selection-mode sequential \
+  --limit 10 \
+  --model-provider api111 \
+  --image-wire-api images_generations \
+  --endpoint https://api.vectorengine.cn/v1/images/generations \
+  --run-dir outputs/api111_definition-control-function-v3_generations \
+  --api-key "sk-xxx"
+```
+
+HeyRoute base-prompt provider example:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version definition-control-genprompt-v3 \
+  --selection-mode sequential \
+  --limit 10 \
+  --base-prompt-provider heyroute \
+  --run-dir outputs/heyroute_definition-control-genprompt-v3
+```
+
+Equivalent explicit flags for the provider config:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version definition-control-genprompt-v3 \
+  --selection-mode sequential \
+  --limit 10 \
+  --base-prompt-model gpt-5.5 \
+  --base-prompt-wire-api responses \
+  --base-prompt-endpoint https://heyroute.ai/v1/responses \
+  --base-prompt-reasoning-effort high \
+  --disable-base-prompt-response-storage \
+  --run-dir outputs/heyroute_definition-control-genprompt-v3_explicit
+```
+
 Prompt-file routing note:
 
 - Research-condition versions load from `prompts/aliases/*.txt`.
@@ -309,9 +375,17 @@ python3 scripts/generate_images/generate_from_csv.py \
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
 - `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3`-`v17` keep the historical Park-theory-grounded series, `definition-only` / `definition-control` / `definition-genprompt` / `definition-control-genprompt` keep the original four research-condition files, `visual-control` / `genprompt-control` remain backward-compatible names for those originals, the `-v2` family runs the independent refactor in `prompts/research_conditions_v2/`, and the `-v3` family runs the boundary-hardened refactor in `prompts/research_conditions_v3/`.
 - `--base-prompt-file`: v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` prompt-generation template; defaults to the matching version file.
-- `--base-prompt-model`: text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-4o-mini`.
-- `--base-prompt-endpoint`: chat completions endpoint used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family, defaults to `{api-base-url}/chat/completions`.
+- `--model-provider`: optional provider preset for the final image-generation stage; `heyroute` uses `https://heyroute.ai/v1/responses` with `gpt-5.5`, and `api111` defaults to `gpt-image-2` on the source-image-preserving image endpoint.
+- `--image-wire-api`: final image-generation wire API, one of `images_edits`, `images_generations`, or `responses`; defaults to `images_edits` unless a provider preset overrides it.
+- `--image-reasoning-effort`: Responses API reasoning effort for final image generation, one of `low`, `medium`, or `high`.
+- `--disable-image-response-storage`: sends `store=false` for Responses API final image generation.
+- `--base-prompt-provider`: optional provider preset for prompt generation; `heyroute` uses `https://heyroute.ai/v1/responses` with `gpt-5.5`, and `api111` uses `https://api.vectorengine.cn/v1/responses` with `gpt-5.5`.
+- `--base-prompt-model`: text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-5.5`.
+- `--base-prompt-wire-api`: prompt-generation wire API, either `chat_completions` or `responses`; defaults to `chat_completions` unless a provider preset overrides it.
+- `--base-prompt-endpoint`: prompt-generation endpoint used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family; defaults to the provider preset endpoint or `{api-base-url}/chat/completions` / `{api-base-url}/responses`.
 - `--base-prompt-dir`: directory for saved generated prompts, defaults to `{run-dir}/base_prompts`.
+- `--base-prompt-reasoning-effort`: Responses API reasoning effort for prompt generation, one of `low`, `medium`, or `high`.
+- `--disable-base-prompt-response-storage`: sends `store=false` for Responses API prompt generation.
 - `--prompt`: inline prompt template; overrides `--prompt-file`.
 - `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, or the matching `-v2` / `-v3` family, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
 - `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, or the matching `-v2` / `-v3` family, `context` and `usage` resolve to `Experiential-oriented`.
@@ -323,7 +397,7 @@ python3 scripts/generate_images/generate_from_csv.py \
 - `--ids`: comma-separated product ids to process.
 - `--api-key`: runtime API key. Prefer `OPENAI_API_KEY` if you do not want the key in shell history.
 - `--api-base-url`: defaults to `https://api.vectorengine.cn/v1`.
-- `--endpoint`: defaults to `{api-base-url}/images/edits`.
+- `--endpoint`: final image-generation endpoint; defaults to the provider preset endpoint or `{api-base-url}/images/edits` / `{api-base-url}/responses`.
 - `--run-dir`: run root directory. Supports `{model}`, `{selection_label}`, `{orientation_label}`, `{prompt_version}`, and `{timestamp}` placeholders.
 - `--dry-run`: render prompts only.
 - `--download-only`: download source images only.

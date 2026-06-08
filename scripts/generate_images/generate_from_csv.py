@@ -90,8 +90,46 @@ IMAGE_TYPE_ALIASES = {
 DEFAULT_MODEL = "gpt-image-2"
 DEFAULT_API_BASE_URL = "https://api.vectorengine.cn/v1"
 DEFAULT_IMAGES_EDIT_PATH = "/images/edits"
+DEFAULT_IMAGES_GENERATIONS_PATH = "/images/generations"
 DEFAULT_CHAT_COMPLETIONS_PATH = "/chat/completions"
-DEFAULT_BASE_PROMPT_MODEL = "gpt-5.2"
+DEFAULT_RESPONSES_PATH = "/responses"
+DEFAULT_BASE_PROMPT_MODEL = "gpt-5.5"
+DEFAULT_IMAGE_WIRE_API = "images_edits"
+IMAGE_WIRE_APIS = ("images_edits", "images_generations", "responses")
+IMAGE_PROVIDER_PRESETS = {
+    "heyroute": {
+        "base_url": "https://heyroute.ai/v1",
+        "wire_api": "responses",
+        "model": "gpt-5.5",
+        "reasoning_effort": "high",
+        "disable_response_storage": True,
+    },
+    "api111": {
+        "base_url": "https://api.vectorengine.cn/v1",
+        "wire_api": "images_edits",
+        "model": "gpt-image-2",
+        "reasoning_effort": "high",
+        "disable_response_storage": True,
+    },
+}
+DEFAULT_BASE_PROMPT_WIRE_API = "chat_completions"
+BASE_PROMPT_WIRE_APIS = ("chat_completions", "responses")
+BASE_PROMPT_PROVIDER_PRESETS = {
+    "heyroute": {
+        "base_url": "https://heyroute.ai/v1",
+        "wire_api": "responses",
+        "model": "gpt-5.5",
+        "reasoning_effort": "high",
+        "disable_response_storage": True,
+    },
+    "api111": {
+        "base_url": "https://api.vectorengine.cn/v1",
+        "wire_api": "responses",
+        "model": "gpt-5.5",
+        "reasoning_effort": "high",
+        "disable_response_storage": True,
+    },
+}
 RESEARCH_CONDITIONS_V2_DIR = "prompts/research_conditions_v2"
 RESEARCH_CONDITIONS_V3_DIR = "prompts/research_conditions_v3"
 DEFAULT_BASE_PROMPT_FILES = {
@@ -546,14 +584,38 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", default=None, help="JSONL manifest path. Defaults to {run-dir}/generation_manifest.jsonl.")
     parser.add_argument("--model", default=os.environ.get("OPENAI_IMAGE_MODEL", DEFAULT_MODEL), help="Image model.")
     parser.add_argument(
+        "--model-provider",
+        default=os.environ.get("GENAI_AD_IMAGE_MODEL_PROVIDER"),
+        choices=sorted(IMAGE_PROVIDER_PRESETS),
+        help="Optional provider preset for the final image-generation stage. `heyroute` and `api111` configure Responses API endpoints with provider-specific model defaults.",
+    )
+    parser.add_argument(
         "--api-base-url",
         default=os.environ.get("OPENAI_API_BASE") or os.environ.get("OPENAI_BASE_URL") or DEFAULT_API_BASE_URL,
         help="OpenAI-compatible API base URL. Defaults to the configured VectorEngine base URL.",
     )
     parser.add_argument(
+        "--image-wire-api",
+        default=os.environ.get("GENAI_AD_IMAGE_WIRE_API"),
+        choices=IMAGE_WIRE_APIS,
+        help="Wire API used by the final image-generation stage. Defaults to images_edits unless a provider preset overrides it.",
+    )
+    parser.add_argument(
         "--endpoint",
         default=os.environ.get("OPENAI_IMAGES_EDIT_ENDPOINT"),
-        help="Images edit endpoint. If omitted, {api-base-url}/images/edits is used.",
+        help="Final image-generation endpoint. If omitted, the script uses the provider preset endpoint or derives one from --api-base-url and --image-wire-api.",
+    )
+    parser.add_argument(
+        "--image-reasoning-effort",
+        default=os.environ.get("GENAI_AD_IMAGE_REASONING_EFFORT"),
+        choices=["low", "medium", "high"],
+        help="Reasoning effort for Responses API image generation.",
+    )
+    parser.add_argument(
+        "--disable-image-response-storage",
+        action="store_true",
+        default=env_flag("GENAI_AD_IMAGE_DISABLE_RESPONSE_STORAGE"),
+        help="Send store=false for Responses API image generation.",
     )
     parser.add_argument(
         "--base-prompt-file",
@@ -561,14 +623,26 @@ def parse_args() -> argparse.Namespace:
         help="Product prompt-generation template used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families before image generation.",
     )
     parser.add_argument(
+        "--base-prompt-provider",
+        default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_PROVIDER"),
+        choices=sorted(BASE_PROMPT_PROVIDER_PRESETS),
+        help="Optional provider preset for prompt generation. `heyroute` and `api111` configure Responses API endpoints with provider-specific model defaults.",
+    )
+    parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
         help="Text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families to generate the product prompt.",
     )
     parser.add_argument(
+        "--base-prompt-wire-api",
+        default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_WIRE_API"),
+        choices=BASE_PROMPT_WIRE_APIS,
+        help="Wire API used by the prompt-generation stage. Defaults to chat_completions unless a provider preset overrides it.",
+    )
+    parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Chat completions endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families. If omitted, {api-base-url}/chat/completions is used.",
+        help="Endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families. If omitted, the script uses the provider preset endpoint or derives one from --api-base-url and --base-prompt-wire-api.",
     )
     parser.add_argument(
         "--base-prompt-dir",
@@ -586,6 +660,18 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
         help="Temperature for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 prompt generation.",
+    )
+    parser.add_argument(
+        "--base-prompt-reasoning-effort",
+        default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_REASONING_EFFORT"),
+        choices=["low", "medium", "high"],
+        help="Reasoning effort for Responses API prompt generation.",
+    )
+    parser.add_argument(
+        "--disable-base-prompt-response-storage",
+        action="store_true",
+        default=env_flag("GENAI_AD_IMAGE_DISABLE_BASE_PROMPT_RESPONSE_STORAGE"),
+        help="Send store=false for Responses API prompt generation.",
     )
     parser.add_argument(
         "--api-key",
@@ -685,6 +771,24 @@ def split_csv_values(value: str | None) -> list[str]:
     if not value:
         return []
     return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def env_flag(name: str) -> bool:
+    value = os.environ.get(name)
+    if value is None:
+        return False
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def cli_arg_present(flag: str) -> bool:
+    return flag in sys.argv
+
+
+def retry_sleep_seconds(attempt: int, error_message: str = "") -> float:
+    lowered = error_message.lower()
+    if "http 429" in lowered or "saturated" in lowered or "http 502" in lowered or "http 503" in lowered or "http 504" in lowered:
+        return min((2**attempt) * 5, 60)
+    return min(2**attempt, 8)
 
 
 def normalize_image_type(image_type: str) -> str:
@@ -841,8 +945,91 @@ def endpoint_from_base_url(base_url: str) -> str:
     return f"{base_url.rstrip('/')}{DEFAULT_IMAGES_EDIT_PATH}"
 
 
+def generations_endpoint_from_base_url(base_url: str) -> str:
+    return f"{base_url.rstrip('/')}{DEFAULT_IMAGES_GENERATIONS_PATH}"
+
+
 def chat_endpoint_from_base_url(base_url: str) -> str:
     return f"{base_url.rstrip('/')}{DEFAULT_CHAT_COMPLETIONS_PATH}"
+
+
+def responses_endpoint_from_base_url(base_url: str) -> str:
+    return f"{base_url.rstrip('/')}{DEFAULT_RESPONSES_PATH}"
+
+
+def sibling_endpoint(endpoint: str, current_suffix: str, new_suffix: str) -> str | None:
+    if endpoint.endswith(current_suffix):
+        return f"{endpoint[: -len(current_suffix)]}{new_suffix}"
+    return None
+
+
+def apply_image_provider_preset(args: argparse.Namespace) -> None:
+    if not args.model_provider:
+        return
+    preset = IMAGE_PROVIDER_PRESETS.get(args.model_provider)
+    if not preset:
+        available = ", ".join(sorted(IMAGE_PROVIDER_PRESETS))
+        raise ValueError(f"Unsupported --model-provider {args.model_provider!r}. Use one of: {available}")
+
+    if args.endpoint is None:
+        base_url = str(preset["base_url"])
+        wire_api = str(args.image_wire_api or preset["wire_api"])
+        if wire_api == "responses":
+            args.endpoint = responses_endpoint_from_base_url(base_url)
+        elif wire_api == "images_generations":
+            args.endpoint = generations_endpoint_from_base_url(base_url)
+        else:
+            args.endpoint = endpoint_from_base_url(base_url)
+
+    if args.image_wire_api is None:
+        args.image_wire_api = str(preset["wire_api"])
+
+    if (
+        not cli_arg_present("--model")
+        and "OPENAI_IMAGE_MODEL" not in os.environ
+        and args.model == DEFAULT_MODEL
+    ):
+        args.model = str(preset["model"])
+
+    if args.image_reasoning_effort is None:
+        args.image_reasoning_effort = str(preset["reasoning_effort"])
+
+    if not args.disable_image_response_storage and bool(preset.get("disable_response_storage")):
+        args.disable_image_response_storage = True
+
+
+def apply_base_prompt_provider_preset(args: argparse.Namespace) -> None:
+    if not args.base_prompt_provider:
+        return
+    preset = BASE_PROMPT_PROVIDER_PRESETS.get(args.base_prompt_provider)
+    if not preset:
+        available = ", ".join(sorted(BASE_PROMPT_PROVIDER_PRESETS))
+        raise ValueError(f"Unsupported --base-prompt-provider {args.base_prompt_provider!r}. Use one of: {available}")
+
+    if args.base_prompt_endpoint is None:
+        base_url = str(preset["base_url"])
+        wire_api = str(args.base_prompt_wire_api or preset["wire_api"])
+        if wire_api == "responses":
+            args.base_prompt_endpoint = responses_endpoint_from_base_url(base_url)
+        else:
+            args.base_prompt_endpoint = chat_endpoint_from_base_url(base_url)
+
+    if args.base_prompt_wire_api is None:
+        args.base_prompt_wire_api = str(preset["wire_api"])
+
+    if (
+        not cli_arg_present("--base-prompt-model")
+        and "OPENAI_BASE_PROMPT_MODEL" not in os.environ
+        and "OPENAI_TEXT_MODEL" not in os.environ
+        and args.base_prompt_model == DEFAULT_BASE_PROMPT_MODEL
+    ):
+        args.base_prompt_model = str(preset["model"])
+
+    if args.base_prompt_reasoning_effort is None:
+        args.base_prompt_reasoning_effort = str(preset["reasoning_effort"])
+
+    if not args.disable_base_prompt_response_storage and bool(preset.get("disable_response_storage")):
+        args.disable_base_prompt_response_storage = True
 
 
 def uses_generated_base_prompt(prompt_version: str) -> bool:
@@ -890,6 +1077,8 @@ def resolve_output_paths(
     selected_rows: list[dict[str, str]],
     plans: list[OrientationPlan],
 ) -> None:
+    apply_image_provider_preset(args)
+    apply_base_prompt_provider_preset(args)
     timestamp = args.timestamp or time.strftime("%Y%m%d_%H%M%S")
     values = {
         "model": safe_name(args.model),
@@ -913,8 +1102,20 @@ def resolve_output_paths(
     args.output_dir = args.output_dir or str(run_dir / "generated")
     args.source_dir = args.source_dir or str(run_dir / "source_images")
     args.manifest = args.manifest or str(run_dir / "generation_manifest.jsonl")
-    args.endpoint = args.endpoint or endpoint_from_base_url(args.api_base_url)
-    args.base_prompt_endpoint = args.base_prompt_endpoint or chat_endpoint_from_base_url(args.api_base_url)
+    args.image_wire_api = args.image_wire_api or DEFAULT_IMAGE_WIRE_API
+    if args.endpoint is None:
+        if args.image_wire_api == "responses":
+            args.endpoint = responses_endpoint_from_base_url(args.api_base_url)
+        elif args.image_wire_api == "images_generations":
+            args.endpoint = generations_endpoint_from_base_url(args.api_base_url)
+        else:
+            args.endpoint = endpoint_from_base_url(args.api_base_url)
+    args.base_prompt_wire_api = args.base_prompt_wire_api or DEFAULT_BASE_PROMPT_WIRE_API
+    if args.base_prompt_endpoint is None:
+        if args.base_prompt_wire_api == "responses":
+            args.base_prompt_endpoint = responses_endpoint_from_base_url(args.api_base_url)
+        else:
+            args.base_prompt_endpoint = chat_endpoint_from_base_url(args.api_base_url)
     args.base_prompt_dir = args.base_prompt_dir or str(run_dir / "base_prompts")
 
 
@@ -1080,8 +1281,55 @@ def call_openai_image_edit(
         except Exception as exc:  # noqa: BLE001 - surface exact failure in manifest.
             last_error = exc
         if attempt < retries:
-            time.sleep(min(2**attempt, 8))
+            time.sleep(retry_sleep_seconds(attempt, str(last_error or "")))
     raise RuntimeError(f"OpenAI image edit failed after {retries + 1} attempts: {last_error}")
+
+
+def call_openai_image_generation(
+    *,
+    api_key: str,
+    endpoint: str,
+    prompt: str,
+    model: str,
+    size: str,
+    quality: str,
+    output_format: str,
+    n: int,
+    timeout: int,
+    retries: int,
+) -> dict:
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "size": size,
+        "quality": quality,
+        "output_format": output_format,
+        "n": n,
+    }
+    data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+    last_error: Exception | None = None
+    for attempt in range(retries + 1):
+        request = urllib.request.Request(
+            endpoint,
+            data=data,
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_error = RuntimeError(f"HTTP {exc.code}: {detail}")
+        except Exception as exc:  # noqa: BLE001 - surface exact failure in manifest.
+            last_error = exc
+        if attempt < retries:
+            time.sleep(retry_sleep_seconds(attempt, str(last_error or "")))
+    raise RuntimeError(f"OpenAI image generation failed after {retries + 1} attempts: {last_error}")
 
 
 def image_data_url(image_path: pathlib.Path) -> str:
@@ -1090,9 +1338,131 @@ def image_data_url(image_path: pathlib.Path) -> str:
     return f"data:{mime_type};base64,{encoded}"
 
 
-def extract_chat_completion_text(response: dict) -> str:
+def call_openai_image_responses(
+    *,
+    api_key: str,
+    endpoint: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    size: str,
+    quality: str,
+    output_format: str,
+    n: int,
+    reasoning_effort: str | None,
+    store: bool,
+    timeout: int,
+    retries: int,
+) -> dict:
+    payload: dict[str, object] = {
+        "model": model,
+        "input": [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "input_text", "text": prompt},
+                    {"type": "input_image", "image_url": image_data_url(image_path), "detail": "high"},
+                ],
+            }
+        ],
+        "store": store,
+        "tools": [
+            {
+                "type": "image_generation",
+                "size": size,
+                "quality": quality,
+                "output_format": output_format,
+                "action": "edit",
+                "input_fidelity": "high",
+            }
+        ],
+        "tool_choice": {"type": "image_generation"},
+    }
+    if n > 1:
+        payload["n"] = n
+    if reasoning_effort:
+        payload["reasoning"] = {"effort": reasoning_effort}
+    data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+    last_error: Exception | None = None
+    for attempt in range(retries + 1):
+        request = urllib.request.Request(
+            endpoint,
+            data=data,
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_error = RuntimeError(f"HTTP {exc.code}: {detail}")
+        except Exception as exc:  # noqa: BLE001 - surface exact failure in manifest.
+            last_error = exc
+        if attempt < retries:
+            time.sleep(retry_sleep_seconds(attempt, str(last_error or "")))
+    raise RuntimeError(f"OpenAI image responses call failed after {retries + 1} attempts: {last_error}")
+
+
+def collect_text_fragments(value: object, depth: int = 0) -> list[str]:
+    if depth > 6:
+        return []
+    if isinstance(value, str):
+        stripped = value.strip()
+        return [stripped] if stripped else []
+    if isinstance(value, dict):
+        parts: list[str] = []
+        preferred_keys = (
+            "output_text",
+            "text",
+            "value",
+            "content",
+            "message",
+            "output",
+            "response",
+            "data",
+        )
+        seen: set[str] = set()
+        for key in preferred_keys:
+            if key in value:
+                seen.add(key)
+                parts.extend(collect_text_fragments(value.get(key), depth + 1))
+        for key, item in value.items():
+            if key in seen or key in {"b64_json", "image_base64", "result"}:
+                continue
+            parts.extend(collect_text_fragments(item, depth + 1))
+        return parts
+    if isinstance(value, list):
+        parts: list[str] = []
+        for item in value:
+            parts.extend(collect_text_fragments(item, depth + 1))
+        return parts
+    return []
+
+
+def extract_text_response_text(response: dict) -> str:
     if isinstance(response.get("output_text"), str) and response["output_text"].strip():
         return response["output_text"].strip()
+
+    output = response.get("output")
+    if isinstance(output, list):
+        parts: list[str] = []
+        for item in output:
+            if not isinstance(item, dict) or item.get("type") != "message":
+                continue
+            for content_item in item.get("content") or []:
+                if not isinstance(content_item, dict):
+                    continue
+                text = content_item.get("text")
+                if isinstance(text, str) and text.strip():
+                    parts.append(text.strip())
+        joined = "\n".join(parts)
+        if joined:
+            return joined
 
     choices = response.get("choices") or []
     if choices:
@@ -1112,6 +1482,12 @@ def extract_chat_completion_text(response: dict) -> str:
             joined = "\n".join(part.strip() for part in parts if part.strip())
             if joined:
                 return joined
+
+    recursive_parts = collect_text_fragments(response)
+    if recursive_parts:
+        joined = "\n".join(part for part in recursive_parts if part)
+        if joined:
+            return joined
 
     raise RuntimeError("Text API response did not contain a usable prompt.")
 
@@ -1168,8 +1544,189 @@ def call_openai_chat_completion(
         except Exception as exc:  # noqa: BLE001 - surface exact failure in manifest.
             last_error = exc
         if attempt < retries:
-            time.sleep(min(2**attempt, 8))
+            time.sleep(retry_sleep_seconds(attempt, str(last_error or "")))
     raise RuntimeError(f"OpenAI chat completion failed after {retries + 1} attempts: {last_error}")
+
+
+def call_openai_responses(
+    *,
+    api_key: str,
+    endpoint: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    max_tokens: int,
+    reasoning_effort: str | None,
+    store: bool,
+    timeout: int,
+    retries: int,
+) -> dict:
+    payload: dict[str, object] = {
+        "model": model,
+        "instructions": "你是严谨的广告实验刺激材料 prompt 写作者，只输出用户要求的中性商品 prompt。",
+        "input": [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "input_text", "text": prompt},
+                    {"type": "input_image", "image_url": image_data_url(image_path), "detail": "high"},
+                ],
+            },
+        ],
+        "max_output_tokens": max_tokens,
+        "store": store,
+        "text": {"format": {"type": "text"}},
+    }
+    if reasoning_effort:
+        payload["reasoning"] = {"effort": reasoning_effort}
+    data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+    last_error: Exception | None = None
+    for attempt in range(retries + 1):
+        request = urllib.request.Request(
+            endpoint,
+            data=data,
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_error = RuntimeError(f"HTTP {exc.code}: {detail}")
+        except Exception as exc:  # noqa: BLE001 - surface exact failure in manifest.
+            last_error = exc
+        if attempt < retries:
+            time.sleep(retry_sleep_seconds(attempt, str(last_error or "")))
+    raise RuntimeError(f"OpenAI responses call failed after {retries + 1} attempts: {last_error}")
+
+
+def call_base_prompt_model(
+    *,
+    api_key: str,
+    endpoint: str,
+    wire_api: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    max_tokens: int,
+    temperature: float,
+    reasoning_effort: str | None,
+    disable_response_storage: bool,
+    timeout: int,
+    retries: int,
+) -> dict:
+    if wire_api == "responses":
+        try:
+            return call_openai_responses(
+                api_key=api_key,
+                endpoint=endpoint,
+                image_path=image_path,
+                prompt=prompt,
+                model=model,
+                max_tokens=max_tokens,
+                reasoning_effort=reasoning_effort,
+                store=not disable_response_storage,
+                timeout=timeout,
+                retries=retries,
+            )
+        except RuntimeError as exc:
+            fallback_endpoint = sibling_endpoint(endpoint, DEFAULT_RESPONSES_PATH, DEFAULT_CHAT_COMPLETIONS_PATH)
+            if fallback_endpoint is None:
+                raise
+            fallback_message = str(exc).lower()
+            if "bad_response_body" not in fallback_message and "http 500" not in fallback_message:
+                raise
+            return call_openai_chat_completion(
+                api_key=api_key,
+                endpoint=fallback_endpoint,
+                image_path=image_path,
+                prompt=prompt,
+                model=model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                timeout=timeout,
+                retries=retries,
+            )
+
+    return call_openai_chat_completion(
+        api_key=api_key,
+        endpoint=endpoint,
+        image_path=image_path,
+        prompt=prompt,
+        model=model,
+        max_tokens=max_tokens,
+        temperature=temperature,
+        timeout=timeout,
+        retries=retries,
+    )
+
+
+def call_image_model(
+    *,
+    api_key: str,
+    endpoint: str,
+    wire_api: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    size: str,
+    quality: str,
+    output_format: str,
+    n: int,
+    reasoning_effort: str | None,
+    disable_response_storage: bool,
+    timeout: int,
+    retries: int,
+) -> dict:
+    if wire_api == "responses":
+        return call_openai_image_responses(
+            api_key=api_key,
+            endpoint=endpoint,
+            image_path=image_path,
+            prompt=prompt,
+            model=model,
+            size=size,
+            quality=quality,
+            output_format=output_format,
+            n=n,
+            reasoning_effort=reasoning_effort,
+            store=not disable_response_storage,
+            timeout=timeout,
+            retries=retries,
+        )
+
+    if wire_api == "images_generations":
+        return call_openai_image_generation(
+            api_key=api_key,
+            endpoint=endpoint,
+            prompt=prompt,
+            model=model,
+            size=size,
+            quality=quality,
+            output_format=output_format,
+            n=n,
+            timeout=timeout,
+            retries=retries,
+        )
+
+    return call_openai_image_edit(
+        api_key=api_key,
+        endpoint=endpoint,
+        image_path=image_path,
+        prompt=prompt,
+        model=model,
+        size=size,
+        quality=quality,
+        output_format=output_format,
+        n=n,
+        timeout=timeout,
+        retries=retries,
+    )
 
 
 def base_prompt_output_path(args: argparse.Namespace, product_id: str, orientation: str | None = None) -> pathlib.Path:
@@ -1230,18 +1787,46 @@ def get_generated_product_prompt(
         cache[cache_key] = result
         return result
 
-    response = call_openai_chat_completion(
+    response = call_base_prompt_model(
         api_key=api_key,
         endpoint=args.base_prompt_endpoint,
+        wire_api=args.base_prompt_wire_api,
         image_path=source_path,
         prompt=request_prompt,
         model=args.base_prompt_model,
         max_tokens=args.base_prompt_max_tokens,
         temperature=args.base_prompt_temperature,
+        reasoning_effort=args.base_prompt_reasoning_effort,
+        disable_response_storage=args.disable_base_prompt_response_storage,
         timeout=args.timeout,
         retries=args.retries,
     )
-    prompt_text = extract_chat_completion_text(response)
+    response_mode = "primary"
+    try:
+        prompt_text = extract_text_response_text(response)
+    except RuntimeError:
+        fallback_endpoint = None
+        if args.base_prompt_wire_api == "responses":
+            fallback_endpoint = sibling_endpoint(
+                args.base_prompt_endpoint,
+                DEFAULT_RESPONSES_PATH,
+                DEFAULT_CHAT_COMPLETIONS_PATH,
+            )
+        if not fallback_endpoint:
+            raise
+        response = call_openai_chat_completion(
+            api_key=api_key,
+            endpoint=fallback_endpoint,
+            image_path=source_path,
+            prompt=request_prompt,
+            model=args.base_prompt_model,
+            max_tokens=args.base_prompt_max_tokens,
+            temperature=args.base_prompt_temperature,
+            timeout=args.timeout,
+            retries=args.retries,
+        )
+        prompt_text = extract_text_response_text(response)
+        response_mode = "fallback_chat_completions"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(prompt_text.strip() + "\n", encoding="utf-8")
     request_path.write_text(request_prompt.strip() + "\n", encoding="utf-8")
@@ -1253,24 +1838,55 @@ def get_generated_product_prompt(
         "source": "api",
         "request_prompt": request_prompt,
         "api_usage": response.get("usage") or {},
+        "response_mode": response_mode,
     }
     cache[cache_key] = result
     return result
 
 
+def extract_response_images(response: dict) -> list[str]:
+    images: list[str] = []
+
+    for image_obj in response.get("data", []):
+        if not isinstance(image_obj, dict):
+            continue
+        b64_json = image_obj.get("b64_json")
+        if isinstance(b64_json, str) and b64_json:
+            images.append(b64_json)
+
+    output = response.get("output")
+    if isinstance(output, list):
+        for item in output:
+            if not isinstance(item, dict):
+                continue
+            for key in ("result", "b64_json", "image_base64"):
+                value = item.get(key)
+                if isinstance(value, str) and value:
+                    images.append(value)
+            content = item.get("content")
+            if isinstance(content, list):
+                for content_item in content:
+                    if not isinstance(content_item, dict):
+                        continue
+                    for key in ("result", "b64_json", "image_base64"):
+                        value = content_item.get(key)
+                        if isinstance(value, str) and value:
+                            images.append(value)
+
+    return images
+
+
 def save_images(response: dict, output_prefix: pathlib.Path, output_format: str) -> list[pathlib.Path]:
     saved_paths: list[pathlib.Path] = []
     output_prefix.parent.mkdir(parents=True, exist_ok=True)
-    for index, image_obj in enumerate(response.get("data", [])):
-        b64_json = image_obj.get("b64_json")
-        if not b64_json:
-            continue
-        suffix = f"_{index + 1}" if len(response.get("data", [])) > 1 else ""
+    image_payloads = extract_response_images(response)
+    for index, b64_json in enumerate(image_payloads):
+        suffix = f"_{index + 1}" if len(image_payloads) > 1 else ""
         output_path = output_prefix.with_name(f"{output_prefix.name}{suffix}.{output_format}")
         output_path.write_bytes(base64.b64decode(b64_json))
         saved_paths.append(output_path)
     if not saved_paths:
-        raise RuntimeError("API response did not contain data[].b64_json images.")
+        raise RuntimeError("API response did not contain usable image payloads.")
     return saved_paths
 
 
@@ -1332,12 +1948,30 @@ def main() -> int:
 
     selected_ids = ", ".join(row.get("id", "") for row in rows)
     print(f"RUN dir={args.run_dir}", flush=True)
+    if args.model_provider:
+        print(f"MODEL_PROVIDER {args.model_provider}", flush=True)
     print(f"MODEL {args.model}", flush=True)
+    print(f"IMAGE_WIRE_API {args.image_wire_api}", flush=True)
     print(f"ENDPOINT {args.endpoint}", flush=True)
+    if args.image_reasoning_effort:
+        print(f"IMAGE_REASONING_EFFORT {args.image_reasoning_effort}", flush=True)
+    print(
+        f"IMAGE_RESPONSE_STORAGE {'disabled' if args.disable_image_response_storage else 'enabled'}",
+        flush=True,
+    )
     print(f"PROMPT_VERSION {args.prompt_version}", flush=True)
     if uses_generated_base_prompt(args.prompt_version):
+        if args.base_prompt_provider:
+            print(f"BASE_PROMPT_PROVIDER {args.base_prompt_provider}", flush=True)
         print(f"BASE_PROMPT_MODEL {args.base_prompt_model}", flush=True)
+        print(f"BASE_PROMPT_WIRE_API {args.base_prompt_wire_api}", flush=True)
         print(f"BASE_PROMPT_ENDPOINT {args.base_prompt_endpoint}", flush=True)
+        if args.base_prompt_reasoning_effort:
+            print(f"BASE_PROMPT_REASONING_EFFORT {args.base_prompt_reasoning_effort}", flush=True)
+        print(
+            f"BASE_PROMPT_RESPONSE_STORAGE {'disabled' if args.disable_base_prompt_response_storage else 'enabled'}",
+            flush=True,
+        )
     print(f"ROWS {len(rows)} ids={selected_ids}", flush=True)
     print(f"ORIENTATIONS {', '.join(plan.orientation for plan in plans)}", flush=True)
 
@@ -1364,8 +1998,12 @@ def main() -> int:
             "timestamp": args.timestamp,
             "selection_mode": effective_selection_mode(args),
             "prompt_version": args.prompt_version,
+            "model_provider": args.model_provider,
             "model": args.model,
+            "image_wire_api": args.image_wire_api,
             "endpoint": args.endpoint,
+            "image_reasoning_effort": args.image_reasoning_effort,
+            "image_response_storage_disabled": args.disable_image_response_storage,
             "size": args.size,
             "quality": args.quality,
             "output_format": args.output_format,
@@ -1380,8 +2018,12 @@ def main() -> int:
             generated_prompt_field = generated_prompt_template_field(args.prompt_version)
             base_request_prompt = render_prompt(base_prompt_template, row, record["orientation"])
             manifest_record["base_prompt_source"] = base_prompt_source
+            manifest_record["base_prompt_provider"] = args.base_prompt_provider
             manifest_record["base_prompt_model"] = args.base_prompt_model
+            manifest_record["base_prompt_wire_api"] = args.base_prompt_wire_api
             manifest_record["base_prompt_endpoint"] = args.base_prompt_endpoint
+            manifest_record["base_prompt_reasoning_effort"] = args.base_prompt_reasoning_effort
+            manifest_record["base_prompt_response_storage_disabled"] = args.disable_base_prompt_response_storage
             manifest_record["base_prompt_generation_prompt"] = base_request_prompt
             manifest_record[generated_prompt_field] = generated_base_prompt_placeholder(args.prompt_version)
 
@@ -1445,12 +2087,14 @@ def main() -> int:
                 manifest_record["generated_product_prompt_path"] = generated_prompt["path"]
                 manifest_record["base_prompt_request_path"] = generated_prompt.get("request_path")
                 manifest_record["base_prompt_cache_status"] = generated_prompt["source"]
+                manifest_record["base_prompt_response_mode"] = generated_prompt.get("response_mode")
                 if generated_prompt.get("api_usage"):
                     manifest_record["base_prompt_api_usage"] = generated_prompt["api_usage"]
 
-            response = call_openai_image_edit(
+            response = call_image_model(
                 api_key=api_key or "",
                 endpoint=args.endpoint,
+                wire_api=args.image_wire_api,
                 image_path=source_path,
                 prompt=record["prompt"],
                 model=args.model,
@@ -1458,6 +2102,8 @@ def main() -> int:
                 quality=args.quality,
                 output_format=args.output_format,
                 n=args.n,
+                reasoning_effort=args.image_reasoning_effort,
+                disable_response_storage=args.disable_image_response_storage,
                 timeout=args.timeout,
                 retries=args.retries,
             )

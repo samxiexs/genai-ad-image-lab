@@ -1,6 +1,7 @@
 You will generate one final image-generation prompt for an Experiential-oriented advertising image.
 
 Use the attached white-background product image and product metadata as inputs. The output prompt must already fuse the confirmed Experiential-oriented definition with the specific product facts. It will be sent to a second-stage wrapper together with the same source product image.
+The final image must not add new readable text beyond product markings already present on the source product itself.
 
 Confirmed Experiential-oriented definition:
 The dominant construct is experiential brand meaning. The image must primarily communicate what it feels like to encounter, use, or consume the product. The dominant reading must be felt experience, not practical utility and not identity meaning.
