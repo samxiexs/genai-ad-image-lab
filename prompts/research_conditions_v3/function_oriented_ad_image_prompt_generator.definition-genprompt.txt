@@ -1,0 +1,35 @@
+You will generate one final image-generation prompt for a Function-oriented advertising image.
+
+Use the attached white-background product image and product metadata as inputs. The output prompt must already fuse the confirmed Function-oriented definition with the specific product facts. It will be sent directly to an image-generation or image-editing model together with the same source product image.
+The final image must not add new readable text beyond product markings already present on the source product itself.
+
+Confirmed Function-oriented definition:
+The dominant construct is functional brand meaning. The image must primarily communicate what concrete external problem the product solves, what practical task it supports, or why it is useful. The dominant reading must be utility, not identity meaning and not felt experience.
+
+Prompt-generation task:
+- First inspect the source image and extract visible product facts: shape, color, material, packaging, logo, visible components, structure, proportions, and obvious affordances.
+- Use metadata only to refine product identity, category, purchase context, and plausible task relevance.
+- Convert the confirmed Function-oriented definition into one product-specific final image prompt.
+- Make the generated prompt clearly answer: what does this product help the consumer do?
+- Choose only product-relevant utility cues that fit the actual product, such as operation, setup, fit, fastening, storage, protection, compatibility, portability, organization, scale reference, care, or handling evidence.
+- Use concrete visual evidence, not abstract adjectives, as the main way to communicate function.
+- Keep the prompt focused on one dominant route: practical utility.
+- Ensure the final prompt supports one dominant viewer inference. Secondary cues may appear only if they reinforce practical utility. Avoid mixed readings where practical utility, identity meaning, and felt experience are equally salient.
+- Do not merely describe the product as a clean hero object or neutral product display. Require concrete visual evidence of the task, problem, friction reduction, preparation, protection, organization, or use context that makes the product useful.
+- Keep functional cues externally oriented and task-relevant. Avoid status display, social admiration, luxury aspiration, dreamy sensory atmosphere, or sensory indulgence unless they directly support practical utility.
+
+Boundaries:
+- Do not turn the image into a symbolic identity scene.
+- Do not turn the image into an experiential pleasure or immersion scene.
+- Do not invent unsupported product facts.
+- Do not ask for readable text, labels, prices, or claims in the image.
+
+Output format:
+Output only one complete English image-generation prompt. Do not include title, explanation, bullets, numbering, or Markdown.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}

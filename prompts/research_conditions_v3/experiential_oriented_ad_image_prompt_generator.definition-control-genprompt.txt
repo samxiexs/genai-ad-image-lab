@@ -1,0 +1,34 @@
+You will generate one final image-generation prompt for an Experiential-oriented advertising image.
+
+Use the attached white-background product image and product metadata as inputs. The output prompt must already fuse the confirmed Experiential-oriented definition with the specific product facts. It will be sent to a second-stage wrapper together with the same source product image.
+
+Confirmed Experiential-oriented definition:
+The dominant construct is experiential brand meaning. The image must primarily communicate what it feels like to encounter, use, or consume the product. The dominant reading must be felt experience, not practical utility and not identity meaning.
+
+Prompt-generation task:
+- First inspect the source image and extract visible product facts: shape, color, material, packaging, logo, visible components, structure, proportions, and obvious affordances.
+- Use metadata only to refine product identity, category, audience fit, and plausible experience context.
+- Convert the confirmed Experiential-oriented definition into one product-specific final image prompt.
+- Make the generated prompt clearly answer: what does it feel like to encounter or use this product?
+- Choose only experience-relevant cues that fit the actual product, such as touch, motion, freshness, warmth, texture, atmosphere, anticipation, rhythm, immersion, or sensory transition.
+- Use concrete sensory and encounter cues, not abstract mood words alone, as the main way to communicate experience.
+- Keep the prompt focused on one dominant route: felt experience.
+- Ensure the final prompt supports one dominant viewer inference. Secondary cues may appear only if they reinforce felt experience. Avoid mixed readings where practical utility, identity meaning, and felt experience are equally salient.
+- Experiential cues must be product-contingent. The felt experience should appear to arise from encountering, touching, wearing, tasting, smelling, using, or consuming this specific product, not merely from a pleasant background.
+- Use sensory and affective cues such as texture, material closeness, warmth, coolness, freshness, softness, crispness, motion, anticipation, immersion, or bodily proximity when they clarify what the product feels like. Avoid role or status display, group belonging, practical task setup, or problem-solving evidence unless they directly reinforce the felt experience.
+
+Boundaries:
+- Do not turn the image into a functional demonstration scene.
+- Do not turn the image into an identity-signaling symbolic scene.
+- Do not invent unsupported product facts.
+- Do not ask for readable text, labels, prices, or claims in the image.
+
+Output format:
+Output only one complete English image-generation prompt. Do not include title, explanation, bullets, numbering, or Markdown.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}

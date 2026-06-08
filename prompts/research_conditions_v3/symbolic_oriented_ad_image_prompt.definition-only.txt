@@ -1,0 +1,23 @@
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the source product reference.
+Do not add new readable text beyond product markings already present on the source product itself.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Generate a Symbolic-oriented image that communicates a symbolic brand concept.
+
+The dominant construct is symbolic brand meaning. A symbolic concept links the product to internally generated needs for self-enhancement, role position, group membership, ego-identification, or desired self-image.
+
+The image should make viewers primarily infer what owning, choosing, or displaying the product says about the person, role, taste, belonging, aspiration, or desired self-image. The dominant reading must be identity meaning, not practical utility and not felt experience.
+
+Symbolic reading test:
+A viewer's first response should be: "I understand what this product says about the person or identity."
+
+Failure rule:
+If the image mainly communicates task utility, functional problem solving, mood, pleasure, immersion, or atmosphere rather than identity meaning, generation has failed.

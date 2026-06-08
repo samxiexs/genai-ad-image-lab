@@ -1,0 +1,39 @@
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
+
+Use the provided white-background product image as the exact source product reference.
+
+Part 1: Product-specific prompt generated from the confirmed Product-oriented definition
+The following content has already been generated from the confirmed Product-oriented definition, the source product image, and the product metadata. It provides a product-specific functional execution plan.
+
+{generated_orientation_prompt}
+
+Part 2: Visual control requirements
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure.
+- Do not redesign the product.
+- Do not invent unsupported functions, ingredients, certifications, awards, claims, ratings, comparisons, slogans, labels, prices, promotions, QR codes, arrows, charts, badges, or brand assets.
+- Do not add new readable text inside the image.
+- Existing product markings already present on the source image may remain, but do not rewrite them.
+- Keep the product visually coherent with the new scene through realistic lighting, shadows, reflections, perspective, scale, and material behavior.
+- The final image must look photographic and physically plausible, not like a pasted cutout, CGI render, synthetic collage, screenshot, or template mockup.
+- Leave clean negative space if later text overlay is needed.
+- The manipulation must change the dominant concept route, not the product identity.
+
+Part 3: Confirmed Product-oriented definition
+The dominant construct is functional brand meaning. A functional concept links the product to externally generated consumption needs, especially solving a consumption-related problem, preventing a potential problem, reducing friction, or supporting a practical task.
+
+The final image must primarily communicate what concrete external problem the product solves, what practical task it supports, or why it is useful. The dominant reading must be utility, not identity meaning and not felt experience.
+
+Additional control for all conditions:
+The image must support one dominant viewer inference. Secondary visual cues may appear only if they reinforce the target condition. Avoid mixed readings where viewers may equally infer practical utility, identity meaning, and felt experience.
+
+Product-oriented additional guidance:
+Do not merely show the product as a clean hero object or neutral product display. Show concrete visual evidence of the task, problem, friction reduction, preparation, protection, organization, or use context that makes the product useful. Functional cues should be externally oriented and task-relevant. Avoid status display, social admiration, luxury aspiration, dreamy sensory atmosphere, or sensory indulgence unless they directly support practical utility.
+
+Priority rule:
+If Part 1 and Part 3 suggest different dominant readings, follow Part 3.
+
+Product reading test:
+A viewer's first response should be: "I understand what this product helps me do and why it is useful."
+
+Failure rule:
+If the image mainly communicates identity, taste, belonging, pleasure, immersion, or general lifestyle mood rather than practical utility, generation has failed.

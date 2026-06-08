@@ -57,6 +57,12 @@ RESEARCH_FUNCTION_LABEL_VERSIONS = frozenset({
     "definition-genprompt-v2",
     "definition-control-genprompt-v2",
     "genprompt-control-v2",
+    "definition-only-v3",
+    "definition-control-v3",
+    "visual-control-v3",
+    "definition-genprompt-v3",
+    "definition-control-genprompt-v3",
+    "genprompt-control-v3",
 })
 ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
 V3_ORIENTATION_ALIASES = {
@@ -87,6 +93,7 @@ DEFAULT_IMAGES_EDIT_PATH = "/images/edits"
 DEFAULT_CHAT_COMPLETIONS_PATH = "/chat/completions"
 DEFAULT_BASE_PROMPT_MODEL = "gpt-5.2"
 RESEARCH_CONDITIONS_V2_DIR = "prompts/research_conditions_v2"
+RESEARCH_CONDITIONS_V3_DIR = "prompts/research_conditions_v3"
 DEFAULT_BASE_PROMPT_FILES = {
     "v15": "prompts/neutral_product_ad_image_prompt.v15.txt",
     "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
@@ -131,6 +138,24 @@ DEFAULT_BASE_PROMPT_FILES = {
         "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V2_DIR}/symbolic_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
         "Experiential-oriented": f"{RESEARCH_CONDITIONS_V2_DIR}/experiential_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
     },
+    "definition-genprompt-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt_generator.definition-genprompt.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt_generator.definition-genprompt.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt_generator.definition-genprompt.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt_generator.definition-genprompt.txt",
+    },
+    "definition-control-genprompt-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+    },
+    "genprompt-control-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
+    },
 }
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
@@ -146,6 +171,9 @@ GENERATED_BASE_PROMPT_PLACEHOLDERS = {
     "definition-genprompt-v2": "[definition-genprompt-v2 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "definition-control-genprompt-v2": "[definition-control-genprompt-v2 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "genprompt-control-v2": "[genprompt-control-v2 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "definition-genprompt-v3": "[definition-genprompt-v3 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "definition-control-genprompt-v3": "[definition-control-genprompt-v3 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "genprompt-control-v3": "[genprompt-control-v3 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
 }
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
@@ -318,6 +346,42 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V2_DIR}/symbolic_oriented_ad_image_prompt.definition-control-genprompt.txt",
         "Experiential-oriented": f"{RESEARCH_CONDITIONS_V2_DIR}/experiential_oriented_ad_image_prompt.definition-control-genprompt.txt",
     },
+    "definition-only-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt.definition-only.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt.definition-only.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-only.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-only.txt",
+    },
+    "definition-control-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt.definition-control.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt.definition-control.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-control.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-control.txt",
+    },
+    "visual-control-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt.definition-control.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt.definition-control.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-control.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-control.txt",
+    },
+    "definition-genprompt-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt.definition-genprompt.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt.definition-genprompt.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-genprompt.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-genprompt.txt",
+    },
+    "definition-control-genprompt-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt.definition-control-genprompt.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt.definition-control-genprompt.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-control-genprompt.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-control-genprompt.txt",
+    },
+    "genprompt-control-v3": {
+        "Product-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/product_oriented_ad_image_prompt.definition-control-genprompt.txt",
+        "Function-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/function_oriented_ad_image_prompt.definition-control-genprompt.txt",
+        "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-control-genprompt.txt",
+        "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-control-genprompt.txt",
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
     {
@@ -348,6 +412,12 @@ PARK_PROMPT_VERSIONS = frozenset(
         "definition-genprompt-v2",
         "definition-control-genprompt-v2",
         "genprompt-control-v2",
+        "definition-only-v3",
+        "definition-control-v3",
+        "visual-control-v3",
+        "definition-genprompt-v3",
+        "definition-control-genprompt-v3",
+        "genprompt-control-v3",
     }
 )
 GENERATED_BASE_PROMPT_VERSIONS = frozenset(
@@ -361,6 +431,9 @@ GENERATED_BASE_PROMPT_VERSIONS = frozenset(
         "definition-genprompt-v2",
         "definition-control-genprompt-v2",
         "genprompt-control-v2",
+        "definition-genprompt-v3",
+        "definition-control-genprompt-v3",
+        "genprompt-control-v3",
     }
 )
 ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset(
@@ -372,6 +445,9 @@ ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset(
         "definition-genprompt-v2",
         "definition-control-genprompt-v2",
         "genprompt-control-v2",
+        "definition-genprompt-v3",
+        "definition-control-genprompt-v3",
+        "genprompt-control-v3",
     }
 )
 
@@ -411,7 +487,8 @@ def parse_args() -> argparse.Namespace:
             "Single creative orientation. Overrides --orientations. Affect-oriented is a deprecated alias for "
             "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17/"
             "definition-only/definition-control/visual-control/definition-genprompt/definition-control-genprompt/genprompt-control/"
-            "definition-only-v2/definition-control-v2/visual-control-v2/definition-genprompt-v2/definition-control-genprompt-v2/genprompt-control-v2, "
+            "definition-only-v2/definition-control-v2/visual-control-v2/definition-genprompt-v2/definition-control-genprompt-v2/genprompt-control-v2/"
+            "definition-only-v3/definition-control-v3/visual-control-v3/definition-genprompt-v3/definition-control-genprompt-v3/genprompt-control-v3, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -441,7 +518,8 @@ def parse_args() -> argparse.Namespace:
             "definition-only is the confirmed definition-first baseline, definition-control is the def-plus-visual-control family, "
             "definition-genprompt converts the confirmed def prompts into product-specific generated image prompts, definition-control-genprompt embeds those generated prompts into the def-plus-visual-control wrapper, "
             "visual-control/genprompt-control remain backward-compatible names for definition-control/definition-control-genprompt, "
-            "and the -v2 family runs the independent refactor stored in prompts/research_conditions_v2."
+            "the -v2 family runs the independent refactor stored in prompts/research_conditions_v2, "
+            "and the -v3 family runs the boundary-hardened refactor stored in prompts/research_conditions_v3."
         ),
     )
     parser.add_argument(
@@ -480,34 +558,34 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-file",
         default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE"),
-        help="Product prompt-generation template used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2 families before image generation.",
+        help="Product prompt-generation template used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families before image generation.",
     )
     parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
-        help="Text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2 families to generate the product prompt.",
+        help="Text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families to generate the product prompt.",
     )
     parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Chat completions endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2 families. If omitted, {api-base-url}/chat/completions is used.",
+        help="Chat completions endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families. If omitted, {api-base-url}/chat/completions is used.",
     )
     parser.add_argument(
         "--base-prompt-dir",
         default=None,
-        help="Directory for saved v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2 generated product prompts. Defaults to {run-dir}/base_prompts.",
+        help="Directory for saved v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 generated product prompts. Defaults to {run-dir}/base_prompts.",
     )
     parser.add_argument(
         "--base-prompt-max-tokens",
         type=int,
         default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
-        help="Maximum output tokens for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2 prompt generation.",
+        help="Maximum output tokens for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-temperature",
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
-        help="Temperature for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2 prompt generation.",
+        help="Temperature for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 prompt generation.",
     )
     parser.add_argument(
         "--api-key",
