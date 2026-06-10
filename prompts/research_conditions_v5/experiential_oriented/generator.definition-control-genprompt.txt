@@ -15,6 +15,7 @@ Additional visual-control requirements:
 - Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
 - Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
 - Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+- Keep the scene photographically realistic, with believable scene logic, naturalistic lighting, realistic textures, and no obvious synthetic artifacts.
 
 Product metadata:
 - Title: {ori_title}
