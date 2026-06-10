@@ -1,0 +1,26 @@
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Part 1: Product-specific prompt generated from the confirmed Product-oriented definition
+The following content has already been generated from the confirmed Product-oriented definition, the source product image, and the product metadata. It provides a product-specific functional execution plan.
+
+{generated_orientation_prompt}
+
+Part 2: Additional visual-control requirements
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
+- Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+- Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
+- Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+
+Part 3: Confirmed Product-oriented definition
+Generate a Product-oriented image that communicates a functional brand concept.
+
+Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}

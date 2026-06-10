@@ -1,0 +1,41 @@
+You will write one final English image-generation prompt for a controlled Symbolic-oriented advertising image.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Preserved Symbolic-oriented instruction:
+Additional visual-control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
+- Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+- Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
+- Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+
+Generate a Symbolic-oriented image that communicates a symbolic brand concept.
+
+Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. Work on symbolic consumer behavior and the sociology of consumption illustrates the important relationship between symbolic needs and consumption. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Core question:
+Who am I?
+
+The dominant reading must be identity meaning. The image should make viewers first infer what owning, choosing, or displaying the product says about the person, desired group, role, taste, belonging, aspiration, or self-image.
+
+Execution guidance for this Symbolic-oriented condition:
+Use person, role, styling, space, and composition as meaning cues rather than explicit function demonstration or pure sensory atmosphere. The scene may include wardrobe, posture, social setting, spatial markers, ritualized placement, or surrounding objects, but only when these cues clarify identity meaning.
+
+Additional control for all conditions:
+The image must support one dominant viewer inference. Secondary visual cues may appear only if they reinforce the target condition. Avoid mixed readings where viewers may equally infer practical utility, identity meaning, and felt experience.
+
+Symbolic-oriented additional guidance:
+Symbolic cues must be identity-diagnostic. They should imply a recognizable role, taste, aspiration, group affiliation, self-presentation, or desired self-image, not merely an attractive lifestyle scene. The product should appear as something that helps define how the person is seen or how the person sees themselves. Avoid explicit task demonstration, problem-solving evidence, sensory close-ups, or immersive pleasure cues unless they reinforce identity meaning.
+
+Symbolic reading test:
+A viewer's first response should be: "I understand what this product says about the person or identity."
+
+Failure rule:
+If the image mainly communicates functional utility, problem solving, pleasure, immersion, or general lifestyle atmosphere rather than identity meaning, generation has failed.

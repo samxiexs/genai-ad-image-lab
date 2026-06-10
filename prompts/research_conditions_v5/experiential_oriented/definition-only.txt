@@ -1,0 +1,17 @@
+You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Generate an Experiential-oriented image that communicates an experiential brand concept.
+
+Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Explanation:
+This image should clearly answer "What does it feel like?" by making viewers primarily infer what it feels like to encounter, use, or consume the product. The dominant reading must be felt experience, not practical utility and not identity meaning. Use product-contingent sensory and affective cues such as touch, texture, motion, warmth, coolness, freshness, softness, crispness, anticipation, immersion, atmosphere, or bodily proximity, so the felt experience seems to arise from this specific product rather than from a pleasant background. A viewer's first response should be, "I understand what it feels like to encounter or use this product." If the image mainly communicates practical utility, status, role, belonging, or self-image rather than felt experience, generation has failed.

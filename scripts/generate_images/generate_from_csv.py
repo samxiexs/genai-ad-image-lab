@@ -63,6 +63,18 @@ RESEARCH_FUNCTION_LABEL_VERSIONS = frozenset({
     "definition-genprompt-v3",
     "definition-control-genprompt-v3",
     "genprompt-control-v3",
+    "definition-only-v4",
+    "definition-control-v4",
+    "visual-control-v4",
+    "definition-genprompt-v4",
+    "definition-control-genprompt-v4",
+    "genprompt-control-v4",
+    "definition-only-v5",
+    "definition-control-v5",
+    "visual-control-v5",
+    "definition-genprompt-v5",
+    "definition-control-genprompt-v5",
+    "genprompt-control-v5",
 })
 ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
 V3_ORIENTATION_ALIASES = {
@@ -132,6 +144,24 @@ BASE_PROMPT_PROVIDER_PRESETS = {
 }
 RESEARCH_CONDITIONS_V2_DIR = "prompts/research_conditions_v2"
 RESEARCH_CONDITIONS_V3_DIR = "prompts/research_conditions_v3"
+RESEARCH_CONDITIONS_V4_DIR = "prompts/research_conditions_v4"
+RESEARCH_CONDITIONS_V5_DIR = "prompts/research_conditions_v5"
+RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS = {
+    "Product-oriented": "product_oriented",
+    "Function-oriented": "function_oriented",
+    "Symbolic-oriented": "symbolic_oriented",
+    "Experiential-oriented": "experiential_oriented",
+}
+
+
+def research_conditions_v4_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V4_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
+def research_conditions_v5_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V5_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
 DEFAULT_BASE_PROMPT_FILES = {
     "v15": "prompts/neutral_product_ad_image_prompt.v15.txt",
     "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
@@ -194,6 +224,30 @@ DEFAULT_BASE_PROMPT_FILES = {
         "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
         "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt_generator.definition-control-genprompt.txt",
     },
+    "definition-genprompt-v4": {
+        orientation: research_conditions_v4_path(orientation, "generator.definition-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-control-genprompt-v4": {
+        orientation: research_conditions_v4_path(orientation, "generator.definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "genprompt-control-v4": {
+        orientation: research_conditions_v4_path(orientation, "generator.definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-genprompt-v5": {
+        orientation: research_conditions_v5_path(orientation, "generator.definition-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-control-genprompt-v5": {
+        orientation: research_conditions_v5_path(orientation, "generator.definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "genprompt-control-v5": {
+        orientation: research_conditions_v5_path(orientation, "generator.definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
 }
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
@@ -212,6 +266,12 @@ GENERATED_BASE_PROMPT_PLACEHOLDERS = {
     "definition-genprompt-v3": "[definition-genprompt-v3 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "definition-control-genprompt-v3": "[definition-control-genprompt-v3 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "genprompt-control-v3": "[genprompt-control-v3 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "definition-genprompt-v4": "[definition-genprompt-v4 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "definition-control-genprompt-v4": "[definition-control-genprompt-v4 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "genprompt-control-v4": "[genprompt-control-v4 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "definition-genprompt-v5": "[definition-genprompt-v5 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "definition-control-genprompt-v5": "[definition-control-genprompt-v5 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+    "genprompt-control-v5": "[genprompt-control-v5 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
 }
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
@@ -420,6 +480,54 @@ PROMPT_VERSION_FILES = {
         "Symbolic-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/symbolic_oriented_ad_image_prompt.definition-control-genprompt.txt",
         "Experiential-oriented": f"{RESEARCH_CONDITIONS_V3_DIR}/experiential_oriented_ad_image_prompt.definition-control-genprompt.txt",
     },
+    "definition-only-v4": {
+        orientation: research_conditions_v4_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-control-v4": {
+        orientation: research_conditions_v4_path(orientation, "definition-control.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "visual-control-v4": {
+        orientation: research_conditions_v4_path(orientation, "definition-control.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-genprompt-v4": {
+        orientation: research_conditions_v4_path(orientation, "definition-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-control-genprompt-v4": {
+        orientation: research_conditions_v4_path(orientation, "definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "genprompt-control-v4": {
+        orientation: research_conditions_v4_path(orientation, "definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-only-v5": {
+        orientation: research_conditions_v5_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-control-v5": {
+        orientation: research_conditions_v5_path(orientation, "definition-control.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "visual-control-v5": {
+        orientation: research_conditions_v5_path(orientation, "definition-control.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-genprompt-v5": {
+        orientation: research_conditions_v5_path(orientation, "definition-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-control-genprompt-v5": {
+        orientation: research_conditions_v5_path(orientation, "definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "genprompt-control-v5": {
+        orientation: research_conditions_v5_path(orientation, "definition-control-genprompt.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
     {
@@ -456,6 +564,18 @@ PARK_PROMPT_VERSIONS = frozenset(
         "definition-genprompt-v3",
         "definition-control-genprompt-v3",
         "genprompt-control-v3",
+        "definition-only-v4",
+        "definition-control-v4",
+        "visual-control-v4",
+        "definition-genprompt-v4",
+        "definition-control-genprompt-v4",
+        "genprompt-control-v4",
+        "definition-only-v5",
+        "definition-control-v5",
+        "visual-control-v5",
+        "definition-genprompt-v5",
+        "definition-control-genprompt-v5",
+        "genprompt-control-v5",
     }
 )
 GENERATED_BASE_PROMPT_VERSIONS = frozenset(
@@ -472,6 +592,12 @@ GENERATED_BASE_PROMPT_VERSIONS = frozenset(
         "definition-genprompt-v3",
         "definition-control-genprompt-v3",
         "genprompt-control-v3",
+        "definition-genprompt-v4",
+        "definition-control-genprompt-v4",
+        "genprompt-control-v4",
+        "definition-genprompt-v5",
+        "definition-control-genprompt-v5",
+        "genprompt-control-v5",
     }
 )
 ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset(
@@ -486,6 +612,12 @@ ORIENTATION_SPECIFIC_GENERATED_PROMPT_VERSIONS = frozenset(
         "definition-genprompt-v3",
         "definition-control-genprompt-v3",
         "genprompt-control-v3",
+        "definition-genprompt-v4",
+        "definition-control-genprompt-v4",
+        "genprompt-control-v4",
+        "definition-genprompt-v5",
+        "definition-control-genprompt-v5",
+        "genprompt-control-v5",
     }
 )
 
@@ -526,7 +658,9 @@ def parse_args() -> argparse.Namespace:
             "Symbolic-oriented; under --prompt-version v3/v4/v5/v6/v7/v8/v9/v10/v11/v12/v13/v14/v15/v16/v17/"
             "definition-only/definition-control/visual-control/definition-genprompt/definition-control-genprompt/genprompt-control/"
             "definition-only-v2/definition-control-v2/visual-control-v2/definition-genprompt-v2/definition-control-genprompt-v2/genprompt-control-v2/"
-            "definition-only-v3/definition-control-v3/visual-control-v3/definition-genprompt-v3/definition-control-genprompt-v3/genprompt-control-v3, "
+            "definition-only-v3/definition-control-v3/visual-control-v3/definition-genprompt-v3/definition-control-genprompt-v3/genprompt-control-v3/"
+            "definition-only-v4/definition-control-v4/visual-control-v4/definition-genprompt-v4/definition-control-genprompt-v4/genprompt-control-v4/"
+            "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -557,7 +691,9 @@ def parse_args() -> argparse.Namespace:
             "definition-genprompt converts the confirmed def prompts into product-specific generated image prompts, definition-control-genprompt embeds those generated prompts into the def-plus-visual-control wrapper, "
             "visual-control/genprompt-control remain backward-compatible names for definition-control/definition-control-genprompt, "
             "the -v2 family runs the independent refactor stored in prompts/research_conditions_v2, "
-            "and the -v3 family runs the boundary-hardened refactor stored in prompts/research_conditions_v3."
+            "the -v3 family runs the boundary-hardened refactor stored in prompts/research_conditions_v3, "
+            "the -v4 family runs the folderized matched-control refactor stored in prompts/research_conditions_v4, "
+            "and the -v5 family runs the explanation-first refactor stored in prompts/research_conditions_v5."
         ),
     )
     parser.add_argument(
@@ -620,7 +756,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-file",
         default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE"),
-        help="Product prompt-generation template used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families before image generation.",
+        help="Product prompt-generation template used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5 families before image generation.",
     )
     parser.add_argument(
         "--base-prompt-provider",
@@ -631,7 +767,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
-        help="Text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families to generate the product prompt.",
+        help="Text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5 families to generate the product prompt.",
     )
     parser.add_argument(
         "--base-prompt-wire-api",
@@ -642,24 +778,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3 families. If omitted, the script uses the provider preset endpoint or derives one from --api-base-url and --base-prompt-wire-api.",
+        help="Endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5 families. If omitted, the script uses the provider preset endpoint or derives one from --api-base-url and --base-prompt-wire-api.",
     )
     parser.add_argument(
         "--base-prompt-dir",
         default=None,
-        help="Directory for saved v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 generated product prompts. Defaults to {run-dir}/base_prompts.",
+        help="Directory for saved v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5 generated product prompts. Defaults to {run-dir}/base_prompts.",
     )
     parser.add_argument(
         "--base-prompt-max-tokens",
         type=int,
         default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
-        help="Maximum output tokens for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 prompt generation.",
+        help="Maximum output tokens for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5 prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-temperature",
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
-        help="Temperature for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3 prompt generation.",
+        help="Temperature for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5 prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-reasoning-effort",
