@@ -7,16 +7,19 @@ The following content has already been generated from the confirmed Experiential
 
 {generated_orientation_prompt}
 
-Part 2: Additional visual-control requirements
+Part 2: Confirmed Experiential-oriented definition
+Generate an Experiential-oriented image that communicates an experiential brand concept.
+
+Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Explanation:
+This image should clearly answer "What does it feel like?" by making viewers primarily infer the sensory, affective, or stimulating experience of encountering, using, or consuming the product. The dominant reading should be felt experience rather than practical utility or identity meaning. Show the product in a way that makes sensory pleasure, stimulation, variety, or product-evoked experience salient, with the experience arising from the product itself. A viewer's first response should be: "I understand what it feels like to encounter or use this product."
+
+Part 3: Additional visual-control requirements
 - Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
 - Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
 - Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
 - Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
-
-Part 3: Confirmed Experiential-oriented definition
-Generate an Experiential-oriented image that communicates an experiential brand concept.
-
-Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
 
 Product metadata:
 - Title: {ori_title}
@@ -24,6 +27,3 @@ Product metadata:
 - Category: {level_one_category_name}
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
-
-Explanation:
-This image should clearly answer "What does it feel like?" by making viewers primarily infer what it feels like to encounter, use, or consume the product. The dominant reading must be felt experience, not practical utility and not identity meaning. The image should support one dominant viewer inference, and any secondary cues should only reinforce felt experience rather than create mixed readings. Use product-contingent sensory and affective cues such as touch, texture, motion, warmth, coolness, freshness, softness, crispness, anticipation, immersion, atmosphere, or bodily proximity, so the felt experience seems to arise from this specific product rather than from a pleasant background. If Part 1 and Part 3 suggest different dominant readings, follow Part 3. A viewer's first response should be, "I understand what it feels like to encounter or use this product." If the image mainly communicates practical utility, status, role, belonging, or self-image rather than felt experience, generation has failed.

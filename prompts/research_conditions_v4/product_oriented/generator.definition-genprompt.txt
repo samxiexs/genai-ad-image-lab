@@ -2,7 +2,6 @@ You will write one final English image-generation prompt for a controlled Produc
 Use the provided white-background product image as the source product reference.
 Do not add new readable text inside the image.
 
-Preserved Product-oriented instruction:
 Generate a Product-oriented image that communicates a functional brand concept.
 
 Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
@@ -13,14 +12,3 @@ Product metadata:
 - Category: {level_one_category_name}
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
-
-Core question:
-What does it do?
-
-The image should make viewers primarily infer what concrete external problem the product solves, what practical task it supports, or why it is useful. The dominant reading must be practical utility, not identity meaning and not felt experience.
-
-Product reading test:
-A viewer's first response should be: "I understand what this product helps me do and why it is useful."
-
-Failure rule:
-If the image mainly communicates self-image, taste, role, belonging, mood, pleasure, immersion, or atmosphere rather than practical utility, generation has failed.

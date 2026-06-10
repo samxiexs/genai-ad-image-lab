@@ -2,15 +2,18 @@ You are generating one controlled Function-oriented advertising image for a cons
 Use the provided white-background product image as the source product reference.
 Do not add new readable text inside the image.
 
+Generate a Function-oriented image that communicates a functional brand concept.
+
+Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
+
+Explanation:
+This image should clearly answer "What does it do?" by making viewers primarily infer what external consumption problem the product solves and what practical benefit it provides. The dominant reading should be product utility rather than identity meaning or felt experience. Show the product in a way that makes its function, performance, convenience, or problem-solving role legible through product-relevant evidence consistent with the actual product. A viewer's first response should be: "I understand what this product helps me do and why it is useful."
+
 Additional visual-control requirements:
 - Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
 - Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
 - Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
 - Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
-
-Generate a Function-oriented image that communicates a functional brand concept.
-
-Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
 
 Product metadata:
 - Title: {ori_title}
@@ -18,6 +21,3 @@ Product metadata:
 - Category: {level_one_category_name}
 - Price: {creative_id_price}
 - Promotion: {creative_id_promotion}
-
-Explanation:
-This image should clearly answer "What does it do?" by making viewers primarily infer what concrete external problem the product solves, what practical task it supports, or why it is useful. The dominant reading must be practical utility, not identity meaning and not felt experience. The image should support one dominant viewer inference, and any secondary cues should only reinforce practical utility rather than create mixed readings. Use visible product-function evidence and concrete visual signs of task support, problem solving, friction reduction, preparation, protection, organization, handling, or use context, rather than symbolic identity cues or experiential atmosphere. Functional cues should remain externally oriented and task-relevant. A viewer's first response should be, "I understand what this product helps me do and why it is useful." If the image mainly communicates identity, taste, belonging, pleasure, immersion, or general lifestyle mood rather than practical utility, generation has failed.
