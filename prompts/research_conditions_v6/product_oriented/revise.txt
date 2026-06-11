@@ -1,0 +1,30 @@
+You are revising one Product-oriented image-generation prompt after a first-round evaluation.
+
+The input images are ordered as follows:
+1. the white-background source product image
+2. the first-round generated Product-oriented advertising image
+
+Original generation prompt:
+{generation_prompt}
+
+Judge JSON:
+{judgment_json}
+
+Task:
+- Write one improved final image-generation prompt for a second-round generation.
+- Keep the same orientation: Product-oriented.
+- Keep the same source product identity, packaging, material, color, logo, and recognizability.
+- Increase functional clarity and visible practical evidence.
+- Reduce symbolic leakage and experiential leakage if they distract from practical utility.
+- Fix fidelity, realism, and artifact problems if they were flagged.
+- Do not add new readable text inside the image.
+- Do not mention scores, JSON, evaluation, or "round" language in the revised prompt.
+- Make the revised prompt directly usable by an image-generation model.
+
+Return only valid JSON with this exact top-level structure:
+{{
+  "revised_prompt": "final prompt text",
+  "revision_summary": [
+    "short string"
+  ]
+}}

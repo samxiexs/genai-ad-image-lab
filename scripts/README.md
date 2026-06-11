@@ -25,7 +25,7 @@ Generated images, logs, API responses, and intermediate files should be written 
 
 ## Current Script
 
-Use `scripts/generate_images/generate_from_csv.py` to read product rows, download the white-background image from `creative_id_image`, render a prompt template, and send the image plus prompt to the OpenAI Images Edit API.
+Use `scripts/generate_images/generate_from_csv.py` to read product rows, download the white-background image from `creative_id_image`, render a prompt template, and send the image plus prompt to the OpenAI Images Edit API. The same script now also supports a `--multiround` mode for the `definition-only-v6` prompt family, where it generates, judges, revises, regenerates, and re-judges each image.
 
 Start safely with:
 

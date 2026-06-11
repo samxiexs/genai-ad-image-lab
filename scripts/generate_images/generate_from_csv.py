@@ -75,6 +75,7 @@ RESEARCH_FUNCTION_LABEL_VERSIONS = frozenset({
     "definition-genprompt-v5",
     "definition-control-genprompt-v5",
     "genprompt-control-v5",
+    "definition-only-v6",
 })
 ORIENTATION_ALIASES = {"Affect-oriented": "Symbolic-oriented"}
 V3_ORIENTATION_ALIASES = {
@@ -106,6 +107,7 @@ DEFAULT_IMAGES_GENERATIONS_PATH = "/images/generations"
 DEFAULT_CHAT_COMPLETIONS_PATH = "/chat/completions"
 DEFAULT_RESPONSES_PATH = "/responses"
 DEFAULT_BASE_PROMPT_MODEL = "gpt-5.5"
+DEFAULT_ANALYSIS_MAX_TOKENS = 2000
 DEFAULT_IMAGE_WIRE_API = "images_edits"
 IMAGE_WIRE_APIS = ("images_edits", "images_generations", "responses")
 IMAGE_PROVIDER_PRESETS = {
@@ -146,6 +148,7 @@ RESEARCH_CONDITIONS_V2_DIR = "prompts/research_conditions_v2"
 RESEARCH_CONDITIONS_V3_DIR = "prompts/research_conditions_v3"
 RESEARCH_CONDITIONS_V4_DIR = "prompts/research_conditions_v4"
 RESEARCH_CONDITIONS_V5_DIR = "prompts/research_conditions_v5"
+RESEARCH_CONDITIONS_V6_DIR = "prompts/research_conditions_v6"
 RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS = {
     "Product-oriented": "product_oriented",
     "Function-oriented": "function_oriented",
@@ -160,6 +163,10 @@ def research_conditions_v4_path(orientation: str, filename: str) -> str:
 
 def research_conditions_v5_path(orientation: str, filename: str) -> str:
     return f"{RESEARCH_CONDITIONS_V5_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
+def research_conditions_v6_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V6_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
 
 
 DEFAULT_BASE_PROMPT_FILES = {
@@ -272,6 +279,20 @@ GENERATED_BASE_PROMPT_PLACEHOLDERS = {
     "definition-genprompt-v5": "[definition-genprompt-v5 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "definition-control-genprompt-v5": "[definition-control-genprompt-v5 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "genprompt-control-v5": "[genprompt-control-v5 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
+}
+MULTIROUND_PROMPT_VERSION = "definition-only-v6"
+MULTIROUND_TEMPLATE_FILES = {
+    orientation: {
+        "judge": research_conditions_v6_path(orientation, "judge.txt"),
+        "revise": research_conditions_v6_path(orientation, "revise.txt"),
+    }
+    for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+}
+EXPECTED_ROUTE_ORIENTATION_MAP = {
+    "product": {"Product-oriented", "Function-oriented"},
+    "functional": {"Product-oriented", "Function-oriented"},
+    "symbolic": {"Symbolic-oriented"},
+    "experiential": {"Experiential-oriented"},
 }
 DEFAULT_PREVIOUS_SAMPLE_IDS = [
     "79469",
@@ -508,6 +529,10 @@ PROMPT_VERSION_FILES = {
         orientation: research_conditions_v5_path(orientation, "definition-only.txt")
         for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
     },
+    "definition-only-v6": {
+        orientation: research_conditions_v6_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
     "definition-control-v5": {
         orientation: research_conditions_v5_path(orientation, "definition-control.txt")
         for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
@@ -571,6 +596,7 @@ PARK_PROMPT_VERSIONS = frozenset(
         "definition-control-genprompt-v4",
         "genprompt-control-v4",
         "definition-only-v5",
+        "definition-only-v6",
         "definition-control-v5",
         "visual-control-v5",
         "definition-genprompt-v5",
@@ -660,7 +686,8 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v2/definition-control-v2/visual-control-v2/definition-genprompt-v2/definition-control-genprompt-v2/genprompt-control-v2/"
             "definition-only-v3/definition-control-v3/visual-control-v3/definition-genprompt-v3/definition-control-genprompt-v3/genprompt-control-v3/"
             "definition-only-v4/definition-control-v4/visual-control-v4/definition-genprompt-v4/definition-control-genprompt-v4/genprompt-control-v4/"
-            "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5, "
+            "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5/"
+            "definition-only-v6, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -693,7 +720,8 @@ def parse_args() -> argparse.Namespace:
             "the -v2 family runs the independent refactor stored in prompts/research_conditions_v2, "
             "the -v3 family runs the boundary-hardened refactor stored in prompts/research_conditions_v3, "
             "the -v4 family runs the folderized matched-control refactor stored in prompts/research_conditions_v4, "
-            "and the -v5 family runs the explanation-first refactor stored in prompts/research_conditions_v5."
+            "the -v5 family runs the explanation-first refactor stored in prompts/research_conditions_v5, "
+            "and definition-only-v6 runs the new multiround-ready v6 definition-only family stored in prompts/research_conditions_v6."
         ),
     )
     parser.add_argument(
@@ -808,6 +836,45 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         default=env_flag("GENAI_AD_IMAGE_DISABLE_BASE_PROMPT_RESPONSE_STORAGE"),
         help="Send store=false for Responses API prompt generation.",
+    )
+    parser.add_argument(
+        "--multiround",
+        action="store_true",
+        help="Run the five-step multiround generation, judge, revise, regenerate, and re-judge workflow. Currently supported only for --prompt-version definition-only-v6.",
+    )
+    parser.add_argument(
+        "--analysis-provider",
+        default=os.environ.get("GENAI_AD_IMAGE_ANALYSIS_PROVIDER"),
+        choices=sorted(BASE_PROMPT_PROVIDER_PRESETS),
+        help="Optional provider preset for multiround judge and revise calls. Defaults to --base-prompt-provider when omitted.",
+    )
+    parser.add_argument(
+        "--analysis-model",
+        default=os.environ.get("OPENAI_ANALYSIS_MODEL"),
+        help="Text/vision model used by multiround judge and revise calls. Defaults to --base-prompt-model when omitted.",
+    )
+    parser.add_argument(
+        "--analysis-wire-api",
+        default=os.environ.get("GENAI_AD_IMAGE_ANALYSIS_WIRE_API"),
+        choices=BASE_PROMPT_WIRE_APIS,
+        help="Wire API used by multiround judge and revise calls. Defaults to --base-prompt-wire-api when omitted.",
+    )
+    parser.add_argument(
+        "--analysis-endpoint",
+        default=os.environ.get("OPENAI_ANALYSIS_ENDPOINT"),
+        help="Endpoint used by multiround judge and revise calls. Defaults to --base-prompt-endpoint when omitted.",
+    )
+    parser.add_argument(
+        "--analysis-max-tokens",
+        type=int,
+        default=int(os.environ["GENAI_AD_IMAGE_ANALYSIS_MAX_TOKENS"]) if "GENAI_AD_IMAGE_ANALYSIS_MAX_TOKENS" in os.environ else None,
+        help="Maximum output tokens for multiround judge and revise calls. Defaults to --base-prompt-max-tokens when omitted.",
+    )
+    parser.add_argument(
+        "--analysis-reasoning-effort",
+        default=os.environ.get("GENAI_AD_IMAGE_ANALYSIS_REASONING_EFFORT"),
+        choices=["low", "medium", "high"],
+        help="Reasoning effort for multiround judge and revise calls. Defaults to --base-prompt-reasoning-effort when omitted.",
     )
     parser.add_argument(
         "--api-key",
@@ -1043,6 +1110,22 @@ def resolve_orientation_plans(args: argparse.Namespace) -> list[OrientationPlan]
     return plans
 
 
+def validate_multiround_args(args: argparse.Namespace) -> None:
+    if not args.multiround:
+        return
+    if args.prompt_version != MULTIROUND_PROMPT_VERSION:
+        raise ValueError(
+            f"--multiround currently requires --prompt-version {MULTIROUND_PROMPT_VERSION!r}."
+        )
+    if args.n != 1:
+        raise ValueError("--multiround currently supports only --n 1.")
+
+
+def load_multiround_template(orientation: str, template_name: str) -> tuple[str, str]:
+    template_path = resolve_existing_prompt_path(MULTIROUND_TEMPLATE_FILES[orientation][template_name])
+    return template_path.read_text(encoding="utf-8"), str(template_path)
+
+
 def canonical_orientation(orientation: str, prompt_version: str) -> str:
     return orientation_aliases_for_version(prompt_version).get(orientation, orientation)
 
@@ -1168,6 +1251,77 @@ def apply_base_prompt_provider_preset(args: argparse.Namespace) -> None:
         args.disable_base_prompt_response_storage = True
 
 
+def apply_analysis_provider_preset(args: argparse.Namespace) -> None:
+    if not args.analysis_provider:
+        return
+    preset = BASE_PROMPT_PROVIDER_PRESETS.get(args.analysis_provider)
+    if not preset:
+        available = ", ".join(sorted(BASE_PROMPT_PROVIDER_PRESETS))
+        raise ValueError(f"Unsupported --analysis-provider {args.analysis_provider!r}. Use one of: {available}")
+
+    if args.analysis_endpoint is None:
+        base_url = str(preset["base_url"])
+        wire_api = str(args.analysis_wire_api or preset["wire_api"])
+        if wire_api == "responses":
+            args.analysis_endpoint = responses_endpoint_from_base_url(base_url)
+        else:
+            args.analysis_endpoint = chat_endpoint_from_base_url(base_url)
+
+    if args.analysis_wire_api is None:
+        args.analysis_wire_api = str(preset["wire_api"])
+
+    if (
+        not cli_arg_present("--analysis-model")
+        and "OPENAI_ANALYSIS_MODEL" not in os.environ
+        and args.analysis_model is None
+    ):
+        args.analysis_model = str(preset["model"])
+
+    if args.analysis_reasoning_effort is None:
+        args.analysis_reasoning_effort = str(preset["reasoning_effort"])
+
+
+def resolve_analysis_settings(args: argparse.Namespace) -> None:
+    analysis_provider_explicit = args.analysis_provider is not None
+    if args.analysis_provider is None:
+        args.analysis_provider = args.base_prompt_provider
+
+    if not analysis_provider_explicit:
+        if args.analysis_wire_api is None:
+            args.analysis_wire_api = args.base_prompt_wire_api or DEFAULT_BASE_PROMPT_WIRE_API
+        if args.analysis_endpoint is None:
+            args.analysis_endpoint = args.base_prompt_endpoint
+        if args.analysis_model is None:
+            args.analysis_model = args.base_prompt_model or DEFAULT_BASE_PROMPT_MODEL
+        if args.analysis_reasoning_effort is None:
+            args.analysis_reasoning_effort = args.base_prompt_reasoning_effort
+
+    apply_analysis_provider_preset(args)
+
+    if args.analysis_wire_api is None:
+        args.analysis_wire_api = args.base_prompt_wire_api or DEFAULT_BASE_PROMPT_WIRE_API
+
+    if args.analysis_endpoint is None:
+        args.analysis_endpoint = args.base_prompt_endpoint
+
+    if args.analysis_endpoint is None:
+        if args.analysis_wire_api == "responses":
+            args.analysis_endpoint = responses_endpoint_from_base_url(args.api_base_url)
+        else:
+            args.analysis_endpoint = chat_endpoint_from_base_url(args.api_base_url)
+
+    if args.analysis_model is None:
+        args.analysis_model = args.base_prompt_model or DEFAULT_BASE_PROMPT_MODEL
+
+    if args.analysis_reasoning_effort is None:
+        args.analysis_reasoning_effort = args.base_prompt_reasoning_effort
+
+    if args.analysis_max_tokens is None:
+        args.analysis_max_tokens = args.base_prompt_max_tokens or DEFAULT_ANALYSIS_MAX_TOKENS
+
+    args.analysis_disable_response_storage = args.disable_base_prompt_response_storage
+
+
 def uses_generated_base_prompt(prompt_version: str) -> bool:
     return prompt_version in GENERATED_BASE_PROMPT_VERSIONS
 
@@ -1237,7 +1391,10 @@ def resolve_output_paths(
     args.run_dir = str(run_dir)
     args.output_dir = args.output_dir or str(run_dir / "generated")
     args.source_dir = args.source_dir or str(run_dir / "source_images")
-    args.manifest = args.manifest or str(run_dir / "generation_manifest.jsonl")
+    if args.multiround:
+        args.manifest = args.manifest or str(run_dir / "multiround_manifest.jsonl")
+    else:
+        args.manifest = args.manifest or str(run_dir / "generation_manifest.jsonl")
     args.image_wire_api = args.image_wire_api or DEFAULT_IMAGE_WIRE_API
     if args.endpoint is None:
         if args.image_wire_api == "responses":
@@ -1253,6 +1410,14 @@ def resolve_output_paths(
         else:
             args.base_prompt_endpoint = chat_endpoint_from_base_url(args.api_base_url)
     args.base_prompt_dir = args.base_prompt_dir or str(run_dir / "base_prompts")
+    resolve_analysis_settings(args)
+    if args.multiround:
+        args.round1_output_dir = str(pathlib.Path(args.output_dir) / "round1")
+        args.round2_output_dir = str(pathlib.Path(args.output_dir) / "round2")
+        args.round1_judgment_dir = str(run_dir / "judgments" / "round1")
+        args.round2_judgment_dir = str(run_dir / "judgments" / "round2")
+        args.revised_prompt_dir = str(run_dir / "revised_prompts")
+        args.summary_path = str(run_dir / "multiround_summary.json")
 
 
 def expected_output_paths(output_prefix: pathlib.Path, output_format: str, n: int) -> list[pathlib.Path]:
@@ -1628,36 +1793,45 @@ def extract_text_response_text(response: dict) -> str:
     raise RuntimeError("Text API response did not contain a usable prompt.")
 
 
-def call_openai_chat_completion(
+def build_chat_completion_content(prompt: str, image_paths: list[pathlib.Path]) -> list[dict[str, object]]:
+    content: list[dict[str, object]] = [{"type": "text", "text": prompt}]
+    for image_path in image_paths:
+        content.append({"type": "image_url", "image_url": {"url": image_data_url(image_path)}})
+    return content
+
+
+def build_responses_content(prompt: str, image_paths: list[pathlib.Path]) -> list[dict[str, object]]:
+    content: list[dict[str, object]] = [{"type": "input_text", "text": prompt}]
+    for image_path in image_paths:
+        content.append({"type": "input_image", "image_url": image_data_url(image_path), "detail": "high"})
+    return content
+
+
+def call_openai_chat_completion_multimodal(
     *,
     api_key: str,
     endpoint: str,
-    image_path: pathlib.Path,
+    image_paths: list[pathlib.Path],
     prompt: str,
     model: str,
+    instructions: str,
     max_tokens: int,
     temperature: float,
+    response_format: dict[str, object] | None,
     timeout: int,
     retries: int,
 ) -> dict:
-    payload = {
+    payload: dict[str, object] = {
         "model": model,
         "messages": [
-            {
-                "role": "system",
-                "content": "你是严谨的广告实验刺激材料 prompt 写作者，只输出用户要求的中性商品 prompt。",
-            },
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": prompt},
-                    {"type": "image_url", "image_url": {"url": image_data_url(image_path)}},
-                ],
-            },
+            {"role": "system", "content": instructions},
+            {"role": "user", "content": build_chat_completion_content(prompt, image_paths)},
         ],
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
+    if response_format is not None:
+        payload["response_format"] = response_format
     data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
 
     last_error: Exception | None = None
@@ -1684,13 +1858,14 @@ def call_openai_chat_completion(
     raise RuntimeError(f"OpenAI chat completion failed after {retries + 1} attempts: {last_error}")
 
 
-def call_openai_responses(
+def call_openai_responses_multimodal(
     *,
     api_key: str,
     endpoint: str,
-    image_path: pathlib.Path,
+    image_paths: list[pathlib.Path],
     prompt: str,
     model: str,
+    instructions: str,
     max_tokens: int,
     reasoning_effort: str | None,
     store: bool,
@@ -1699,14 +1874,11 @@ def call_openai_responses(
 ) -> dict:
     payload: dict[str, object] = {
         "model": model,
-        "instructions": "你是严谨的广告实验刺激材料 prompt 写作者，只输出用户要求的中性商品 prompt。",
+        "instructions": instructions,
         "input": [
             {
                 "role": "user",
-                "content": [
-                    {"type": "input_text", "text": prompt},
-                    {"type": "input_image", "image_url": image_data_url(image_path), "detail": "high"},
-                ],
+                "content": build_responses_content(prompt, image_paths),
             },
         ],
         "max_output_tokens": max_tokens,
@@ -1739,6 +1911,61 @@ def call_openai_responses(
         if attempt < retries:
             time.sleep(retry_sleep_seconds(attempt, str(last_error or "")))
     raise RuntimeError(f"OpenAI responses call failed after {retries + 1} attempts: {last_error}")
+
+
+def call_openai_chat_completion(
+    *,
+    api_key: str,
+    endpoint: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    max_tokens: int,
+    temperature: float,
+    timeout: int,
+    retries: int,
+) -> dict:
+    return call_openai_chat_completion_multimodal(
+        api_key=api_key,
+        endpoint=endpoint,
+        image_paths=[image_path],
+        prompt=prompt,
+        model=model,
+        instructions="你是严谨的广告实验刺激材料 prompt 写作者，只输出用户要求的中性商品 prompt。",
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format=None,
+        timeout=timeout,
+        retries=retries,
+    )
+
+
+def call_openai_responses(
+    *,
+    api_key: str,
+    endpoint: str,
+    image_path: pathlib.Path,
+    prompt: str,
+    model: str,
+    max_tokens: int,
+    reasoning_effort: str | None,
+    store: bool,
+    timeout: int,
+    retries: int,
+) -> dict:
+    return call_openai_responses_multimodal(
+        api_key=api_key,
+        endpoint=endpoint,
+        image_paths=[image_path],
+        prompt=prompt,
+        model=model,
+        instructions="你是严谨的广告实验刺激材料 prompt 写作者，只输出用户要求的中性商品 prompt。",
+        max_tokens=max_tokens,
+        reasoning_effort=reasoning_effort,
+        store=store,
+        timeout=timeout,
+        retries=retries,
+    )
 
 
 def call_base_prompt_model(
@@ -2032,6 +2259,310 @@ def append_manifest(manifest_path: pathlib.Path, record: dict) -> None:
         manifest_file.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
+def write_json(path: pathlib.Path, payload: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def read_json(path: pathlib.Path) -> object:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def strip_code_fences(text: str) -> str:
+    stripped = text.strip()
+    if stripped.startswith("```") and stripped.endswith("```"):
+        lines = stripped.splitlines()
+        if len(lines) >= 3:
+            return "\n".join(lines[1:-1]).strip()
+    return stripped
+
+
+def parse_json_text(text: str) -> dict[str, object]:
+    cleaned = strip_code_fences(text)
+    try:
+        payload = json.loads(cleaned)
+    except json.JSONDecodeError:
+        match = re.search(r"\{.*\}", cleaned, flags=re.DOTALL)
+        if not match:
+            raise
+        payload = json.loads(match.group(0))
+    if not isinstance(payload, dict):
+        raise RuntimeError("Model response JSON must be an object.")
+    return payload
+
+
+def coerce_score(value: object, default: int = 1) -> int:
+    if isinstance(value, bool):
+        return default
+    if isinstance(value, (int, float)):
+        score = int(round(float(value)))
+        return max(1, min(7, score))
+    if isinstance(value, str):
+        match = re.search(r"-?\d+(?:\.\d+)?", value)
+        if match:
+            score = int(round(float(match.group(0))))
+            return max(1, min(7, score))
+    return default
+
+
+def coerce_bool(value: object, default: bool = False) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        lowered = value.strip().lower()
+        if lowered in {"true", "1", "yes"}:
+            return True
+        if lowered in {"false", "0", "no"}:
+            return False
+    return default
+
+
+def normalize_string_list(value: object) -> list[str]:
+    if isinstance(value, list):
+        result: list[str] = []
+        for item in value:
+            text = str(item).strip()
+            if text:
+                result.append(text)
+        return result[:3]
+    if isinstance(value, str) and value.strip():
+        return [value.strip()]
+    return []
+
+
+def normalize_score_dict(value: object) -> dict[str, int]:
+    if not isinstance(value, dict):
+        return {}
+    return {
+        str(key): coerce_score(item)
+        for key, item in value.items()
+    }
+
+
+def target_route_key_for_orientation(orientation: str) -> str:
+    if orientation in {"Product-oriented", "Function-oriented"}:
+        return "functional"
+    if orientation == "Symbolic-oriented":
+        return "symbolic"
+    return "experiential"
+
+
+def normalize_judgment_payload(payload: dict[str, object], orientation: str) -> dict[str, object]:
+    target_route = target_route_key_for_orientation(orientation)
+    raw_route_strengths = payload.get("route_strengths") if isinstance(payload.get("route_strengths"), dict) else {}
+    route_strengths = {
+        "functional": coerce_score(raw_route_strengths.get("functional") if isinstance(raw_route_strengths, dict) else None),
+        "symbolic": coerce_score(raw_route_strengths.get("symbolic") if isinstance(raw_route_strengths, dict) else None),
+        "experiential": coerce_score(raw_route_strengths.get("experiential") if isinstance(raw_route_strengths, dict) else None),
+    }
+    target_route_strength = coerce_score(payload.get("target_route_strength"), route_strengths[target_route])
+    route_strengths[target_route] = target_route_strength
+    non_target_scores = [score for key, score in route_strengths.items() if key != target_route]
+    cross_route_leakage = coerce_score(payload.get("cross_route_leakage"), max(non_target_scores or [1]))
+    dominant_inference = str(payload.get("dominant_inference") or "").strip().lower() or "unclear"
+    if dominant_inference not in {"functional", "symbolic", "experiential", "unclear"}:
+        dominant_inference = "unclear"
+
+    normalized = {
+        "target_orientation": orientation,
+        "target_construct_name": str(payload.get("target_construct_name") or "").strip() or (
+            "functional_clarity" if target_route == "functional" else "symbolic_legibility" if target_route == "symbolic" else "experiential_imagery_accessibility"
+        ),
+        "target_route_strength": target_route_strength,
+        "route_strengths": route_strengths,
+        "cross_route_leakage": cross_route_leakage,
+        "source_product_fidelity": coerce_score(payload.get("source_product_fidelity")),
+        "realism_physical_plausibility": coerce_score(payload.get("realism_physical_plausibility")),
+        "readable_text_violation": coerce_bool(payload.get("readable_text_violation")),
+        "artifact_severity": coerce_score(payload.get("artifact_severity")),
+        "dominant_inference": dominant_inference,
+        "dominant_inference_match": coerce_bool(
+            payload.get("dominant_inference_match"),
+            dominant_inference == target_route,
+        ),
+        "item_scores": normalize_score_dict(payload.get("item_scores")),
+        "strengths": normalize_string_list(payload.get("strengths")),
+        "weaknesses": normalize_string_list(payload.get("weaknesses")),
+        "revision_priorities": normalize_string_list(payload.get("revision_priorities")),
+        "short_rationale": str(payload.get("short_rationale") or "").strip(),
+    }
+    return normalized
+
+
+def extract_revised_prompt_payload(text: str) -> dict[str, object]:
+    payload = parse_json_text(text)
+    revised_prompt = str(payload.get("revised_prompt") or "").strip()
+    if not revised_prompt:
+        raise RuntimeError("Revised prompt response did not contain `revised_prompt`.")
+    return {
+        "revised_prompt": revised_prompt,
+        "revision_summary": normalize_string_list(payload.get("revision_summary")),
+        "raw_payload": payload,
+    }
+
+
+def expected_route_targets(route_value: str | None) -> set[str]:
+    normalized = (route_value or "").strip().lower()
+    return EXPECTED_ROUTE_ORIENTATION_MAP.get(normalized, set())
+
+
+def orientation_slug(orientation: str) -> str:
+    return safe_name(orientation.lower().replace("-", "_"))
+
+
+def multiround_paths(args: argparse.Namespace, product_id: str, orientation: str) -> dict[str, pathlib.Path]:
+    slug = orientation_slug(orientation)
+    filename = f"{product_id}_{slug}"
+    round1_prefix = pathlib.Path(args.round1_output_dir) / orientation / filename
+    round2_prefix = pathlib.Path(args.round2_output_dir) / orientation / filename
+    return {
+        "round1_output_prefix": round1_prefix,
+        "round2_output_prefix": round2_prefix,
+        "round1_output": expected_output_paths(round1_prefix, args.output_format, 1)[0],
+        "round2_output": expected_output_paths(round2_prefix, args.output_format, 1)[0],
+        "round1_judgment": pathlib.Path(args.round1_judgment_dir) / orientation / f"{filename}.json",
+        "round2_judgment": pathlib.Path(args.round2_judgment_dir) / orientation / f"{filename}.json",
+        "revised_prompt": pathlib.Path(args.revised_prompt_dir) / orientation / f"{filename}.txt",
+        "revised_prompt_meta": pathlib.Path(args.revised_prompt_dir) / orientation / f"{filename}.json",
+    }
+
+
+def call_multimodal_text_model(
+    *,
+    api_key: str,
+    endpoint: str,
+    wire_api: str,
+    image_paths: list[pathlib.Path],
+    prompt: str,
+    instructions: str,
+    model: str,
+    max_tokens: int,
+    temperature: float,
+    reasoning_effort: str | None,
+    disable_response_storage: bool,
+    timeout: int,
+    retries: int,
+) -> dict:
+    if wire_api == "responses":
+        try:
+            return call_openai_responses_multimodal(
+                api_key=api_key,
+                endpoint=endpoint,
+                image_paths=image_paths,
+                prompt=prompt,
+                model=model,
+                instructions=instructions,
+                max_tokens=max_tokens,
+                reasoning_effort=reasoning_effort,
+                store=not disable_response_storage,
+                timeout=timeout,
+                retries=retries,
+            )
+        except RuntimeError as exc:
+            fallback_endpoint = sibling_endpoint(endpoint, DEFAULT_RESPONSES_PATH, DEFAULT_CHAT_COMPLETIONS_PATH)
+            if fallback_endpoint is None:
+                raise
+            fallback_message = str(exc).lower()
+            if "bad_response_body" not in fallback_message and "http 500" not in fallback_message:
+                raise
+            return call_openai_chat_completion_multimodal(
+                api_key=api_key,
+                endpoint=fallback_endpoint,
+                image_paths=image_paths,
+                prompt=prompt,
+                model=model,
+                instructions=instructions,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                response_format=None,
+                timeout=timeout,
+                retries=retries,
+            )
+
+    return call_openai_chat_completion_multimodal(
+        api_key=api_key,
+        endpoint=endpoint,
+        image_paths=image_paths,
+        prompt=prompt,
+        model=model,
+        instructions=instructions,
+        max_tokens=max_tokens,
+        temperature=temperature,
+        response_format=None,
+        timeout=timeout,
+        retries=retries,
+    )
+
+
+def build_multiround_summary(
+    *,
+    args: argparse.Namespace,
+    rows: list[dict[str, str]],
+    plans: list[OrientationPlan],
+    results: list[dict[str, object]],
+) -> dict[str, object]:
+    summary: dict[str, object] = {
+        "run_dir": args.run_dir,
+        "prompt_version": args.prompt_version,
+        "multiround": True,
+        "csv": args.csv,
+        "rows": len(rows),
+        "orientations": [plan.orientation for plan in plans],
+        "records": results,
+        "products": [],
+        "match_summary": {
+            "eligible_products": 0,
+            "matched_products": 0,
+            "match_rate": None,
+        },
+    }
+
+    records_by_product: dict[str, list[dict[str, object]]] = {}
+    for record in results:
+        product_id = str(record.get("id") or "")
+        records_by_product.setdefault(product_id, []).append(record)
+
+    matched_products = 0
+    eligible_products = 0
+    product_summaries: list[dict[str, object]] = []
+    for row in rows:
+        product_id = str(row.get("id") or "")
+        product_records = [
+            record for record in records_by_product.get(product_id, [])
+            if record.get("status") in {"generated", "skipped_exists"}
+        ]
+        expected_route = str(row.get("expected_best_image_route") or "").strip()
+        best_record = None
+        for record in product_records:
+            if record.get("round2_target_route_strength") is None:
+                continue
+            if best_record is None or int(record["round2_target_route_strength"]) > int(best_record["round2_target_route_strength"]):
+                best_record = record
+        matched_expected = None
+        if expected_route and best_record is not None:
+            eligible_products += 1
+            matched_expected = best_record.get("orientation") in expected_route_targets(expected_route)
+            if matched_expected:
+                matched_products += 1
+        product_summaries.append(
+            {
+                "id": product_id,
+                "expected_best_image_route": expected_route,
+                "best_orientation_by_round2": best_record.get("orientation") if best_record else None,
+                "best_round2_target_route_strength": best_record.get("round2_target_route_strength") if best_record else None,
+                "matched_expected_best_route": matched_expected,
+            }
+        )
+
+    summary["products"] = product_summaries
+    summary["match_summary"] = {
+        "eligible_products": eligible_products,
+        "matched_products": matched_products,
+        "match_rate": (matched_products / eligible_products) if eligible_products else None,
+    }
+    return summary
+
+
 def iter_records(
     rows: Iterable[dict[str, str]],
     args: argparse.Namespace,
@@ -2063,8 +2594,375 @@ def iter_records(
             }
 
 
+def run_multiround(
+    *,
+    args: argparse.Namespace,
+    rows: list[dict[str, str]],
+    plans: list[OrientationPlan],
+    api_key: str,
+) -> int:
+    total_records = len(rows) * len(plans)
+    progress = ProgressTracker(total_records, enabled=not args.no_progress)
+    template_cache: dict[str, dict[str, tuple[str, str]]] = {}
+    results: list[dict[str, object]] = []
+
+    for record in iter_records(rows, args, plans):
+        row = record["row"]
+        orientation = str(record["orientation"])
+        product_id = str(record["product_id"])
+        label = f"id={row.get('id')} orientation={orientation}"
+        paths = multiround_paths(args, product_id, orientation)
+        expected_route = str(row.get("expected_best_image_route") or "").strip()
+        template_cache.setdefault(orientation, {})
+        if "judge" not in template_cache[orientation]:
+            template_cache[orientation]["judge"] = load_multiround_template(orientation, "judge")
+        if "revise" not in template_cache[orientation]:
+            template_cache[orientation]["revise"] = load_multiround_template(orientation, "revise")
+
+        judge_template, judge_source = template_cache[orientation]["judge"]
+        revise_template, revise_source = template_cache[orientation]["revise"]
+        manifest_record = {
+            "id": row.get("id"),
+            "material_id": row.get("material_id"),
+            "category": row.get("level_one_category_name"),
+            "brand": row.get("creative_id_brand"),
+            "orientation": orientation,
+            "requested_orientation": record["requested_orientation"],
+            "source_url": record["source_url"],
+            "source_path": str(record["source_path"]),
+            "run_dir": args.run_dir,
+            "timestamp": args.timestamp,
+            "selection_mode": effective_selection_mode(args),
+            "prompt_version": args.prompt_version,
+            "multiround": True,
+            "model_provider": args.model_provider,
+            "model": args.model,
+            "image_wire_api": args.image_wire_api,
+            "endpoint": args.endpoint,
+            "image_reasoning_effort": args.image_reasoning_effort,
+            "image_response_storage_disabled": args.disable_image_response_storage,
+            "analysis_provider": args.analysis_provider,
+            "analysis_model": args.analysis_model,
+            "analysis_wire_api": args.analysis_wire_api,
+            "analysis_endpoint": args.analysis_endpoint,
+            "analysis_max_tokens": args.analysis_max_tokens,
+            "analysis_reasoning_effort": args.analysis_reasoning_effort,
+            "analysis_response_storage_disabled": args.analysis_disable_response_storage,
+            "size": args.size,
+            "quality": args.quality,
+            "output_format": args.output_format,
+            "sample_size": args.sample_size,
+            "random_seed": args.random_seed,
+            "prompt_source": record["prompt_source"],
+            "judge_prompt_source": judge_source,
+            "revise_prompt_source": revise_source,
+            "round1_prompt": record["prompt"],
+            "round1_output": str(paths["round1_output"]),
+            "round2_output": str(paths["round2_output"]),
+            "round1_judgment_path": str(paths["round1_judgment"]),
+            "round2_judgment_path": str(paths["round2_judgment"]),
+            "revised_prompt_path": str(paths["revised_prompt"]),
+            "revised_prompt_meta_path": str(paths["revised_prompt_meta"]),
+            "expected_best_image_route": expected_route,
+            "selection_reason": row.get("selection_reason"),
+            "orientation_matches_expected_route": orientation in expected_route_targets(expected_route) if expected_route else None,
+            "status": "planned",
+        }
+
+        existing_paths = [
+            paths["round1_output"],
+            paths["round2_output"],
+            paths["round1_judgment"],
+            paths["round2_judgment"],
+            paths["revised_prompt"],
+            paths["revised_prompt_meta"],
+        ]
+
+        try:
+            if all(path.exists() for path in existing_paths) and not args.overwrite:
+                round1_judgment = normalize_judgment_payload(read_json(paths["round1_judgment"]), orientation)
+                round2_judgment = normalize_judgment_payload(read_json(paths["round2_judgment"]), orientation)
+                revised_prompt_text = paths["revised_prompt"].read_text(encoding="utf-8").strip()
+                manifest_record["status"] = "skipped_exists"
+                manifest_record["round1_target_route_strength"] = round1_judgment["target_route_strength"]
+                manifest_record["round2_target_route_strength"] = round2_judgment["target_route_strength"]
+                manifest_record["round1_cross_route_leakage"] = round1_judgment["cross_route_leakage"]
+                manifest_record["round2_cross_route_leakage"] = round2_judgment["cross_route_leakage"]
+                manifest_record["round1_judgment"] = round1_judgment
+                manifest_record["round2_judgment"] = round2_judgment
+                manifest_record["revised_prompt"] = revised_prompt_text
+                manifest_record["target_score_delta"] = int(round2_judgment["target_route_strength"]) - int(round1_judgment["target_route_strength"])
+                append_manifest(pathlib.Path(args.manifest), manifest_record)
+                results.append(
+                    {
+                        "id": row.get("id"),
+                        "orientation": orientation,
+                        "status": "skipped_exists",
+                        "expected_best_image_route": expected_route,
+                        "round1_target_route_strength": round1_judgment["target_route_strength"],
+                        "round2_target_route_strength": round2_judgment["target_route_strength"],
+                        "round1_cross_route_leakage": round1_judgment["cross_route_leakage"],
+                        "round2_cross_route_leakage": round2_judgment["cross_route_leakage"],
+                        "target_score_delta": manifest_record["target_score_delta"],
+                        "matched_expected_route_for_orientation": manifest_record["orientation_matches_expected_route"],
+                        "round1_output": str(paths["round1_output"]),
+                        "round2_output": str(paths["round2_output"]),
+                    }
+                )
+                print(f"SKIP existing multiround output for {label}", flush=True)
+                progress.advance("skipped", label)
+                continue
+
+            print(f"PROCESS multiround {label} category={row.get('level_one_category_name')}", flush=True)
+
+            if args.dry_run:
+                judge_preview = render_prompt(judge_template, row, orientation, {"generation_prompt": record["prompt"]})
+                revise_preview = render_prompt(
+                    revise_template,
+                    row,
+                    orientation,
+                    {
+                        "generation_prompt": record["prompt"],
+                        "judgment_json": '{"target_route_strength": 0, "revision_priorities": ["placeholder"]}',
+                    },
+                )
+                manifest_record["status"] = "dry_run"
+                manifest_record["round1_judge_request_preview"] = judge_preview
+                manifest_record["revise_request_preview"] = revise_preview
+                append_manifest(pathlib.Path(args.manifest), manifest_record)
+                results.append(
+                    {
+                        "id": row.get("id"),
+                        "orientation": orientation,
+                        "status": "dry_run",
+                        "expected_best_image_route": expected_route,
+                        "round1_target_route_strength": None,
+                        "round2_target_route_strength": None,
+                        "target_score_delta": None,
+                    }
+                )
+                print("ROUND1_PROMPT", flush=True)
+                print(record["prompt"], flush=True)
+                print("ROUND1_JUDGE_REQUEST", flush=True)
+                print(judge_preview, flush=True)
+                print("ROUND2_REVISE_REQUEST", flush=True)
+                print(revise_preview, flush=True)
+                progress.advance("dry_run", label)
+                continue
+
+            source_path = download_image(
+                record["source_url"],
+                record["source_path"],
+                timeout=args.timeout,
+                retries=args.retries,
+            )
+            manifest_record["source_path"] = str(source_path)
+
+            if args.download_only:
+                manifest_record["status"] = "downloaded"
+                append_manifest(pathlib.Path(args.manifest), manifest_record)
+                results.append(
+                    {
+                        "id": row.get("id"),
+                        "orientation": orientation,
+                        "status": "downloaded",
+                        "expected_best_image_route": expected_route,
+                        "round1_target_route_strength": None,
+                        "round2_target_route_strength": None,
+                        "target_score_delta": None,
+                    }
+                )
+                progress.advance("downloaded", label)
+                continue
+
+            round1_response = call_image_model(
+                api_key=api_key,
+                endpoint=args.endpoint,
+                wire_api=args.image_wire_api,
+                image_path=source_path,
+                prompt=record["prompt"],
+                model=args.model,
+                size=args.size,
+                quality=args.quality,
+                output_format=args.output_format,
+                n=args.n,
+                reasoning_effort=args.image_reasoning_effort,
+                disable_response_storage=args.disable_image_response_storage,
+                timeout=args.timeout,
+                retries=args.retries,
+            )
+            round1_output = save_images(round1_response, paths["round1_output_prefix"], args.output_format)[0]
+
+            round1_judge_prompt = render_prompt(
+                judge_template,
+                row,
+                orientation,
+                {"generation_prompt": record["prompt"]},
+            )
+            round1_judge_response = call_multimodal_text_model(
+                api_key=api_key,
+                endpoint=args.analysis_endpoint,
+                wire_api=args.analysis_wire_api,
+                image_paths=[source_path, round1_output],
+                prompt=round1_judge_prompt,
+                instructions="You are a strict advertising-image evaluator. Return only valid JSON.",
+                model=args.analysis_model,
+                max_tokens=args.analysis_max_tokens,
+                temperature=0.0,
+                reasoning_effort=args.analysis_reasoning_effort,
+                disable_response_storage=args.analysis_disable_response_storage,
+                timeout=args.timeout,
+                retries=args.retries,
+            )
+            round1_judgment = normalize_judgment_payload(
+                parse_json_text(extract_text_response_text(round1_judge_response)),
+                orientation,
+            )
+            write_json(paths["round1_judgment"], round1_judgment)
+
+            revise_request = render_prompt(
+                revise_template,
+                row,
+                orientation,
+                {
+                    "generation_prompt": record["prompt"],
+                    "judgment_json": json.dumps(round1_judgment, ensure_ascii=False, indent=2),
+                },
+            )
+            revise_response = call_multimodal_text_model(
+                api_key=api_key,
+                endpoint=args.analysis_endpoint,
+                wire_api=args.analysis_wire_api,
+                image_paths=[source_path, round1_output],
+                prompt=revise_request,
+                instructions="You revise advertising-image prompts. Return only valid JSON.",
+                model=args.analysis_model,
+                max_tokens=args.analysis_max_tokens,
+                temperature=0.0,
+                reasoning_effort=args.analysis_reasoning_effort,
+                disable_response_storage=args.analysis_disable_response_storage,
+                timeout=args.timeout,
+                retries=args.retries,
+            )
+            revised_payload = extract_revised_prompt_payload(extract_text_response_text(revise_response))
+            revised_prompt_text = str(revised_payload["revised_prompt"])
+            paths["revised_prompt"].parent.mkdir(parents=True, exist_ok=True)
+            paths["revised_prompt"].write_text(revised_prompt_text.strip() + "\n", encoding="utf-8")
+            write_json(paths["revised_prompt_meta"], revised_payload["raw_payload"])
+
+            round2_response = call_image_model(
+                api_key=api_key,
+                endpoint=args.endpoint,
+                wire_api=args.image_wire_api,
+                image_path=source_path,
+                prompt=revised_prompt_text,
+                model=args.model,
+                size=args.size,
+                quality=args.quality,
+                output_format=args.output_format,
+                n=args.n,
+                reasoning_effort=args.image_reasoning_effort,
+                disable_response_storage=args.disable_image_response_storage,
+                timeout=args.timeout,
+                retries=args.retries,
+            )
+            round2_output = save_images(round2_response, paths["round2_output_prefix"], args.output_format)[0]
+
+            round2_judge_prompt = render_prompt(
+                judge_template,
+                row,
+                orientation,
+                {"generation_prompt": revised_prompt_text},
+            )
+            round2_judge_response = call_multimodal_text_model(
+                api_key=api_key,
+                endpoint=args.analysis_endpoint,
+                wire_api=args.analysis_wire_api,
+                image_paths=[source_path, round2_output],
+                prompt=round2_judge_prompt,
+                instructions="You are a strict advertising-image evaluator. Return only valid JSON.",
+                model=args.analysis_model,
+                max_tokens=args.analysis_max_tokens,
+                temperature=0.0,
+                reasoning_effort=args.analysis_reasoning_effort,
+                disable_response_storage=args.analysis_disable_response_storage,
+                timeout=args.timeout,
+                retries=args.retries,
+            )
+            round2_judgment = normalize_judgment_payload(
+                parse_json_text(extract_text_response_text(round2_judge_response)),
+                orientation,
+            )
+            write_json(paths["round2_judgment"], round2_judgment)
+
+            manifest_record["status"] = "generated"
+            manifest_record["round1_output"] = str(round1_output)
+            manifest_record["round2_output"] = str(round2_output)
+            manifest_record["round1_judgment"] = round1_judgment
+            manifest_record["round2_judgment"] = round2_judgment
+            manifest_record["revised_prompt"] = revised_prompt_text
+            manifest_record["revision_summary"] = revised_payload["revision_summary"]
+            manifest_record["round1_target_route_strength"] = round1_judgment["target_route_strength"]
+            manifest_record["round2_target_route_strength"] = round2_judgment["target_route_strength"]
+            manifest_record["round1_cross_route_leakage"] = round1_judgment["cross_route_leakage"]
+            manifest_record["round2_cross_route_leakage"] = round2_judgment["cross_route_leakage"]
+            manifest_record["target_score_delta"] = int(round2_judgment["target_route_strength"]) - int(round1_judgment["target_route_strength"])
+            manifest_record["round1_image_api_usage"] = round1_response.get("usage")
+            manifest_record["round2_image_api_usage"] = round2_response.get("usage")
+            manifest_record["round1_analysis_api_usage"] = round1_judge_response.get("usage")
+            manifest_record["revise_api_usage"] = revise_response.get("usage")
+            manifest_record["round2_analysis_api_usage"] = round2_judge_response.get("usage")
+            append_manifest(pathlib.Path(args.manifest), manifest_record)
+
+            results.append(
+                {
+                    "id": row.get("id"),
+                    "orientation": orientation,
+                    "status": "generated",
+                    "expected_best_image_route": expected_route,
+                    "round1_target_route_strength": round1_judgment["target_route_strength"],
+                    "round2_target_route_strength": round2_judgment["target_route_strength"],
+                    "round1_cross_route_leakage": round1_judgment["cross_route_leakage"],
+                    "round2_cross_route_leakage": round2_judgment["cross_route_leakage"],
+                    "target_score_delta": manifest_record["target_score_delta"],
+                    "matched_expected_route_for_orientation": manifest_record["orientation_matches_expected_route"],
+                    "round1_output": str(round1_output),
+                    "round2_output": str(round2_output),
+                }
+            )
+            print(
+                f"SAVED multiround id={row.get('id')} round1={round1_output} round2={round2_output}",
+                flush=True,
+            )
+            progress.advance("generated", label)
+            if args.sleep > 0:
+                time.sleep(args.sleep)
+        except Exception as exc:  # noqa: BLE001 - keep batch processing robust.
+            manifest_record["status"] = "error"
+            manifest_record["error"] = str(exc)
+            manifest_record["traceback"] = traceback.format_exc()
+            append_manifest(pathlib.Path(args.manifest), manifest_record)
+            results.append(
+                {
+                    "id": row.get("id"),
+                    "orientation": orientation,
+                    "status": "error",
+                    "expected_best_image_route": expected_route,
+                    "error": str(exc),
+                }
+            )
+            print(f"ERROR multiround id={row.get('id')}: {exc}", file=sys.stderr)
+            progress.advance("error", label)
+
+    summary = build_multiround_summary(args=args, rows=rows, plans=plans, results=results)
+    write_json(pathlib.Path(args.summary_path), summary)
+    print(f"SUMMARY {args.summary_path}", flush=True)
+    return 0
+
+
 def main() -> int:
     args = parse_args()
+    validate_multiround_args(args)
     plans = resolve_orientation_plans(args)
     rows = select_rows(read_rows(pathlib.Path(args.csv)), args)
     resolve_output_paths(args, rows, plans)
@@ -2108,8 +3006,24 @@ def main() -> int:
             f"BASE_PROMPT_RESPONSE_STORAGE {'disabled' if args.disable_base_prompt_response_storage else 'enabled'}",
             flush=True,
         )
+    if args.multiround:
+        if args.analysis_provider:
+            print(f"ANALYSIS_PROVIDER {args.analysis_provider}", flush=True)
+        print(f"ANALYSIS_MODEL {args.analysis_model}", flush=True)
+        print(f"ANALYSIS_WIRE_API {args.analysis_wire_api}", flush=True)
+        print(f"ANALYSIS_ENDPOINT {args.analysis_endpoint}", flush=True)
+        print(f"ANALYSIS_MAX_TOKENS {args.analysis_max_tokens}", flush=True)
+        if args.analysis_reasoning_effort:
+            print(f"ANALYSIS_REASONING_EFFORT {args.analysis_reasoning_effort}", flush=True)
+        print(
+            f"ANALYSIS_RESPONSE_STORAGE {'disabled' if args.analysis_disable_response_storage else 'enabled'}",
+            flush=True,
+        )
     print(f"ROWS {len(rows)} ids={selected_ids}", flush=True)
     print(f"ORIENTATIONS {', '.join(plan.orientation for plan in plans)}", flush=True)
+
+    if args.multiround:
+        return run_multiround(args=args, rows=rows, plans=plans, api_key=api_key or "")
 
     total_records = len(rows) * len(plans)
     progress = ProgressTracker(total_records, enabled=not args.no_progress)

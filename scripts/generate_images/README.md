@@ -11,13 +11,13 @@ Expected workflow:
    - `Product-oriented`
    - `Context-oriented`
    - `Symbolic-oriented`
-   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, and the matching `-v2` / `-v3` families use the Park-theory-grounded set:
+   `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, `definition-only-v6`, and the matching `-v2` / `-v3` families use the Park-theory-grounded set:
    - `Product-oriented`
    - `Symbolic-oriented`
    - `Experiential-oriented`
 5. Save generated images to `outputs/`.
 
-`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, or the matching `-v2` / `-v3` family, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
+`Affect-oriented` is accepted as a deprecated alias for `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, `definition-only-v6`, or the matching `-v2` / `-v3` family, `Context-oriented` is also accepted as a deprecated alias for `Experiential-oriented`.
 
 Recommended output naming:
 
@@ -178,6 +178,41 @@ Use `definition-control` for `def + visual control`:
 
 ```bash
 python3 scripts/generate_images/generate_from_csv.py --prompt-version definition-control --api-key "sk-xxx"
+```
+
+Use `definition-only-v6` for the multiround-ready v6 definition-only family:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version definition-only-v6 \
+  --api-key "sk-xxx"
+```
+
+Run the v6 multiround workflow on the final 15-product dataset:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --csv data/experiment/white_bg_product_catalog_final_15_selected.csv \
+  --prompt-version definition-only-v6 \
+  --multiround \
+  --selection-mode sequential \
+  --limit 15 \
+  --model-provider api111 \
+  --base-prompt-provider api111 \
+  --run-dir outputs/final15_definition-only-v6_multiround \
+  --api-key "sk-xxx"
+```
+
+Preview the multiround workflow without network calls:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --csv data/experiment/white_bg_product_catalog_final_15_selected.csv \
+  --prompt-version definition-only-v6 \
+  --multiround \
+  --selection-mode sequential \
+  --limit 1 \
+  --dry-run
 ```
 
 Use `definition-genprompt` for `def -> generated prompt -> image`:
@@ -373,7 +408,7 @@ python3 scripts/generate_images/generate_from_csv.py \
 
 - `--csv`: input product CSV.
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
-- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3`-`v17` keep the historical Park-theory-grounded series, `definition-only` / `definition-control` / `definition-genprompt` / `definition-control-genprompt` keep the original four research-condition files, `visual-control` / `genprompt-control` remain backward-compatible names for those originals, the `-v2` family runs the independent refactor in `prompts/research_conditions_v2/`, and the `-v3` family runs the boundary-hardened refactor in `prompts/research_conditions_v3/`.
+- `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3`-`v17` keep the historical Park-theory-grounded series, `definition-only` / `definition-control` / `definition-genprompt` / `definition-control-genprompt` keep the original four research-condition files, `visual-control` / `genprompt-control` remain backward-compatible names for those originals, the `-v2` family runs the independent refactor in `prompts/research_conditions_v2/`, the `-v3` family runs the boundary-hardened refactor in `prompts/research_conditions_v3/`, and `definition-only-v6` runs the new multiround-ready `prompts/research_conditions_v6/` family without touching the historical `v6` prompt set.
 - `--base-prompt-file`: v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` prompt-generation template; defaults to the matching version file.
 - `--model-provider`: optional provider preset for the final image-generation stage; `heyroute` uses `https://heyroute.ai/v1/responses` with `gpt-5.5`, and `api111` defaults to `gpt-image-2` on the source-image-preserving image endpoint.
 - `--image-wire-api`: final image-generation wire API, one of `images_edits`, `images_generations`, or `responses`; defaults to `images_edits` unless a provider preset overrides it.
@@ -386,9 +421,16 @@ python3 scripts/generate_images/generate_from_csv.py \
 - `--base-prompt-dir`: directory for saved generated prompts, defaults to `{run-dir}/base_prompts`.
 - `--base-prompt-reasoning-effort`: Responses API reasoning effort for prompt generation, one of `low`, `medium`, or `high`.
 - `--disable-base-prompt-response-storage`: sends `store=false` for Responses API prompt generation.
+- `--multiround`: runs the five-step round1 generate -> round1 judge -> revise prompt -> round2 generate -> round2 judge workflow. Currently supported only with `--prompt-version definition-only-v6`.
+- `--analysis-provider`: optional provider preset for multiround judge and revise calls. Defaults to `--base-prompt-provider`.
+- `--analysis-model`: text/vision model used by multiround judge and revise calls. Defaults to `--base-prompt-model`.
+- `--analysis-wire-api`: wire API used by multiround judge and revise calls. Defaults to `--base-prompt-wire-api`.
+- `--analysis-endpoint`: endpoint used by multiround judge and revise calls. Defaults to `--base-prompt-endpoint`.
+- `--analysis-max-tokens`: maximum output tokens for multiround judge and revise calls. Defaults to `--base-prompt-max-tokens`.
+- `--analysis-reasoning-effort`: Responses API reasoning effort for multiround judge and revise calls. Defaults to `--base-prompt-reasoning-effort`.
 - `--prompt`: inline prompt template; overrides `--prompt-file`.
-- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, or the matching `-v2` / `-v3` family, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
-- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, or the matching `-v2` / `-v3` family, `context` and `usage` resolve to `Experiential-oriented`.
+- `--orientation`: generate one orientation only; deprecated alias `Affect-oriented` is normalized to `Symbolic-oriented`. Under `--prompt-version v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, `definition-only-v6`, or the matching `-v2` / `-v3` family, deprecated alias `Context-oriented` is normalized to `Experiential-oriented`.
+- `--image-type`: short alias for generating one type only: `product`/`function`, `context`/`usage`, `symbolic`, or `experiential`/`experience`. Under `v3`, `v4`, `v5`, `v6`, `v7`, `v8`, `v9`, `v10`, `v11`, `v12`, `v13`, `v14`, `v15`, `v16`, `v17`, `definition-only`, `definition-control`, `visual-control`, `definition-genprompt`, `definition-control-genprompt`, `genprompt-control`, `definition-only-v6`, or the matching `-v2` / `-v3` family, `context` and `usage` resolve to `Experiential-oriented`.
 - `--orientations`: comma-separated orientations, or `all`; defaults to all three canonical orientations for the selected prompt version.
 - `--selection-mode`: `previous-random10`, `sequential`, or `random`; defaults to `previous-random10`.
 - `--limit`: maximum rows to process. Sequential mode defaults to 1 if `--limit` is omitted.
@@ -427,6 +469,7 @@ python3 scripts/generate_images/generate_from_csv.py \
 - v16 run root: `outputs/{model}_{selection_label}_{orientation_label}_v16_{timestamp}/`
 - v17 run root: `outputs/{model}_{selection_label}_{orientation_label}_v17_{timestamp}/`
 - definition-only run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-only_{timestamp}/`
+- definition-only-v6 run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-only-v6_{timestamp}/`
 - definition-control run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-control_{timestamp}/`
 - definition-genprompt run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-genprompt_{timestamp}/`
 - definition-control-genprompt run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-control-genprompt_{timestamp}/`
@@ -434,5 +477,11 @@ python3 scripts/generate_images/generate_from_csv.py \
 - v15/v16 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
 - v17/definition-genprompt/definition-control-genprompt/genprompt-control orientation-specific generated prompts: `{run-dir}/base_prompts/{id}_{orientation}_prompt.txt`
 - Generated images: `{run-dir}/generated/{orientation}/{id}_{orientation}.png`
+- Multiround round1 images: `{run-dir}/generated/round1/{orientation}/{id}_{orientation}.png`
+- Multiround round2 images: `{run-dir}/generated/round2/{orientation}/{id}_{orientation}.png`
+- Multiround judgments: `{run-dir}/judgments/round1/` and `{run-dir}/judgments/round2/`
+- Multiround revised prompts: `{run-dir}/revised_prompts/{orientation}/{id}_{orientation}.txt`
+- Multiround manifest JSONL: `{run-dir}/multiround_manifest.jsonl`
+- Multiround summary JSON: `{run-dir}/multiround_summary.json`
 - Downloaded source images: `{run-dir}/source_images/{id}.{ext}`
 - Manifest JSONL: `{run-dir}/generation_manifest.jsonl`

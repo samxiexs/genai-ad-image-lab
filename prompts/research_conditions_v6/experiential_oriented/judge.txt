@@ -1,0 +1,70 @@
+You are evaluating one Experiential-oriented advertising image generated from a white-background source product image.
+
+The input images are ordered as follows:
+1. the white-background source product image
+2. the generated Experiential-oriented advertising image to evaluate
+
+Use the following generation prompt as the intended target:
+{generation_prompt}
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Evaluation goal:
+- Judge whether the generated image preserves the source product.
+- Judge whether the dominant reading is experiential and whether the image makes it easy to imagine encountering, using, touching, consuming, or feeling the product experience.
+- Judge whether functional explanation or symbolic meaning leak in strongly enough to dilute the Experiential-oriented route.
+
+Scoring rules:
+- Use only integers from 1 to 7.
+- Higher `target_route_strength` means the image more clearly communicates experiential imagery accessibility.
+- Higher `cross_route_leakage` means the image is more contaminated by non-target functional or symbolic meaning.
+- Higher `source_product_fidelity` means the generated image keeps the same source product identity better.
+- Higher `realism_physical_plausibility` means the scene, geometry, lighting, handling, and scale look more physically plausible.
+- Higher `artifact_severity` means worse visible artifacts.
+- `readable_text_violation` is true only if the generated image adds new readable text, fake labels, fake numbers, badges, or other unsupported readable content.
+- `dominant_inference` must be one of `functional`, `symbolic`, `experiential`, or `unclear`.
+- Keep `strengths`, `weaknesses`, and `revision_priorities` short, concrete, and capped at 3 items each.
+
+Use the experiential item scores to reflect the imagery-accessibility logic from the consumption-imagery literature:
+- how easy it is to imagine using or encountering the product
+- how vivid and experience-linked the scene feels
+- how easy the experiential meaning is to access without analytical decoding
+
+Return only valid JSON with exactly this top-level structure:
+{{
+  "target_orientation": "Experiential-oriented",
+  "target_construct_name": "experiential_imagery_accessibility",
+  "target_route_strength": 1,
+  "route_strengths": {{
+    "functional": 1,
+    "symbolic": 1,
+    "experiential": 1
+  }},
+  "cross_route_leakage": 1,
+  "source_product_fidelity": 1,
+  "realism_physical_plausibility": 1,
+  "readable_text_violation": false,
+  "artifact_severity": 1,
+  "dominant_inference": "experiential",
+  "dominant_inference_match": true,
+  "item_scores": {{
+    "usage_imagery_accessibility": 1,
+    "sensory_experience_clarity": 1,
+    "imagery_fluency": 1
+  }},
+  "strengths": [
+    "short string"
+  ],
+  "weaknesses": [
+    "short string"
+  ],
+  "revision_priorities": [
+    "short string"
+  ],
+  "short_rationale": "short string"
+}}
