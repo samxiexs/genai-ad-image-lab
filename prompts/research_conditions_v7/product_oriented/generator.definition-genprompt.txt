@@ -15,4 +15,4 @@ Product metadata:
 - Promotion: {creative_id_promotion}
 
 Explanation:
-Following Park et al. (1986) brand concept management, treat this as the introduction-stage execution of a functional brand concept: the image should establish the brand image by emphasizing functional performance in solving consumption-related problems. It should make product-relevant problem-solving evidence visible in a way that could support problem-solving specialization or problem-solving generalization at the elaboration stage, and could later be reinforced through performance-related products at fortification. The dominant reading should be practical utility and externally generated consumption needs, not identity meaning or sensory stimulation.
+Establish a functional brand image by emphasizing the functional performance of the product in solving consumption-related problems. Make the visual evidence show how the product addresses an externally generated consumption need through practical use, performance, convenience, or problem solving. Keep the dominant meaning focused on functional utility, not symbolic identity or experiential stimulation.

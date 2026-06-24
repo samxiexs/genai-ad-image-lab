@@ -1,8 +1,8 @@
 # Research Conditions V7
 
-This folder stores the Park et al. (1986) BCM-stage-grounded `v7` refactor of the research-condition prompt families.
+This folder stores the BCM-stage-grounded `v7` refactor of the research-condition prompt families.
 
-Compared with `prompts/research_conditions_v5/`, this version keeps the same folderized structure and matched visual-control block, but replaces each orientation's freeform explanation paragraph with a source-grounded explanation derived from Park, Jaworski, and MacInnis's brand concept management stages: introduction, elaboration, and fortification.
+Compared with `prompts/research_conditions_v5/`, this version keeps the same folderized structure and matched visual-control block, but replaces each orientation's freeform explanation paragraph with a source-grounded prompt-oriented explanation derived from brand concept management stages: introduction, elaboration, and fortification.
 
 Runtime version names:
 
