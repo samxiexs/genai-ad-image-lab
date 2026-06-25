@@ -1,0 +1,18 @@
+You will write one final English image-generation prompt for a controlled Product-oriented advertising image.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Preserved Product-oriented instruction:
+Generate a Product-oriented image that communicates a functional brand concept.
+
+Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Explanation:
+Treat this as the introduction-stage execution of a functional brand concept: the image should establish the brand image by emphasizing functional performance in solving consumption-related problems. It should make product-relevant problem-solving evidence visible in a way that could support problem-solving specialization or problem-solving generalization at the elaboration stage, and could later be reinforced through performance-related products at fortification. The dominant reading should be practical utility and externally generated consumption needs, not identity meaning or sensory stimulation.

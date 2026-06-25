@@ -1,0 +1,25 @@
+You will write one final English image-generation prompt for a controlled Experiential-oriented advertising image.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Preserved Experiential-oriented instruction:
+Generate an Experiential-oriented image that communicates an experiential brand concept.
+
+Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Explanation:
+Treat this as the introduction-stage execution of an experiential brand concept: the image should establish the brand image by conveying the brand effect on sensory satisfaction or cognitive stimulation and highlighting experiential and fantasy aspects associated with consumption. It should make product-evoked sensory pleasure, stimulation, or variety visible in a way that could support brand accessory or brand network elaboration and could later be linked to other experiential products at fortification. The dominant reading should be felt experience and internally generated stimulation or variety, not practical utility or identity signaling. Do not deliberately use human figures to express the experience; the product itself can create visually stimulating sensory cues.
+
+Additional visual-control requirements:
+- Preserve the source product's recognizable shape, color, material, logo, packaging, visible design, proportions, and physical structure. Do not redesign the product.
+- Do not invent unsupported functions, claims, ingredients, certifications, awards, prices, ratings, badges, slogans, arrows, charts, QR codes, or brand assets.
+- Do not add new readable text. Existing logos or package text already present on the source product may remain, but do not create new ad copy, labels, feature callouts, or rewritten package text.
+- Keep the image realistic and photographic. Adapt lighting, shadow, perspective, reflections, and scale so the product looks physically present in the scene rather than pasted from a cutout.
+- Keep the scene photographically realistic, with believable scene logic, naturalistic lighting, realistic textures, and no obvious synthetic artifacts.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
