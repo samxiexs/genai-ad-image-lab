@@ -1,0 +1,17 @@
+You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Generate an Experiential-oriented image that communicates an experiential brand concept.
+
+Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Explanation:
+The source theory frames experiential needs as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. For brands with experiential concepts, positioning conveys the brand's effect on sensory satisfaction or cognitive stimulation, while highlighting experiential and fantasy aspects associated with consumption. The concept can also be developed or reinforced through related products that provide additional or different forms of stimulation. In the image context, this experiential meaning is best understood as the sensory, stimulating, imaginative, or emotionally involving experience associated with encountering, using, or consuming the product. When appropriate, a person may appear as part of a consumption or use moment, insofar as that presence helps make the product's experiential value more visible. The central meaning should remain sensory satisfaction, stimulation, variety, fantasy, or felt consumption experience, rather than social identity or status.
