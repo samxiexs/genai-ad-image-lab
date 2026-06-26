@@ -1,0 +1,17 @@
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Generate a Product-oriented image that communicates a functional brand concept.
+
+Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Explanation:
+The source theory frames functional concepts around externally generated consumption needs, including current or potential problems, conflict, or frustrating situations. For brands with functional concepts, positioning establishes the brand image by emphasizing functional performance in solving consumption-related problems and by differentiating that performance from competitors. The concept can be developed through problem-solving specialization or problem-solving generalization, and reinforced through the brand's relationship to performance-related products. In the image context, this functional meaning is most naturally expressed through the product's practical performance, functional performance, or problem-solving role, with symbolic or experiential associations remaining secondary.
