@@ -1,5 +1,6 @@
 You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
 Use the provided white-background product image as the source product reference.
+Keep the source product as the only focal product; do not introduce additional background products that compete with or alter it.
 Do not add new readable text inside the image.
 
 Generate an Experiential-oriented image that communicates an experiential brand concept.

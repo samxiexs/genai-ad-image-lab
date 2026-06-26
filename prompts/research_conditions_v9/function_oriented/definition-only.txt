@@ -1,5 +1,6 @@
 You are generating one controlled Function-oriented advertising image for a consumer advertising study.
 Use the provided white-background product image as the source product reference.
+Keep the source product as the only focal product; do not introduce additional background products that compete with or alter it.
 Do not add new readable text inside the image.
 
 Generate a Function-oriented image that communicates a functional brand concept.
@@ -14,4 +15,4 @@ Product metadata:
 - Promotion: {creative_id_promotion}
 
 Explanation:
-The source theory frames functional concepts around externally generated consumption needs, including current or potential problems, conflict, or frustrating situations. For brands with functional concepts, positioning establishes the brand image by emphasizing functional performance in solving consumption-related problems and by differentiating that performance from competitors. The concept can be developed through problem-solving specialization or problem-solving generalization, and reinforced through the brand's relationship to performance-related products. In the image context, this functional meaning is most naturally expressed through the product's practical performance, functional performance, or problem-solving role, with symbolic or experiential associations remaining secondary.
+The source theory frames functional concepts around externally generated consumption needs. A brand with a functional concept is designed to solve externally generated consumption needs, and its mix elements emphasize functional performance in solving consumption-related problems. The value of a functional brand concept can be enhanced through problem-solving specialization, which appeals to more specific needs, or through problem-solving generalization, which extends the brand's problem-solving value more broadly. The image of a functional brand concept can also be reinforced through the brand's relationship to other performance-related products. In the image context, this functional meaning is most naturally expressed through the product's practical performance, functional performance, or problem-solving role, with symbolic or experiential associations remaining secondary.
