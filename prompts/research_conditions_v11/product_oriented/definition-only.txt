@@ -4,14 +4,19 @@ Do not add new readable text inside the image.
 
 Generate a Product-oriented image that communicates a functional brand concept.
 
-Functional needs are defined as those that motivate the search for products that solve consumption-related problems (e.g., solve a current problem, prevent a potential problem, resolve conflict, restructure a frustrating situation; see Fennell 1978). A brand with a functional concept is defined as one designed to solve externally generated consumption needs.
+Functional needs are defined as those that motivate the search for products that solve consumption-related problems. A brand with a functional concept is one designed to solve externally generated consumption needs.
 
 Product metadata:
-- Title: {ori_title}
-- Brand: {creative_id_brand}
-- Category: {level_one_category_name}
-- Price: {creative_id_price}
-- Promotion: {creative_id_promotion}
+
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}
 
 Explanation:
-Use the source theory's brand concept-image logic as the execution basis. For a functional concept, the image translates the brand meaning into visible practical problem solving. Functional value can be expressed through product-relevant cues of performance, reliability, efficiency, protection, precision, convenience, durability, or practical task support. Depending on the product, the image may emphasize a specific practical need or a broader usefulness across related consumption situations. The intended viewer inference is that the product helps solve, prevent, or reduce a concrete consumption-related problem.
+Use the source theory's brand concept-image logic as the execution basis. For a functional concept, the image should translate the brand meaning into the product's practical problem-solving value. The product should be presented as a visually understandable answer to a consumption-related problem, so that the viewer can infer what the product helps accomplish, improve, simplify, protect, repair, clean, organize, measure, prepare, support, or make more reliable.
+
+The functional meaning should be grounded in the product itself and in the product's relationship to a plausible use situation. Product-relevant cues such as performance, reliability, efficiency, durability, convenience, precision, protection, capacity, ease of use, task support, or practical outcome can be used when appropriate for the product category. The image may suggest either specialized problem solving for a specific practical need or broader usefulness across related practical situations, but the product should remain the central evidence of functional value.
+
+The intended viewer inference is that the product is useful because it helps solve a practical consumption problem. A successful image should make the viewer quickly understand what practical problem the product helps solve. If the image primarily communicates beauty, status, identity, belonging, mood, fantasy, sensory pleasure, or atmosphere rather than practical problem-solving value, it does not successfully express a functional brand concept.

@@ -7,11 +7,16 @@ Generate a Symbolic-oriented image that communicates a symbolic brand concept.
 Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. Work on symbolic consumer behavior and the sociology of consumption illustrates the important relationship between symbolic needs and consumption. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
 
 Product metadata:
-- Title: {ori_title}
-- Brand: {creative_id_brand}
-- Category: {level_one_category_name}
-- Price: {creative_id_price}
-- Promotion: {creative_id_promotion}
+
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}
 
 Explanation:
-Use the source theory's brand concept-image logic as the execution basis. For a symbolic concept, the image translates the brand meaning into what the product communicates about self-image, role, identity, taste, expertise, status, achievement, or belonging. Symbolic meaning can be perceived from the product itself: visible form, materials, design language, brand cues, rarity, premium presentation, distinctive display state, or a carefully chosen presentation context can help establish a distinctive image, distinguish the owner from the mass, or express identity and achievement. The intended viewer inference is that the product carries a symbolic meaning about the person or identity associated with it, with the product's own design and presentation serving as the central symbolic evidence.
+Use the source theory's brand concept-image logic as the execution basis. For a symbolic concept, the image should translate the brand meaning into the perceived message that the product communicates about a consumer's self-image, identity, taste, values, dispositions, role, standards, or desired image. The symbolic meaning should arise from the product itself as a design object and brand object, not mainly from people shown around it.
+
+The product should be presented so that its visible form, material impression, design language, brand cues already present in the source image, distinctive placement, curated display state, ownership traces, or carefully selected surrounding objects allow viewers to infer something about the kind of person, taste, value orientation, or identity associated with choosing or owning it. A symbolic image may suggest refinement, professionalism, independence, creativity, discipline, care, cultural taste, technical taste, health consciousness, family responsibility, achievement, or status when appropriate to the product, but it should not reduce symbolic meaning to luxury alone.
+
+The intended viewer inference is not simply that the product is beautiful, pleasurable, useful, or atmospheric. The intended inference is that the product carries identity-related meaning: it helps communicate who the consumer is, what the consumer values, what role the consumer occupies, or what image the consumer wishes to project. Human figures, social groups, or lifestyle scenes are not necessary for this effect; if any human or lifestyle cue appears, it should remain secondary and should only support the product's symbolic meaning. If the image mainly communicates sensory pleasure, mood, fantasy, relaxation, practical utility, or general visual beauty rather than the product's identity-related message, it does not successfully express a symbolic brand concept.
