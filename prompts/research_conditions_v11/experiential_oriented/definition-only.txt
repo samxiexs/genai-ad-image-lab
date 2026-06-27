@@ -1,10 +1,7 @@
 You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
-Use the provided white-background product image as the source product reference.
-Do not add new readable text inside the image.
+Use the provided white-background product image as the source product reference. Do not add new readable text inside the image. Make the product feel naturally integrated into a realistic commercial-photography scene, not pasted onto a background, and let the concept be expressed through the product, setting, and interaction rather than added text, icons, labels, or infographic panels.
 
-Generate an Experiential-oriented image that communicates an experiential brand concept.
-
-Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
 
 Product metadata:
 
@@ -15,8 +12,4 @@ Product metadata:
 * Promotion: {creative_id_promotion}
 
 Explanation:
-Use the source theory's brand concept-image logic as the execution basis. For an experiential concept, the image should translate the brand meaning into the sensory, felt, imaginative, playful, surprising, relaxing, immersive, or cognitively stimulating experience associated with encountering, using, consuming, touching, smelling, tasting, hearing, watching, opening, wearing, holding, preparing, or interacting with the product.
-
-The experiential meaning should arise from the product's immediate encounter and consumption experience. Product-relevant cues such as texture, aroma, taste, freshness, temperature, softness, smoothness, comfort, motion, rhythm, lightness, relaxation, play, novelty, variety, discovery, imagination, or atmosphere can be used when appropriate for the product category. These cues should help viewers imagine what the product feels like in use or consumption, rather than what the product says about the consumer's identity.
-
-The intended viewer inference is not who the consumer is, what status the consumer has, what role the consumer occupies, or what self-image the consumer projects. The intended inference is what kind of sensory pleasure, stimulation, variety, mood, or felt experience the product provides. The product should remain the source of that experience, rather than becoming merely a symbol of taste, achievement, belonging, or personal values. If the image mainly communicates identity, status, role position, self-image, personal standards, or social meaning rather than the felt experience of the product, it does not successfully express an experiential brand concept.
+For an experiential concept, the image turns the brand meaning into the felt experience of encountering, using, consuming, or interacting with the product. The product becomes the source of sensory pleasure, variety, imagination, or cognitive stimulation, either through a believable use moment or through cues that make the viewer anticipate the feeling of use. Product-grounded cues such as texture, aroma, taste, temperature, motion, rhythm, immersion, play, surprise, relaxation, comfort, discovery, atmosphere, or fantasy can make the experience vivid. The expected reading is what the product feels like, not practical problem solving or identity display.

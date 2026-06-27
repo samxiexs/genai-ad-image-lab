@@ -1,10 +1,7 @@
 You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
-Use the provided white-background product image as the source product reference.
-Do not add new readable text inside the image.
+Use the provided white-background product image as the source product reference. Do not add new readable text inside the image. Make the product feel naturally integrated into a realistic commercial-photography scene, not pasted onto a background, and let the concept be expressed through the product, setting, and interaction rather than just added text, icons, labels, or infographic panels.
 
-Generate a Symbolic-oriented image that communicates a symbolic brand concept.
-
-Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. Work on symbolic consumer behavior and the sociology of consumption illustrates the important relationship between symbolic needs and consumption. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
+Generate a Symbolic-oriented image that communicates a symbolic brand concept. Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. Work on symbolic consumer behavior and the sociology of consumption illustrates the important relationship between symbolic needs and consumption. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
 
 Product metadata:
 
@@ -15,8 +12,4 @@ Product metadata:
 * Promotion: {creative_id_promotion}
 
 Explanation:
-Use the source theory's brand concept-image logic as the execution basis. For a symbolic concept, the image should translate the brand meaning into the perceived message that the product communicates about a consumer's self-image, identity, taste, values, dispositions, role, standards, or desired image. The symbolic meaning should arise from the product itself as a design object and brand object, not mainly from people shown around it.
-
-The product should be presented so that its visible form, material impression, design language, brand cues already present in the source image, distinctive placement, curated display state, ownership traces, or carefully selected surrounding objects allow viewers to infer something about the kind of person, taste, value orientation, or identity associated with choosing or owning it. A symbolic image may suggest refinement, professionalism, independence, creativity, discipline, care, cultural taste, technical taste, health consciousness, family responsibility, achievement, or status when appropriate to the product, but it should not reduce symbolic meaning to luxury alone.
-
-The intended viewer inference is not simply that the product is beautiful, pleasurable, useful, or atmospheric. The intended inference is that the product carries identity-related meaning: it helps communicate who the consumer is, what the consumer values, what role the consumer occupies, or what image the consumer wishes to project. Human figures, social groups, or lifestyle scenes are not necessary for this effect; if any human or lifestyle cue appears, it should remain secondary and should only support the product's symbolic meaning. If the image mainly communicates sensory pleasure, mood, fantasy, relaxation, practical utility, or general visual beauty rather than the product's identity-related message, it does not successfully express a symbolic brand concept.
+For a symbolic concept, the image turns the brand meaning into what choosing, owning, wearing, displaying, carrying, placing, or using the product says about self-image, role, taste, values, achievement, expertise, independence, refinement, or belonging. Symbolic meaning can come from the product's holistic design presence: form, material impression, color, brand cues, rarity, presentation, associated place or time, and nearby objects that imply a distinctive way of living. A single well-composed person may appear when the product-person relationship clarifies personal taste or role, while the product remains the visual carrier of identity meaning. The expected reading is personal meaning and self-expression, not merely beauty, pleasure, price, or function.
