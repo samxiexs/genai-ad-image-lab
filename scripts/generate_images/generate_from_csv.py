@@ -167,6 +167,7 @@ RESEARCH_CONDITIONS_V7_DIR = "prompts/research_conditions_v7"
 RESEARCH_CONDITIONS_V8_DIR = "prompts/research_conditions_v8"
 RESEARCH_CONDITIONS_V9_DIR = "prompts/research_conditions_v9"
 RESEARCH_CONDITIONS_V10_DIR = "prompts/research_conditions_v10"
+RESEARCH_CONDITIONS_V11_DIR = "prompts/research_conditions_v11"
 RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS = {
     "Product-oriented": "product_oriented",
     "Function-oriented": "function_oriented",
@@ -201,6 +202,10 @@ def research_conditions_v9_path(orientation: str, filename: str) -> str:
 
 def research_conditions_v10_path(orientation: str, filename: str) -> str:
     return f"{RESEARCH_CONDITIONS_V10_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
+def research_conditions_v11_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V11_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
 
 
 DEFAULT_BASE_PROMPT_FILES = {
@@ -673,6 +678,10 @@ PROMPT_VERSION_FILES = {
         orientation: research_conditions_v10_path(orientation, "definition-only.txt")
         for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
     },
+    "definition-only-v11": {
+        orientation: research_conditions_v11_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
     {
@@ -736,6 +745,7 @@ PARK_PROMPT_VERSIONS = frozenset(
         "genprompt-control-v8",
         "definition-only-v9",
         "definition-only-v10",
+        "definition-only-v11",
     }
 )
 GENERATED_BASE_PROMPT_VERSIONS = frozenset(
@@ -835,7 +845,7 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5/"
             "definition-only-v6/definition-only-v7/definition-control-v7/visual-control-v7/definition-genprompt-v7/definition-control-genprompt-v7/genprompt-control-v7/"
             "definition-only-v8/definition-control-v8/visual-control-v8/definition-genprompt-v8/definition-control-genprompt-v8/genprompt-control-v8/"
-            "definition-only-v9/definition-only-v10, "
+            "definition-only-v9/definition-only-v10/definition-only-v11, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -873,7 +883,8 @@ def parse_args() -> argparse.Namespace:
             "the -v7 family runs the BCM-stage-grounded explanation refactor stored in prompts/research_conditions_v7, "
             "the -v8 family runs the prompt-oriented explanation refactor with the experiential no-deliberate-human-figures note stored in prompts/research_conditions_v8, "
             "definition-only-v9 copies the v8 definition-only prompt set in prompts/research_conditions_v9, "
-            "and definition-only-v10 copies the v9 definition-only prompt set in prompts/research_conditions_v10."
+            "definition-only-v10 copies the v9 definition-only prompt set in prompts/research_conditions_v10, "
+            "and definition-only-v11 copies the v10 definition-only prompt set in prompts/research_conditions_v11."
         ),
     )
     parser.add_argument(
@@ -1039,9 +1050,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n", type=int, default=1, help="Images to generate per row.")
     parser.add_argument(
         "--selection-mode",
-        choices=["previous-random10", "sequential", "random"],
+        choices=["previous-random10", "sequential", "random", "random-per-group3"],
         default=DEFAULT_SELECTION_MODE,
-        help="Row selection mode. Defaults to the previous fixed random-10 sample.",
+        help=(
+            "Row selection mode. random-per-group3 samples up to three rows per "
+            "candidate_group/representative_group. Defaults to the previous fixed random-10 sample."
+        ),
     )
     parser.add_argument("--limit", type=int, default=None, help="Maximum rows to process. Sequential mode defaults to 1.")
     parser.add_argument("--start", type=int, default=0, help="Number of matching rows to skip before processing.")
@@ -1112,6 +1126,39 @@ def select_rows(rows: list[dict[str, str]], args: argparse.Namespace) -> list[di
             raise ValueError("--sample-size must be non-negative.")
         sample_size = min(sample_size, len(selected))
         selected = random.Random(args.random_seed).sample(selected, sample_size)
+        return selected
+
+    if mode == "random-per-group3":
+        selected = selected[args.start :]
+        group_column = next(
+            (
+                column
+                for column in ("candidate_group", "representative_group", "concept_group")
+                if any(row.get(column) for row in selected)
+            ),
+            None,
+        )
+        if group_column is None:
+            raise ValueError(
+                "--selection-mode random-per-group3 requires a group column such as "
+                "candidate_group or representative_group."
+            )
+        groups: dict[str, list[tuple[int, dict[str, str]]]] = {}
+        for index, row in enumerate(selected):
+            group = str(row.get(group_column, "")).strip()
+            if not group:
+                group = "__missing_group__"
+            groups.setdefault(group, []).append((index, row))
+        rng = random.Random(args.random_seed)
+        selected_with_index: list[tuple[int, dict[str, str]]] = []
+        for group_rows in groups.values():
+            if len(group_rows) > 3:
+                selected_with_index.extend(rng.sample(group_rows, 3))
+            else:
+                selected_with_index.extend(group_rows)
+        selected = [row for _, row in sorted(selected_with_index, key=lambda item: item[0])]
+        if args.limit is not None and args.limit >= 0:
+            selected = selected[: args.limit]
         return selected
 
     selected = selected[args.start :]
@@ -1509,6 +1556,8 @@ def selection_label(args: argparse.Namespace, selected_rows: list[dict[str, str]
         return f"random{len(selected_rows)}_seed{DEFAULT_RANDOM_SEED}"
     if mode == "random":
         return f"random{len(selected_rows)}_seed{args.random_seed}"
+    if mode == "random-per-group3":
+        return f"random_per_group3_{len(selected_rows)}_seed{args.random_seed}"
     if args.limit is None:
         return f"sequential{len(selected_rows)}_start{args.start}"
     return f"sequential{len(selected_rows)}_start{args.start}"

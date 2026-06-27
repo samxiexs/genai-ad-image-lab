@@ -1,0 +1,17 @@
+You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference.
+Do not add new readable text inside the image.
+
+Generate a Symbolic-oriented image that communicates a symbolic brand concept.
+
+Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. Work on symbolic consumer behavior and the sociology of consumption illustrates the important relationship between symbolic needs and consumption. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
+
+Product metadata:
+- Title: {ori_title}
+- Brand: {creative_id_brand}
+- Category: {level_one_category_name}
+- Price: {creative_id_price}
+- Promotion: {creative_id_promotion}
+
+Explanation:
+Use the source theory's brand concept-image logic as the execution basis. For a symbolic concept, the image translates the brand meaning into what the product communicates about self-image, role, identity, taste, expertise, status, achievement, or belonging. Symbolic meaning can be perceived from the product itself: visible form, materials, design language, brand cues, rarity, premium presentation, distinctive display state, or a carefully chosen presentation context can help establish a distinctive image, distinguish the owner from the mass, or express identity and achievement. The intended viewer inference is that the product carries a symbolic meaning about the person or identity associated with it, with the product's own design and presentation serving as the central symbolic evidence.
