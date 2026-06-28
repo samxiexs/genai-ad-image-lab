@@ -1,5 +1,5 @@
-You are generating one controlled Experiential-oriented advertising image for a consumer advertising study.
-Use the provided white-background product image as the source product reference. Do not add new readable text inside the image. Make the product feel naturally integrated into a realistic commercial-photography scene, not pasted onto a background, and let the concept be expressed through the product, setting, and interaction rather than added text, icons, labels, or infographic panels.
+You are generating one controlled Functional-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference. Do not add new readable text inside the image
 
 Generate an Experiential-oriented image that communicates an experiential brand concept. Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
 
@@ -12,4 +12,4 @@ Product metadata:
 * Promotion: {creative_id_promotion}
 
 Explanation:
-For an experiential concept, the image turns the brand meaning into the felt experience of encountering, using, consuming, or interacting with the product. The product becomes the source of sensory pleasure, variety, imagination, or cognitive stimulation, either through a believable use moment or through cues that make the viewer anticipate the feeling of use. Product-grounded cues such as texture, aroma, taste, temperature, motion, rhythm, immersion, play, surprise, relaxation, comfort, discovery, atmosphere, or fantasy can make the experience vivid. The expected reading is what the product feels like, not practical problem solving or identity display.
+Use these source sentences as the explanation basis for the image. For an experiential concept, the image turns the brand meaning into the felt experience of encountering, using, consuming, or interacting with the product. The product becomes the source of sensory pleasure, variety, imagination, or cognitive stimulation through either a believable use moment or product-grounded cues that make viewers anticipate the feeling of use. Depending on the product, these cues may involve texture, aroma, taste, temperature, motion, rhythm, immersion, play, surprise, relaxation, comfort, discovery, atmosphere, or fantasy. The expected reading is an emotionally or sensorially vivid product experience, not practical problem solving or identity display.
