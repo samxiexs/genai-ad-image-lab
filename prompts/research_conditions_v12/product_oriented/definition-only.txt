@@ -1,5 +1,5 @@
 You are generating one controlled Product-oriented advertising image for a consumer advertising study.
-Use the provided white-background product image as the source product reference. Do not add new readable text inside the image. Keep the product within one believable commercial-photography scene; avoid a floating oversized product display beside a separate person using or wearing the same product.
+Use the provided white-background product image as the source product reference.
 
 Definition:
 Functional needs are defined as those that motivate the search for products that solve consumption-related problems. A brand with a functional concept is one designed to solve externally generated consumption needs.
