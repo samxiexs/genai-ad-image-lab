@@ -5,7 +5,7 @@ Definition:
 Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
 
 Explanation:
-An experiential image conveys sensory satisfaction, variety, or cognitive stimulation. It highlights experiential or fantasy aspects associated with encountering, using, or consuming the product. Product-grounded sensory cues and believable everyday consumption or use situations may suggest additional or different forms of stimulation. The central inference is the felt experience provided by the product, rather than practical problem solving or self-image expression.
+An experiential image conveys sensory satisfaction, variety, or cognitive stimulation. It highlights experiential or fantasy aspects associated with encountering, using, or consuming the product. Product-grounded sensory cues and believable everyday consumption or use situations may suggest additional or different forms of stimulation. The primary inference should be what the felt experience provided by the product, rather than what practical problem the product helps solve or what useful performance it provides, or what identity it expresses.
 
 
 Product metadata:
