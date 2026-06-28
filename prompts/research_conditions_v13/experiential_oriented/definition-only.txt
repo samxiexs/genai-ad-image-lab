@@ -1,12 +1,4 @@
-Generate a controlled Experiential-oriented advertising image based on the provided white-background product image, keeping the original width-to-height ratio and physically realistic product scale, placement, and proportions, with no new readable text, following the definition and explanation below.
-
-Definition:
-Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
-
-Explanation:
-An experiential image conveys sensory pleasure, variety, or cognitive stimulation. It highlights experiential aspects associated with encountering, using, or consuming the product, so the product is understood through the experience it provides in use or consumption. Everyday use or consumption situations may make the product's sensory or stimulating qualities more vivid, evoking how the product is handled, operated, enjoyed, or engaged with as part of an ongoing experience. Product-grounded cues, variations, or complementary elements may suggest additional forms of stimulation within that use experience. The central inference is the experiential value provided by the product, rather than practical problem solving or self-image expression.
-
-
+Generate a controlled Experiential-oriented image using the provided white-background product image as reference. Preserve the original width-to-height ratio, do not add any new readable text inside the image. Follow the definition and explanation below.
 
 Product metadata:
 * Title: {ori_title}
@@ -14,3 +6,9 @@ Product metadata:
 * Category: {level_one_category_name}
 * Price: {creative_id_price}
 * Promotion: {creative_id_promotion}
+
+Definition:
+Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Explanation:
+An experiential image conveys the product's effect on sensory pleasure, variety, or cognitive stimulation. The image should highlight experiential aspects associated with encountering, using, or consuming the product by depicting a believable moment of product use or consumption. Rather than presenting the product as an isolated object, the image should communicate the lived experience of using it in an authentic, everyday context, allowing viewers to imagine or recall what the experience feels like from the user's perspective. Product-grounded cues, realistic use situations, and complementary elements may make the product's experiential qualities more vivid by suggesting how it is naturally handled, operated, enjoyed, or consumed. The primary inference should be what it feels like to encounter, use, or consume the product, rather than how the product solves a practical problem or what it communicates about the consumer's self-image, role, status, or belonging.
