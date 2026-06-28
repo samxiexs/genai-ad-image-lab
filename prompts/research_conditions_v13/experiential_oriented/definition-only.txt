@@ -1,11 +1,11 @@
-Generate a controlled Experiential-oriented advertising image using the provided white-background product image as reference, keep the original width-to-height ratio, do not add any new readable text inside the image, and follow the definition and explanation below.
-
+Generate a controlled Experiential-oriented advertising image based on the provided white-background product image, keeping the original width-to-height ratio and physically realistic product scale, placement, and proportions, with no new readable text, following the definition and explanation below.
 
 Definition:
 Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
 
 Explanation:
-An experiential image conveys the sensory pleasure, variety, or cognitive stimulation associated with the product. Its meaning is grounded in the moment of encountering, using, or consuming the product, where sensory qualities, imagination, play, or varied forms of engagement become part of the product experience. Everyday use or consumption situations may evoke the felt experience of handling, enjoying, or interacting with the product in context. The primary inference is the experiential value provided by the product, rather than the practical problem it solves, the useful performance it provides, or the self-image it communicates.
+An experiential image conveys sensory pleasure, variety, or cognitive stimulation. It highlights experiential aspects associated with encountering, using, or consuming the product, so the product is understood through the experience it provides in use or consumption. Everyday use or consumption situations may make the product's sensory or stimulating qualities more vivid, evoking how the product is handled, operated, enjoyed, or engaged with as part of an ongoing experience. Product-grounded cues, variations, or complementary elements may suggest additional forms of stimulation within that use experience. The central inference is the experiential value provided by the product, rather than practical problem solving or self-image expression.
+
 
 
 Product metadata:
