@@ -1,11 +1,11 @@
-You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
-The provided white-background product image is the source product reference. Do not add new readable text inside the image.
+Generate a controlled Symbolic-oriented advertising image using the provided white-background product image as reference, keep the original width-to-height ratio, do not add any new readable text inside the image, and follow the definition and explanation below.
+
 
 Definition:
 Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
 
 Explanation:
-A symbolic image associates the individual with a desired group, role, or self-image. Symbolic meaning is the perceived message a product communicates about self-image to the consumer and to others through visual elements. The product may evoke associations linked with a place or time, express personal values or dispositions, or help form identity. A carefully composed relationship between the product and one individual may clarify the desired self-image or role, while keeping the product as the carrier of symbolic meaning rather than treating a crowd as the symbol. The primary inference should be what identity it expresses, rather than what practical problem the product helps solve or what useful performance it provides, or what sensory experience it evokes.
+A symbolic image associates the individual with a desired group, role, or self-image. Symbolic meaning is the perceived message a product communicates about a consumer's self-image to the consumer and to others through visual elements. The product may evoke associations linked with a place or time, express personal values or dispositions, or contribute to identity formation. A relationship between the product and one representative individual may clarify the desired role or self-image when the product remains the carrier of symbolic meaning. The primary inference is the identity-related message expressed by the product, rather than the practical problem it solves, the useful performance it provides, or the sensory experience it evokes.
 
 Product metadata:
 * Title: {ori_title}
