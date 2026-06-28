@@ -1,11 +1,11 @@
 You are generating one controlled Symbolic-oriented advertising image for a consumer advertising study.
-Use the provided white-background product image as the source product reference. Do not add new readable text inside the image.
+Use the provided white-background product image as the source product reference. Do not add new readable text inside the image. Keep the product within one believable commercial-photography scene; avoid a floating oversized product display beside a separate person using or wearing the same product.
 
 Definition:
 Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
 
 Explanation:
-A symbolic image associates the individual with a desired group, role, or self-image. Symbolic meaning is the perceived message a product communicates about self-image to the consumer and to others through visual elements. The product may evoke associations linked with a place or time, express personal values or dispositions, or help form identity. A carefully composed product-person relationship may clarify the desired self-image or role while keeping the product as the carrier of symbolic meaning.
+A symbolic image associates the individual with a desired group, role, or self-image. Symbolic meaning is the perceived message a product communicates about self-image to the consumer and to others through visual elements. The product may evoke associations linked with a place or time, express personal values or dispositions, or help form identity. A carefully composed relationship between the product and one individual may clarify the desired self-image or role, while keeping the product as the carrier of symbolic meaning rather than treating a crowd as the symbol.
 
 Product metadata:
 * Title: {ori_title}
