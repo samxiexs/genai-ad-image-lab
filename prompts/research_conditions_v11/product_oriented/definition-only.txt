@@ -1,17 +1,16 @@
-You are generating one controlled Functional-oriented advertising image for a consumer advertising study.
-Use the provided white-background product image as the source product reference. Do not add new readable text inside the image
+You are generating one controlled Product-oriented advertising image for a consumer advertising study.
+Use the provided white-background product image as the source product reference. Do not add new readable text inside the image.
 
-Generate a Product-oriented image that communicates a functional brand concept. 
-
+Definition:
 Functional needs are defined as those that motivate the search for products that solve consumption-related problems. A brand with a functional concept is one designed to solve externally generated consumption needs.
 
-Product metadata:
+Explanation:
+A functional image emphasizes the brand's functional performance in solving consumption-related problems. The image can present the product through several visually connected product-centered views, practical demonstrations, or product-task relations, so viewers can assess the product's ability to fulfill its purpose from seeing it. These views may make specific consumption needs more salient, consistent with problem-solving specialization, while also suggesting broader usefulness across related practical situations, consistent with problem-solving generalization. Related objects, surfaces, or settings can reinforce the brand's relationship to performance-related use when they make the product's functional value visible. The primary inference should be what practical problem the product helps solve or what useful performance it provides, rather than what identity it expresses or what sensory experience it evokes.
 
+
+Product metadata:
 * Title: {ori_title}
 * Brand: {creative_id_brand}
 * Category: {level_one_category_name}
 * Price: {creative_id_price}
 * Promotion: {creative_id_promotion}
-
-Explanation:
-Use these source sentences as the explanation basis for the image. A brand with a functional concept is defined as one designed to solve externally generated consumption needs. For brands with functional concepts, mix elements should emphasize the brand's functional performance in solving consumption-related problems. A problem-solving specialization strategy enhances the value of brands with a functional concept by appealing to more specific needs. Problem-solving generalization is a second strategy for enhancing the value of a brand with a functional concept. Show the product in a way that makes its function, performance, convenience, or problem-solving role legible through product-relevant evidence consistent with the actual product.

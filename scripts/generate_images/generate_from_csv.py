@@ -168,6 +168,7 @@ RESEARCH_CONDITIONS_V8_DIR = "prompts/research_conditions_v8"
 RESEARCH_CONDITIONS_V9_DIR = "prompts/research_conditions_v9"
 RESEARCH_CONDITIONS_V10_DIR = "prompts/research_conditions_v10"
 RESEARCH_CONDITIONS_V11_DIR = "prompts/research_conditions_v11"
+RESEARCH_CONDITIONS_V12_DIR = "prompts/research_conditions_v12"
 RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS = {
     "Product-oriented": "product_oriented",
     "Function-oriented": "function_oriented",
@@ -206,6 +207,10 @@ def research_conditions_v10_path(orientation: str, filename: str) -> str:
 
 def research_conditions_v11_path(orientation: str, filename: str) -> str:
     return f"{RESEARCH_CONDITIONS_V11_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
+def research_conditions_v12_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V12_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
 
 
 DEFAULT_BASE_PROMPT_FILES = {
@@ -682,6 +687,10 @@ PROMPT_VERSION_FILES = {
         orientation: research_conditions_v11_path(orientation, "definition-only.txt")
         for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
     },
+    "definition-only-v12": {
+        orientation: research_conditions_v12_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
     {
@@ -746,6 +755,7 @@ PARK_PROMPT_VERSIONS = frozenset(
         "definition-only-v9",
         "definition-only-v10",
         "definition-only-v11",
+        "definition-only-v12",
     }
 )
 GENERATED_BASE_PROMPT_VERSIONS = frozenset(
@@ -845,7 +855,7 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5/"
             "definition-only-v6/definition-only-v7/definition-control-v7/visual-control-v7/definition-genprompt-v7/definition-control-genprompt-v7/genprompt-control-v7/"
             "definition-only-v8/definition-control-v8/visual-control-v8/definition-genprompt-v8/definition-control-genprompt-v8/genprompt-control-v8/"
-            "definition-only-v9/definition-only-v10/definition-only-v11, "
+            "definition-only-v9/definition-only-v10/definition-only-v11/definition-only-v12, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -884,7 +894,8 @@ def parse_args() -> argparse.Namespace:
             "the -v8 family runs the prompt-oriented explanation refactor with the experiential no-deliberate-human-figures note stored in prompts/research_conditions_v8, "
             "definition-only-v9 copies the v8 definition-only prompt set in prompts/research_conditions_v9, "
             "definition-only-v10 copies the v9 definition-only prompt set in prompts/research_conditions_v10, "
-            "and definition-only-v11 copies the v10 definition-only prompt set in prompts/research_conditions_v11."
+            "definition-only-v11 copies the v10 definition-only prompt set in prompts/research_conditions_v11, "
+            "and definition-only-v12 copies the v11 definition-only prompt set in prompts/research_conditions_v12."
         ),
     )
     parser.add_argument(
