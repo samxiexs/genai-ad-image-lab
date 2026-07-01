@@ -463,14 +463,12 @@ PROMPT_VERSION_FILES = {
         "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v13.txt",
     },
     "v14": {
-        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v14.txt",
-        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v14.txt",
-        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v14.txt",
+        orientation: research_conditions_v14_path(orientation, "definition-only.txt")
+        for orientation in ("Product-oriented", "Symbolic-oriented", "Experiential-oriented")
     },
     "v15": {
-        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v15.txt",
-        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v15.txt",
-        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v15.txt",
+        orientation: research_conditions_v15_path(orientation, "definition-only.txt")
+        for orientation in ("Product-oriented", "Symbolic-oriented", "Experiential-oriented")
     },
     "v16": {
         "Product-oriented": "prompts/product_oriented_ad_image_prompt.v16.txt",
@@ -926,8 +924,8 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v11 copies the v10 definition-only prompt set in prompts/research_conditions_v11, "
             "definition-only-v12 copies the v11 definition-only prompt set in prompts/research_conditions_v12, "
             "definition-only-v13 copies the v12 definition-only prompt set in prompts/research_conditions_v13, "
-            "definition-only-v14 copies the v13 definition-only prompt set in prompts/research_conditions_v14, "
-            "and definition-only-v15 copies the v14 definition-only prompt set in prompts/research_conditions_v15."
+            "v14/definition-only-v14 use prompts/research_conditions_v14, "
+            "and v15/definition-only-v15 use prompts/research_conditions_v15."
         ),
     )
     parser.add_argument(
@@ -1112,7 +1110,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--no-rollout",
         action="store_true",
-        help="Disable the default v14 rollout behavior and generate once per product-orientation pair.",
+        help="Disable the default v14/v15 rollout behavior and generate once per product-orientation pair.",
     )
     parser.add_argument(
         "--selection-mode",

@@ -134,7 +134,7 @@ python3 scripts/generate_images/generate_from_csv.py \
   --api-key "sk-xxx"
 ```
 
-Use the v14 prompt set for the Chinese version of v13. By default, v14 is treated as a rollout prompt version: each selected product-orientation pair is generated 3 times as separate API calls, with output names such as `{id}_{orientation}_rollout01.png`, `{id}_{orientation}_rollout02.png`, and `{id}_{orientation}_rollout03.png`.
+Use the v14 prompt set from `prompts/research_conditions_v14/*/definition-only.txt`. By default, v14 is treated as a rollout prompt version: each selected product-orientation pair is generated 3 times as separate API calls, with output names such as `{id}_{orientation}_rollout01.png`, `{id}_{orientation}_rollout02.png`, and `{id}_{orientation}_rollout03.png`.
 
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
@@ -169,7 +169,7 @@ python3 scripts/generate_images/generate_from_csv.py \
   --dry-run
 ```
 
-Use the v15 prompt set. This is a copied successor of v14 and also defaults to 3 rollout API calls per selected product-orientation pair:
+Use the v15 prompt set from `prompts/research_conditions_v15/*/definition-only.txt`. It also defaults to 3 rollout API calls per selected product-orientation pair:
 
 ```bash
 OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \

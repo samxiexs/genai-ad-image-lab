@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Build the final experiment CSV from yellow v15 rows and white v11 rows.
+"""Build the final experiment CSV from screenshot-selected v15 and v11 rows.
 
-Yellow rows come from the 4 x 120 v15 table. White rows come from the
-user-selected screenshot table and are treated as non-symbolic.
+Yellow rows are the 6 highlighted products from the v15 4 x 120 table.
+White rows are screenshot-selected rows 11-15 from the v11 table and are
+treated as non-symbolic.
 
 The output keeps only the columns needed by the v14/v15 prompt metadata and
 the image-generation script. `candidate_group` is retained for
@@ -20,6 +21,17 @@ YELLOW_CSV = REPO_ROOT / "data/experiment/white_bg_product_catalog_v15_120_each.
 WHITE_CSV = REPO_ROOT / "data/experiment/white_bg_product_catalog_v11_user_selected_from_screenshot.csv"
 OUTPUT_CSV = REPO_ROOT / "data/experiment/white_bg_product_catalog_v15_yellow_v11_white_metadata.csv"
 SUMMARY_MD = REPO_ROOT / "data/experiment/white_bg_product_catalog_v15_yellow_v11_white_metadata_summary.md"
+
+YELLOW_SELECTED_IDS = [
+    "65447",
+    "50958",
+    "26328",
+    "14314",
+    "1547520",
+    "100401",
+]
+
+WHITE_SELECTED_ORDERS = ["11", "12", "13", "14", "15"]
 
 OUTPUT_COLUMNS = [
     "id",
@@ -67,15 +79,28 @@ def count_by(rows: list[dict[str, str]], column: str) -> dict[str, int]:
     return dict(sorted(counts.items(), key=lambda item: (-item[1], item[0])))
 
 
+def select_rows_by_values(
+    rows: list[dict[str, str]],
+    *,
+    column: str,
+    values: list[str],
+    source_name: str,
+) -> list[dict[str, str]]:
+    indexed = {str(row.get(column, "")).strip(): row for row in rows}
+    missing = [value for value in values if value not in indexed]
+    if missing:
+        raise ValueError(f"{source_name} missing {column} values: {missing}")
+    return [indexed[value] for value in values]
+
+
 def write_summary(
     *,
     output_rows: list[dict[str, str]],
     yellow_rows: list[dict[str, str]],
     white_rows: list[dict[str, str]],
-    overlap_ids: set[str],
 ) -> None:
     lines = [
-        "# V15 yellow + V11 white metadata CSV",
+        "# V15 yellow + V11 white screenshot-selected metadata CSV",
         "",
         f"- Yellow source: `{YELLOW_CSV}`",
         f"- White source: `{WHITE_CSV}`",
@@ -83,40 +108,49 @@ def write_summary(
         "",
         "Build rule:",
         "",
-        "- Yellow rows keep their existing symbolic value.",
+        f"- Yellow rows are selected by id: `{', '.join(YELLOW_SELECTED_IDS)}`.",
+        f"- White rows are selected by `user_selected_order`: `{', '.join(WHITE_SELECTED_ORDERS)}`.",
+        "- Yellow rows keep their existing `symbolic` value.",
         "- White rows are assigned `symbolic=false`.",
-        "- If the same id appears in both sources, the white row is kept and the yellow duplicate is dropped.",
         "- Only generation-script required columns, `candidate_group`, and v14/v15 metadata column `symbolic` are retained.",
         "",
         "Counts:",
         "",
-        f"- yellow source rows: {len(yellow_rows)}",
-        f"- white source rows: {len(white_rows)}",
-        f"- overlapping ids dropped from yellow: {len(overlap_ids)}",
+        f"- selected yellow rows: {len(yellow_rows)}",
+        f"- selected white rows: {len(white_rows)}",
         f"- output rows: {len(output_rows)}",
         f"- unique ids: {len({row['id'] for row in output_rows})}",
         f"- symbolic counts: {count_by(output_rows, 'symbolic')}",
         f"- candidate_group counts: {count_by(output_rows, 'candidate_group')}",
         "",
-        "Overlapping ids:",
+        "Rows:",
         "",
     ]
-    for item in sorted(overlap_ids):
-        lines.append(f"- {item}")
+    for row in output_rows:
+        lines.append(
+            f"- {row['id']} | {row['candidate_group']} | symbolic={row['symbolic']} | {row['ori_title']}"
+        )
     SUMMARY_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main() -> int:
-    yellow_rows = read_csv(YELLOW_CSV)
-    white_rows = read_csv(WHITE_CSV)
-    white_ids = {row["id"] for row in white_rows}
-    yellow_ids = {row["id"] for row in yellow_rows}
-    overlap_ids = yellow_ids & white_ids
+    yellow_source_rows = read_csv(YELLOW_CSV)
+    white_source_rows = read_csv(WHITE_CSV)
+    yellow_rows = select_rows_by_values(
+        yellow_source_rows,
+        column="id",
+        values=YELLOW_SELECTED_IDS,
+        source_name="yellow source",
+    )
+    white_rows = select_rows_by_values(
+        white_source_rows,
+        column="user_selected_order",
+        values=WHITE_SELECTED_ORDERS,
+        source_name="white source",
+    )
 
     output_rows: list[dict[str, str]] = []
     for row in yellow_rows:
-        if row["id"] in white_ids:
-            continue
         output_rows.append(project_row(row, row.get("symbolic", "")))
     for row in white_rows:
         output_rows.append(project_row(row, "false"))
@@ -126,7 +160,6 @@ def main() -> int:
         output_rows=output_rows,
         yellow_rows=yellow_rows,
         white_rows=white_rows,
-        overlap_ids=overlap_ids,
     )
 
     print(f"WROTE {OUTPUT_CSV}")
