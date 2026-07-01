@@ -1,0 +1,19 @@
+Generate a controlled Experiential-oriented advertising image for research using the provided white-background product image as reference. Preserve the original width-to-height ratio, do not add any new readable text inside the image. Follow the definition and explanation below. If Symbolic is true, keep real source-image branding visible; if false, naturally remove or obscure branding so the product appears unbranded while preserving its form and realism.
+
+Experiential-oriented Definition:
+For this Experiential-oriented image, "experiential" refers to the image created for the brand, not to a fixed product class. Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Experiential-oriented Explanation:
+(1) An experiential-oriented image is designed to fulfill experiential needs for sensory pleasure, variety, and cognitive stimulation.
+(2) Experiential needs are desires for products that provide sensory pleasure, variety, and/or cognitive stimulation, and experiential products satisfy these internally generated needs for stimulation and/or variety.
+(3) Experiential value is derived from the sensory experience and cognitive stimulation provided during consumption.
+(4) Consumption situations should establish a brand image based on the sensory and cognitive associations that fulfill these experiential needs.
+(5) The primary perception should be the sensory pleasure, variety, and cognitive stimulation associated with the product rather than its problem-solving ability or symbolic meaning.
+
+Product metadata:
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Symbolic: {symbolic}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}

@@ -1,0 +1,21 @@
+Generate a controlled Symbolic-oriented advertising image for research using the provided white-background product image as reference. Preserve the original width-to-height ratio, do not add any new readable text inside the image. Follow the definition and explanation below. If Symbolic is true, keep real source-image branding visible; if false, naturally remove or obscure branding so the product appears unbranded while preserving its form and realism.
+
+
+Symbolic-oriented Definition:
+For this Symbolic-oriented image, "symbolic" refers to the image created for the brand, not to a fixed product class. Symbolic needs are defined as desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification. A brand with a symbolic concept is one designed to associate the individual with a desired group, role, or self-image.
+
+Symbolic-oriented Explanation:
+(1) A symbolic-oriented image is designed to fulfill symbolic needs for self-enhancement, role position, group membership, or ego-identification.
+(2) Symbolic needs are desires for products that fulfill internally generated needs for self-enhancement, role position, group membership, or ego-identification, and a symbolic concept is designed to associate the individual with a desired group, role, or self-image.
+(3) Symbolic value is derived from the image a product communicates about the individual through its association with a desired role, reference group, or self-image.
+(4) Brand image should establish symbolic associations that communicate self-image, role, group membership, or identity.
+(5) The primary perception should be the symbolic meaning communicated by the product rather than its functional performance or experiential value.
+
+
+Product metadata:
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Symbolic: {symbolic}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}

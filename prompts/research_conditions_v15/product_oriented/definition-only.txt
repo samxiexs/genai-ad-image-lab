@@ -1,0 +1,19 @@
+Generate a controlled Product-oriented advertising image for research using the provided white-background product image as reference. Preserve the original width-to-height ratio, do not add any new readable text inside the image. Follow the definition and explanation below. If Symbolic is true, keep real source-image branding visible; if false, naturally remove or obscure branding so the product appears unbranded while preserving its form and realism.
+
+Product-oriented Definition:
+For this Product-oriented(functional) image, "functional" refers to the image created for the brand, not to a fixed product class. Functional needs are defined as those that motivate the search for products that solve consumption-related problems. A brand with a functional concept is one designed to solve externally generated consumption needs.
+
+Product-oriented Explanation:
+(1) A product-oriented (functional) image emphasizes the brand’s functional performance in solving consumption-related problems.
+(2) The functional concept focuses on problem-solving ability, allowing consumers to evaluate whether the product can fulfill a specific consumption purpose, rather than communicating symbolic identity or experiential consumption value.
+(3) Functional value can be reflected through product-centered presentations, demonstrations, or task-based usage situations that make performance observable and directly inferable.
+(4) Functional associations are strengthened when related objects, surfaces, or environments highlight the product’s role in practical usage contexts, rather than identity-relevant or experience-oriented contexts.
+(5) The primary perception should be the product’s problem-solving capability and functional performance, rather than symbolic meaning or experiential stimulation.
+
+Product metadata:
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Symbolic: {symbolic}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}

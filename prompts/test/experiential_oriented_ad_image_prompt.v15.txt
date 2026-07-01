@@ -1,19 +1,11 @@
-你正在为消费者广告研究生成受控实验刺激材料。请使用提供的白底商品图作为精确的源商品。可以适当调整展示方式，尽可能确保摄影风格自然，不要出现价格相关的信息。
+你正在为消费者广告研究生成受控实验刺激材料。请使用提供的白底商品图作为精确的源商品。可以适当调整展示的图片，尽可能确保摄影风格，生成图片要自然，不要出现价格相关的信息。
 
-第一部分：商品专属中性 prompt
-以下内容已根据商品元数据和白底源图生成。它只提供商品事实、可见特征和中性摄影基础，不包含三类风格取向。请把它作为商品 grounding 使用，但最终图像必须由第二部分的体验型定义主导。
-
-{neutral_product_prompt}
-
-第二部分：体验型风格定义与生成要求
 广告图的风格基于 Park, Jaworski, and MacInnis (1986) 的体验型品牌概念。体验型概念将商品与内部产生的需求相连接，包括感官愉悦、多样性、认知刺激、沉浸感，或被感受到的消费体验。
 
-请在保持第一部分商品事实不变的前提下，将图像转化为 Experiential-oriented advertising image。主导信息应是商品带来怎样的消费感受，而不仅是商品在哪里使用或具有什么功能。图像应让观看者想象 sensory pleasure、variety、cognitive stimulation、immersion、relaxation、excitement、delight、curiosity 或其他与商品和类目兼容的 felt consumption experience。
-
-严格要求：
-- 商品必须清晰可见、可识别，并保持源图中的核心形状、颜色、logo、包装、材质和物理结构。
-- 使用氛围、运动暗示、景深、节奏、质感、光线、色彩、互动或沉浸式环境来传达体验感，但商品必须仍是体验中的核心。
-- 不要把图像做成功能说明图、部件布局图、中性 studio 演示图或 purely symbolic mood piece。
-- 不要生成新的可读文字、广告语、价格、促销、标签、箭头、图表、二维码或徽章。
-- 不要虚构源图或类目无法合理支持的体验品质。
-- 图像应看起来像真实商业摄影或可信的沉浸式广告图，而不是截图、低质量拼贴、meme、杂乱电商 mockup 或不自然的合成图。
+商品元数据：
+- 标题：{ori_title}
+- 品牌：{creative_id_brand}
+- 类目：{level_one_category_name}
+- symbolic：{symbolic}
+- 价格：{creative_id_price}
+- 促销：{creative_id_promotion}

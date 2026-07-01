@@ -6,5 +6,6 @@
 - 标题：{ori_title}
 - 品牌：{creative_id_brand}
 - 类目：{level_one_category_name}
+- symbolic：{symbolic}
 - 价格：{creative_id_price}
 - 促销：{creative_id_promotion}

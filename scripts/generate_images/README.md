@@ -23,6 +23,7 @@ Recommended output naming:
 
 ```text
 {id}_{orientation}_{variant}.png
+{id}_{orientation}_rollout01.png
 ```
 
 ## Usage
@@ -133,7 +134,7 @@ python3 scripts/generate_images/generate_from_csv.py \
   --api-key "sk-xxx"
 ```
 
-Use the v14 prompt set for the Chinese version of v13:
+Use the v14 prompt set for the Chinese version of v13. By default, v14 is treated as a rollout prompt version: each selected product-orientation pair is generated 3 times as separate API calls, with output names such as `{id}_{orientation}_rollout01.png`, `{id}_{orientation}_rollout02.png`, and `{id}_{orientation}_rollout03.png`.
 
 ```bash
 python3 scripts/generate_images/generate_from_csv.py \
@@ -141,7 +142,34 @@ python3 scripts/generate_images/generate_from_csv.py \
   --api-key "sk-xxx"
 ```
 
-Use the v15 two-stage prompt set. The script first generates a neutral product-specific prompt from metadata plus the white-background source image, then injects that prompt into the three Park-theory-oriented image prompts:
+Set the v14 rollout count explicitly:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v14 \
+  --rollouts 5 \
+  --api-key "sk-xxx"
+```
+
+Disable v14 rollout and generate only once per product-orientation pair:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v14 \
+  --no-rollout \
+  --api-key "sk-xxx"
+```
+
+Preview the v14 rollout plan without network calls:
+
+```bash
+python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v14 \
+  --limit 1 \
+  --dry-run
+```
+
+Use the v15 prompt set. This is a copied successor of v14 and also defaults to 3 rollout API calls per selected product-orientation pair:
 
 ```bash
 OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
@@ -150,7 +178,17 @@ OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
   --limit 14
 ```
 
-Use the v16 prompt set for the full-English version of the v15 two-stage flow:
+Disable v15 rollout and generate only once per product-orientation pair:
+
+```bash
+OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
+  --prompt-version v15 \
+  --no-rollout \
+  --selection-mode sequential \
+  --limit 14
+```
+
+Use the v16 prompt set for the neutral-product-prompt two-stage flow:
 
 ```bash
 OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
@@ -409,15 +447,15 @@ python3 scripts/generate_images/generate_from_csv.py \
 - `--csv`: input product CSV.
 - `--prompt-file`: prompt template with CSV placeholders such as `{ori_title}` and `{level_one_category_name}`. When omitted, the script uses the orientation-specific prompt file.
 - `--prompt-version`: prompt file set to use; `current` preserves the original prompts, `function_v2` uses the revised separation prompts, `v3`-`v17` keep the historical Park-theory-grounded series, `definition-only` / `definition-control` / `definition-genprompt` / `definition-control-genprompt` keep the original four research-condition files, `visual-control` / `genprompt-control` remain backward-compatible names for those originals, the `-v2` family runs the independent refactor in `prompts/research_conditions_v2/`, the `-v3` family runs the boundary-hardened refactor in `prompts/research_conditions_v3/`, and `definition-only-v6` runs the new multiround-ready `prompts/research_conditions_v6/` family without touching the historical `v6` prompt set.
-- `--base-prompt-file`: v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` prompt-generation template; defaults to the matching version file.
+- `--base-prompt-file`: v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` prompt-generation template; defaults to the matching version file.
 - `--model-provider`: optional provider preset for the final image-generation stage; `heyroute` uses `https://heyroute.ai/v1/responses` with `gpt-5.5`, and `api111` defaults to `gpt-image-2` on the source-image-preserving image endpoint.
 - `--image-wire-api`: final image-generation wire API, one of `images_edits`, `images_generations`, or `responses`; defaults to `images_edits` unless a provider preset overrides it.
 - `--image-reasoning-effort`: Responses API reasoning effort for final image generation, one of `low`, `medium`, or `high`.
 - `--disable-image-response-storage`: sends `store=false` for Responses API final image generation.
 - `--base-prompt-provider`: optional provider preset for prompt generation; `heyroute` uses `https://heyroute.ai/v1/responses` with `gpt-5.5`, and `api111` uses `https://api.vectorengine.cn/v1/responses` with `gpt-5.5`.
-- `--base-prompt-model`: text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-5.5`.
+- `--base-prompt-model`: text/vision model used by v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family for prompt generation, defaults to `OPENAI_BASE_PROMPT_MODEL`, `OPENAI_TEXT_MODEL`, or `gpt-5.5`.
 - `--base-prompt-wire-api`: prompt-generation wire API, either `chat_completions` or `responses`; defaults to `chat_completions` unless a provider preset overrides it.
-- `--base-prompt-endpoint`: prompt-generation endpoint used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family; defaults to the provider preset endpoint or `{api-base-url}/chat/completions` / `{api-base-url}/responses`.
+- `--base-prompt-endpoint`: prompt-generation endpoint used by v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching `-v2` / `-v3` family; defaults to the provider preset endpoint or `{api-base-url}/chat/completions` / `{api-base-url}/responses`.
 - `--base-prompt-dir`: directory for saved generated prompts, defaults to `{run-dir}/base_prompts`.
 - `--base-prompt-reasoning-effort`: Responses API reasoning effort for prompt generation, one of `low`, `medium`, or `high`.
 - `--disable-base-prompt-response-storage`: sends `store=false` for Responses API prompt generation.
@@ -462,8 +500,8 @@ python3 scripts/generate_images/generate_from_csv.py \
 - v11 run root: `outputs/{model}_{selection_label}_{orientation_label}_v11_{timestamp}/`
 - v12 run root: `outputs/{model}_{selection_label}_{orientation_label}_v12_{timestamp}/`
 - v13 run root: `outputs/{model}_{selection_label}_{orientation_label}_v13_{timestamp}/`
-- v14 run root: `outputs/{model}_{selection_label}_{orientation_label}_v14_{timestamp}/`
-- v15 run root: `outputs/{model}_{selection_label}_{orientation_label}_v15_{timestamp}/`
+- v14 rollout run root: `outputs/{model}_{selection_label}_{orientation_label}_v14_rollout3_{timestamp}/`
+- v15 rollout run root: `outputs/{model}_{selection_label}_{orientation_label}_v15_rollout3_{timestamp}/`
 - v2 refactor run root example: `outputs/{model}_{selection_label}_{orientation_label}_definition-control-v2_{timestamp}/`
 - v3 refactor run root example: `outputs/{model}_{selection_label}_{orientation_label}_definition-control-v3_{timestamp}/`
 - v16 run root: `outputs/{model}_{selection_label}_{orientation_label}_v16_{timestamp}/`
@@ -474,7 +512,7 @@ python3 scripts/generate_images/generate_from_csv.py \
 - definition-genprompt run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-genprompt_{timestamp}/`
 - definition-control-genprompt run root: `outputs/{model}_{selection_label}_{orientation_label}_definition-control-genprompt_{timestamp}/`
 - backward-compatible names still available: `visual-control`, `genprompt-control`
-- v15/v16 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
+- v16 neutral product prompts: `{run-dir}/base_prompts/{id}_neutral_prompt.txt`
 - v17/definition-genprompt/definition-control-genprompt/genprompt-control orientation-specific generated prompts: `{run-dir}/base_prompts/{id}_{orientation}_prompt.txt`
 - Generated images: `{run-dir}/generated/{orientation}/{id}_{orientation}.png`
 - Multiround round1 images: `{run-dir}/generated/round1/{orientation}/{id}_{orientation}.png`

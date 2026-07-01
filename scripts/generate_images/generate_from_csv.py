@@ -170,6 +170,8 @@ RESEARCH_CONDITIONS_V10_DIR = "prompts/research_conditions_v10"
 RESEARCH_CONDITIONS_V11_DIR = "prompts/research_conditions_v11"
 RESEARCH_CONDITIONS_V12_DIR = "prompts/research_conditions_v12"
 RESEARCH_CONDITIONS_V13_DIR = "prompts/research_conditions_v13"
+RESEARCH_CONDITIONS_V14_DIR = "prompts/research_conditions_v14"
+RESEARCH_CONDITIONS_V15_DIR = "prompts/research_conditions_v15"
 RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS = {
     "Product-oriented": "product_oriented",
     "Function-oriented": "function_oriented",
@@ -218,8 +220,15 @@ def research_conditions_v13_path(orientation: str, filename: str) -> str:
     return f"{RESEARCH_CONDITIONS_V13_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
 
 
+def research_conditions_v14_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V14_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
+def research_conditions_v15_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V15_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
 DEFAULT_BASE_PROMPT_FILES = {
-    "v15": "prompts/neutral_product_ad_image_prompt.v15.txt",
     "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
     "v17": {
         "Product-oriented": "prompts/product_oriented_ad_image_prompt_generator.v17.txt",
@@ -332,9 +341,10 @@ DEFAULT_BASE_PROMPT_FILES = {
 DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
 DEFAULT_PROMPT_VERSION = "current"
+DEFAULT_ROLLOUT_COUNT = 3
+DEFAULT_ROLLOUT_PROMPT_VERSIONS = frozenset({"v14", "v15"})
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 GENERATED_BASE_PROMPT_PLACEHOLDERS = {
-    "v15": "[v15 dry-run：正式运行时会先根据商品元数据和白底源图生成这里的商品专属中性 prompt。]",
     "v16": "[v16 dry-run: in a real run, this section will be generated from product metadata and the white-background source image.]",
     "v17": "[v17 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "definition-genprompt": "[definition-genprompt dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
@@ -700,6 +710,14 @@ PROMPT_VERSION_FILES = {
         orientation: research_conditions_v13_path(orientation, "definition-only.txt")
         for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
     },
+    "definition-only-v14": {
+        orientation: research_conditions_v14_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
+    "definition-only-v15": {
+        orientation: research_conditions_v15_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
     {
@@ -766,11 +784,12 @@ PARK_PROMPT_VERSIONS = frozenset(
         "definition-only-v11",
         "definition-only-v12",
         "definition-only-v13",
+        "definition-only-v14",
+        "definition-only-v15",
     }
 )
 GENERATED_BASE_PROMPT_VERSIONS = frozenset(
     {
-        "v15",
         "v16",
         "v17",
         "definition-genprompt",
@@ -865,7 +884,7 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5/"
             "definition-only-v6/definition-only-v7/definition-control-v7/visual-control-v7/definition-genprompt-v7/definition-control-genprompt-v7/genprompt-control-v7/"
             "definition-only-v8/definition-control-v8/visual-control-v8/definition-genprompt-v8/definition-control-genprompt-v8/genprompt-control-v8/"
-            "definition-only-v9/definition-only-v10/definition-only-v11/definition-only-v12/definition-only-v13, "
+            "definition-only-v9/definition-only-v10/definition-only-v11/definition-only-v12/definition-only-v13/definition-only-v14/definition-only-v15, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -906,7 +925,9 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v10 copies the v9 definition-only prompt set in prompts/research_conditions_v10, "
             "definition-only-v11 copies the v10 definition-only prompt set in prompts/research_conditions_v11, "
             "definition-only-v12 copies the v11 definition-only prompt set in prompts/research_conditions_v12, "
-            "and definition-only-v13 copies the v12 definition-only prompt set in prompts/research_conditions_v13."
+            "definition-only-v13 copies the v12 definition-only prompt set in prompts/research_conditions_v13, "
+            "definition-only-v14 copies the v13 definition-only prompt set in prompts/research_conditions_v14, "
+            "and definition-only-v15 copies the v14 definition-only prompt set in prompts/research_conditions_v15."
         ),
     )
     parser.add_argument(
@@ -914,7 +935,7 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help=(
             "Run root directory. Supports {model}, {selection_label}, {orientation_label}, "
-            "{prompt_version}, and {timestamp}. Defaults to "
+            "{prompt_version}, {rollout_label}, and {timestamp}. Defaults to "
             "outputs/{model}_{selection_label}_{orientation_label}_{timestamp}."
         ),
     )
@@ -969,7 +990,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-file",
         default=os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_FILE"),
-        help="Product prompt-generation template used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5/-v7/-v8 families before image generation.",
+        help="Product prompt-generation template used by v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5/-v7/-v8 families before image generation.",
     )
     parser.add_argument(
         "--base-prompt-provider",
@@ -980,7 +1001,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-model",
         default=os.environ.get("OPENAI_BASE_PROMPT_MODEL") or os.environ.get("OPENAI_TEXT_MODEL") or DEFAULT_BASE_PROMPT_MODEL,
-        help="Text/vision model used by v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5/-v7/-v8 families to generate the product prompt.",
+        help="Text/vision model used by v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5/-v7/-v8 families to generate the product prompt.",
     )
     parser.add_argument(
         "--base-prompt-wire-api",
@@ -991,24 +1012,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--base-prompt-endpoint",
         default=os.environ.get("OPENAI_CHAT_COMPLETIONS_ENDPOINT") or os.environ.get("OPENAI_BASE_PROMPT_ENDPOINT"),
-        help="Endpoint for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5/-v7/-v8 families. If omitted, the script uses the provider preset endpoint or derives one from --api-base-url and --base-prompt-wire-api.",
+        help="Endpoint for v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and the matching -v2/-v3/-v4/-v5/-v7/-v8 families. If omitted, the script uses the provider preset endpoint or derives one from --api-base-url and --base-prompt-wire-api.",
     )
     parser.add_argument(
         "--base-prompt-dir",
         default=None,
-        help="Directory for saved v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5/-v7/-v8 generated product prompts. Defaults to {run-dir}/base_prompts.",
+        help="Directory for saved v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5/-v7/-v8 generated product prompts. Defaults to {run-dir}/base_prompts.",
     )
     parser.add_argument(
         "--base-prompt-max-tokens",
         type=int,
         default=int(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_MAX_TOKENS", "700")),
-        help="Maximum output tokens for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5/-v7/-v8 prompt generation.",
+        help="Maximum output tokens for v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5/-v7/-v8 prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-temperature",
         type=float,
         default=float(os.environ.get("GENAI_AD_IMAGE_BASE_PROMPT_TEMPERATURE", "0.2")),
-        help="Temperature for v15/v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5/-v7/-v8 prompt generation.",
+        help="Temperature for v16/v17/definition-genprompt/definition-control-genprompt/genprompt-control and matching -v2/-v3/-v4/-v5/-v7/-v8 prompt generation.",
     )
     parser.add_argument(
         "--base-prompt-reasoning-effort",
@@ -1070,6 +1091,29 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--quality", default="medium", help="Model quality option, e.g. low, medium, high, auto.")
     parser.add_argument("--output-format", default="png", choices=["png", "jpeg", "webp"], help="Generated image format.")
     parser.add_argument("--n", type=int, default=1, help="Images to generate per row.")
+    parser.add_argument(
+        "--rollout",
+        action="store_true",
+        help=(
+            f"Repeat each product-orientation generation as separate API calls. "
+            f"Uses --rollouts when provided, otherwise {DEFAULT_ROLLOUT_COUNT}. "
+            "Prompt versions v14 and v15 enable this by default."
+        ),
+    )
+    parser.add_argument(
+        "--rollouts",
+        type=int,
+        default=None,
+        help=(
+            "Number of rollout API calls per product-orientation pair. "
+            "Defaults to 3 for --prompt-version v14/v15 and 1 otherwise."
+        ),
+    )
+    parser.add_argument(
+        "--no-rollout",
+        action="store_true",
+        help="Disable the default v14 rollout behavior and generate once per product-orientation pair.",
+    )
     parser.add_argument(
         "--selection-mode",
         choices=["previous-random10", "sequential", "random", "random-per-group3"],
@@ -1340,6 +1384,30 @@ def validate_multiround_args(args: argparse.Namespace) -> None:
         )
     if args.n != 1:
         raise ValueError("--multiround currently supports only --n 1.")
+    if effective_rollout_count(args) != 1:
+        raise ValueError("--multiround cannot be combined with rollout generation.")
+
+
+def effective_rollout_count(args: argparse.Namespace) -> int:
+    if args.no_rollout:
+        return 1
+    if args.rollouts is not None:
+        return args.rollouts
+    if args.rollout or args.prompt_version in DEFAULT_ROLLOUT_PROMPT_VERSIONS:
+        return DEFAULT_ROLLOUT_COUNT
+    return 1
+
+
+def validate_rollout_args(args: argparse.Namespace) -> None:
+    if args.rollout and args.no_rollout:
+        raise ValueError("Use either --rollout or --no-rollout, not both.")
+    if args.rollouts is not None and args.rollouts < 1:
+        raise ValueError("--rollouts must be a positive integer.")
+
+
+def rollout_label(args: argparse.Namespace) -> str:
+    count = effective_rollout_count(args)
+    return f"rollout{count}" if count > 1 else "single"
 
 
 def load_multiround_template(orientation: str, template_name: str) -> tuple[str, str]:
@@ -1359,6 +1427,8 @@ def render_prompt(
 ) -> str:
     values = {key: clean_value(value) for key, value in row.items()}
     values["orientation"] = orientation
+    if not values.get("symbolic"):
+        values["symbolic"] = infer_symbolic_value(row)
     if extra_values:
         values.update({key: "" if value is None else str(value) for key, value in extra_values.items()})
     return template.format_map(DefaultDict(values))
@@ -1373,6 +1443,23 @@ def clean_value(value: str | None) -> str:
     if value is None:
         return ""
     return " ".join(str(value).split())
+
+
+def infer_symbolic_value(row: dict[str, str]) -> str:
+    symbolic_axis = clean_value(row.get("symbolic_axis")).lower()
+    if symbolic_axis == "symbolic":
+        return "true"
+    if symbolic_axis in {"non_symbolic", "non-symbolic", "no_symbolic", "no-symbolic"}:
+        return "false"
+
+    group = clean_value(
+        row.get("candidate_group")
+        or row.get("representative_group")
+        or row.get("concept_group")
+    ).lower()
+    if group:
+        return "true" if "symbolic" in group and "no_symbolic" not in group and "non_symbolic" not in group else "false"
+    return ""
 
 
 def safe_name(value: str, max_len: int = 80) -> str:
@@ -1598,6 +1685,7 @@ def resolve_output_paths(
         "selection_label": selection_label(args, selected_rows),
         "orientation_label": orientation_label(plans),
         "prompt_version": safe_name(args.prompt_version),
+        "rollout_label": rollout_label(args),
         "timestamp": "" if args.no_timestamp else timestamp,
     }
     if args.run_dir:
@@ -1606,6 +1694,8 @@ def resolve_output_paths(
         run_name = f"{values['model']}_{values['selection_label']}_{values['orientation_label']}"
         if args.prompt_version != DEFAULT_PROMPT_VERSION:
             run_name = f"{run_name}_{values['prompt_version']}"
+        if effective_rollout_count(args) > 1:
+            run_name = f"{run_name}_{values['rollout_label']}"
         if not args.no_timestamp:
             run_name = f"{run_name}_{timestamp}"
         run_dir = pathlib.Path("outputs") / run_name
@@ -2791,6 +2881,7 @@ def iter_records(
     args: argparse.Namespace,
     plans: Iterable[OrientationPlan],
 ) -> Iterable[dict]:
+    rollout_count = effective_rollout_count(args)
     for row in rows:
         product_id = safe_name(row.get("id", ""))
         source_url = row.get("creative_id_image", "").strip()
@@ -2798,23 +2889,28 @@ def iter_records(
         source_path = pathlib.Path(args.source_dir) / f"{product_id}{source_ext}"
         for plan in plans:
             orientation = safe_name(plan.orientation)
-            output_prefix = pathlib.Path(args.output_dir) / plan.orientation / f"{product_id}_{orientation}"
-            extra_values = {}
-            if uses_generated_base_prompt(args.prompt_version):
-                extra_values[generated_prompt_template_field(args.prompt_version)] = generated_base_prompt_placeholder(args.prompt_version)
-            prompt = render_prompt(plan.prompt_template, row, plan.orientation, extra_values)
-            yield {
-                "row": row,
-                "product_id": product_id,
-                "source_url": source_url,
-                "source_path": source_path,
-                "output_prefix": output_prefix,
-                "prompt": prompt,
-                "orientation": plan.orientation,
-                "requested_orientation": plan.requested_orientation,
-                "prompt_source": plan.prompt_source,
-                "prompt_template": plan.prompt_template,
-            }
+            for rollout_index in range(1, rollout_count + 1):
+                rollout_suffix = f"_rollout{rollout_index:02d}" if rollout_count > 1 else ""
+                output_prefix = pathlib.Path(args.output_dir) / plan.orientation / f"{product_id}_{orientation}{rollout_suffix}"
+                extra_values = {}
+                if uses_generated_base_prompt(args.prompt_version):
+                    extra_values[generated_prompt_template_field(args.prompt_version)] = generated_base_prompt_placeholder(args.prompt_version)
+                prompt = render_prompt(plan.prompt_template, row, plan.orientation, extra_values)
+                yield {
+                    "row": row,
+                    "product_id": product_id,
+                    "source_url": source_url,
+                    "source_path": source_path,
+                    "output_prefix": output_prefix,
+                    "prompt": prompt,
+                    "orientation": plan.orientation,
+                    "requested_orientation": plan.requested_orientation,
+                    "prompt_source": plan.prompt_source,
+                    "prompt_template": plan.prompt_template,
+                    "rollout_index": rollout_index,
+                    "rollout_count": rollout_count,
+                    "rollout_enabled": rollout_count > 1,
+                }
 
 
 def run_multiround(
@@ -2824,7 +2920,7 @@ def run_multiround(
     plans: list[OrientationPlan],
     api_key: str,
 ) -> int:
-    total_records = len(rows) * len(plans)
+    total_records = len(rows) * len(plans) * effective_rollout_count(args)
     progress = ProgressTracker(total_records, enabled=not args.no_progress)
     template_cache: dict[str, dict[str, tuple[str, str]]] = {}
     results: list[dict[str, object]] = []
@@ -2834,6 +2930,8 @@ def run_multiround(
         orientation = str(record["orientation"])
         product_id = str(record["product_id"])
         label = f"id={row.get('id')} orientation={orientation}"
+        if record["rollout_enabled"]:
+            label = f"{label} rollout={record['rollout_index']}/{record['rollout_count']}"
         paths = multiround_paths(args, product_id, orientation)
         expected_route = str(row.get("expected_best_image_route") or "").strip()
         template_cache.setdefault(orientation, {})
@@ -2858,6 +2956,9 @@ def run_multiround(
             "selection_mode": effective_selection_mode(args),
             "prompt_version": args.prompt_version,
             "multiround": True,
+            "rollout_enabled": record["rollout_enabled"],
+            "rollout_index": record["rollout_index"],
+            "rollout_count": record["rollout_count"],
             "model_provider": args.model_provider,
             "model": args.model,
             "image_wire_api": args.image_wire_api,
@@ -3185,6 +3286,7 @@ def run_multiround(
 
 def main() -> int:
     args = parse_args()
+    validate_rollout_args(args)
     validate_multiround_args(args)
     plans = resolve_orientation_plans(args)
     rows = select_rows(read_rows(pathlib.Path(args.csv)), args)
@@ -3217,6 +3319,7 @@ def main() -> int:
         flush=True,
     )
     print(f"PROMPT_VERSION {args.prompt_version}", flush=True)
+    print(f"ROLLOUTS {effective_rollout_count(args)}", flush=True)
     if uses_generated_base_prompt(args.prompt_version):
         if args.base_prompt_provider:
             print(f"BASE_PROMPT_PROVIDER {args.base_prompt_provider}", flush=True)
@@ -3248,7 +3351,7 @@ def main() -> int:
     if args.multiround:
         return run_multiround(args=args, rows=rows, plans=plans, api_key=api_key or "")
 
-    total_records = len(rows) * len(plans)
+    total_records = len(rows) * len(plans) * effective_rollout_count(args)
     progress = ProgressTracker(total_records, enabled=not args.no_progress)
     generated_prompt_cache: dict[str, dict[str, object]] = {}
 
@@ -3257,6 +3360,8 @@ def main() -> int:
         output_prefix: pathlib.Path = record["output_prefix"]
         expected_outputs = expected_output_paths(output_prefix, args.output_format, args.n)
         label = f"id={row.get('id')} orientation={record['orientation']}"
+        if record["rollout_enabled"]:
+            label = f"{label} rollout={record['rollout_index']}/{record['rollout_count']}"
         manifest_record = {
             "id": row.get("id"),
             "material_id": row.get("material_id"),
@@ -3264,6 +3369,9 @@ def main() -> int:
             "brand": row.get("creative_id_brand"),
             "orientation": record["orientation"],
             "requested_orientation": record["requested_orientation"],
+            "rollout_enabled": record["rollout_enabled"],
+            "rollout_index": record["rollout_index"],
+            "rollout_count": record["rollout_count"],
             "source_url": record["source_url"],
             "source_path": str(record["source_path"]),
             "output_prefix": str(output_prefix),

@@ -1,34 +1,11 @@
-你正在为消费者广告研究生成受控实验刺激材料。请使用提供的白底商品图作为精确的源商品。可以适当调整展示方式，尽可能确保摄影风格自然，不要出现价格相关的信息。
+你正在为消费者广告研究生成受控实验刺激材料。请使用提供的白底商品图作为精确的源商品。可以适当调整展示的图片，尽可能确保摄影风格，生成图片要自然，不要出现价格相关的信息。
 
-第一部分：商品专属中性 prompt
-以下内容已根据商品元数据和白底源图生成。它只提供商品事实、可见特征和中性摄影基础，不包含三类风格取向。请把它作为商品 grounding 使用，但最终图像必须由第二部分的功能型定义主导。
-
-{neutral_product_prompt}
-
-第二部分：功能型风格定义与生成要求
 广告图的风格基于 Park, Jaworski, and MacInnis (1986) 的功能型品牌概念。功能型概念将商品与外部产生的消费需求相连接：解决或预防消费问题、降低摩擦、支持实际任务，或让消费更可靠。
 
-请在保持第一部分商品事实不变的前提下，将图像转化为 Product-oriented / functional advertising image。主导信息应是商品能做什么、帮助什么实际任务、解决什么消费问题，或如何让使用更可靠。图像必须像一张受控的商业产品功能展示，而不是单一美化商品照。
-
-功能推理要求：
-- 先根据第一部分和源图推断商品类型、实际用户问题、典型使用任务、材质或机制，以及消费者购买它的主要功能原因。
-- 不要只展示一个笼统功能。至少呈现三个由类目合理支持的具体功能证据维度，例如 operation/interface、assembly/setup、fit/fastening、scale reference、portability、storage、cleaning、protection、compatibility、freshness、application、organization、comfort、durability、care、ease of use 或 gift-readiness。
-- 对电子产品、工具、电器、运动用品、家居用品、美容仪器、玩具、宠物用品、食品、药品、书籍、配饰、时尚品、珠宝和礼品，选择最适合该商品的多维功能线索，不要机械套用所有维度。
-- 对装饰性、穿戴型、奢侈型或送礼型商品，如果机械功能有限，可把 practical function 表达为 fit、fastening、scale、wearing support、safe storage、material handling、packaging protection、pairing、care 或 gift-readiness。不要把这些商品做成 status、glamour、romance 或抽象 aspiration 图。
-- 不确定时，用一般性的 category affordance，不要编造 fake features。
-
-视觉方向：
-- 让商品成为主视觉，并至少展示三个具体 functional evidence cues。多个维度可以整合在同一张真实商业摄影里，而不是做成信息图。
-- 优先使用受控的商品演示构图：中性桌面、干净 studio 工作台、整齐部件布局、真实开合状态、可见机制、尺度参照、配件关系、安全收纳、材质表面对比、使用前后状态、或只用于解释 grip、fit、fastening、application、scale 的手部形式。
-- 可以包含一个次级 close-detail 区域或分层构图来展示关键细节，但必须像单张商业产品摄影的一部分，不能出现标签、箭头、callout 或文字。
-- 相关中性道具只有在解释功能时才可加入。道具必须像功能证据，而不是生活方式装饰或象征氛围。
-- 光线、阴影、反射和背景应帮助澄清形状、材质、操作部件、affordance 和 usability。审美抛光只能服务于功能理解。
-- 避免纯白或近白 packshot 成为主导方案。图像必须比简单美化商品照提供更多功能信息。
-
-严格要求：
-- 商品必须清晰可见、可识别，并保持源图中的核心形状、颜色、logo、包装、材质和物理结构。
-- 不要虚构源图或类目无法支持的功能、成分、认证、奖项、评分、比较结论或品牌资产。
-- 不要生成新的可读文字、广告语、价格、促销、标签、箭头、图表、二维码或徽章。
-- 不要让高级感、身份象征、情绪氛围、礼赠感或感官体验成为主导信息。
-- 图像应看起来像真实商业摄影，而不是截图、低质量拼贴、meme、杂乱电商 mockup 或不自然的合成图。
-- 如果图像主要像 premium still life、symbolic mood image、experiential atmosphere image，或者只是打光更好的同一张 packshot，那么生成失败。
+商品元数据：
+- 标题：{ori_title}
+- 品牌：{creative_id_brand}
+- 类目：{level_one_category_name}
+- symbolic：{symbolic}
+- 价格：{creative_id_price}
+- 促销：{creative_id_promotion}
