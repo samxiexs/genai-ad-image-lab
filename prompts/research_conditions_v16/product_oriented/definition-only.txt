@@ -1,0 +1,15 @@
+Generate a controlled advertising image emphasizing functional value for a consumer research experiment, using the provided white-background product image as the product reference. Follow the definition and explanation below. If Symbolic is true, keep real source-image branding visible; if false, naturally remove or obscure branding so the product appears unbranded. Use a square 1:1 aspect ratio for the final image, and do not add any new readable text inside the image.
+
+Product-oriented Definition:
+For this Product-oriented(functional) image, "functional" refers to the image created for the brand, not to a fixed product class. Functional needs are defined as those that motivate the search for products that solve consumption-related problems. A brand with a functional concept is one designed to solve externally generated consumption needs.
+
+Product-oriented Explanation:
+Functional positioning emphasizes the brand's functional performance in solving consumption-related problems. Functional needs motivate the search for products that solve a current problem, prevent a potential problem, resolve a conflict, or restructure a frustrating consumption situation. A functional concept is designed to solve externally generated consumption needs. It may be developed through problem-solving specialization, in which the brand addresses a particular consumption problem, or problem-solving generalization, in which the brand's usefulness extends across related consumption situations. To make this performance meaning observable, organize the advertising image as a coherent set of product-centred panels: relate an overall product view to distinct, product-grounded features, use actions, or task relations. The panel set should communicate the product's comprehensibility, usability, and utilitarian function without adding unsupported claims.
+
+Product metadata:
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Symbolic: {symbolic}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}

@@ -172,6 +172,7 @@ RESEARCH_CONDITIONS_V12_DIR = "prompts/research_conditions_v12"
 RESEARCH_CONDITIONS_V13_DIR = "prompts/research_conditions_v13"
 RESEARCH_CONDITIONS_V14_DIR = "prompts/research_conditions_v14"
 RESEARCH_CONDITIONS_V15_DIR = "prompts/research_conditions_v15"
+RESEARCH_CONDITIONS_V16_DIR = "prompts/research_conditions_v16"
 RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS = {
     "Product-oriented": "product_oriented",
     "Function-oriented": "function_oriented",
@@ -228,8 +229,11 @@ def research_conditions_v15_path(orientation: str, filename: str) -> str:
     return f"{RESEARCH_CONDITIONS_V15_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
 
 
+def research_conditions_v16_path(orientation: str, filename: str) -> str:
+    return f"{RESEARCH_CONDITIONS_V16_DIR}/{RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS[orientation]}/{filename}"
+
+
 DEFAULT_BASE_PROMPT_FILES = {
-    "v16": "prompts/neutral_product_ad_image_prompt.v16.txt",
     "v17": {
         "Product-oriented": "prompts/product_oriented_ad_image_prompt_generator.v17.txt",
         "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt_generator.v17.txt",
@@ -342,10 +346,9 @@ DEFAULT_RANDOM_SEED = 20260523
 DEFAULT_SELECTION_MODE = "previous-random10"
 DEFAULT_PROMPT_VERSION = "current"
 DEFAULT_ROLLOUT_COUNT = 3
-DEFAULT_ROLLOUT_PROMPT_VERSIONS = frozenset({"v14", "v15"})
+DEFAULT_ROLLOUT_PROMPT_VERSIONS = frozenset({"v14", "v15", "v16"})
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 GENERATED_BASE_PROMPT_PLACEHOLDERS = {
-    "v16": "[v16 dry-run: in a real run, this section will be generated from product metadata and the white-background source image.]",
     "v17": "[v17 dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "definition-genprompt": "[definition-genprompt dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
     "definition-control-genprompt": "[definition-control-genprompt dry-run: in a real run, this section will be an orientation-specific image prompt generated from product metadata, the source image, and the target brand-concept orientation.]",
@@ -471,9 +474,8 @@ PROMPT_VERSION_FILES = {
         for orientation in ("Product-oriented", "Symbolic-oriented", "Experiential-oriented")
     },
     "v16": {
-        "Product-oriented": "prompts/product_oriented_ad_image_prompt.v16.txt",
-        "Symbolic-oriented": "prompts/symbolic_oriented_ad_image_prompt.v16.txt",
-        "Experiential-oriented": "prompts/experiential_oriented_ad_image_prompt.v16.txt",
+        orientation: research_conditions_v16_path(orientation, "definition-only.txt")
+        for orientation in ("Product-oriented", "Symbolic-oriented", "Experiential-oriented")
     },
     "v17": {
         "Product-oriented": "prompts/product_oriented_ad_image_prompt.v17.txt",
@@ -716,6 +718,10 @@ PROMPT_VERSION_FILES = {
         orientation: research_conditions_v15_path(orientation, "definition-only.txt")
         for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
     },
+    "definition-only-v16": {
+        orientation: research_conditions_v16_path(orientation, "definition-only.txt")
+        for orientation in RESEARCH_CONDITIONS_V4_ORIENTATION_DIRS
+    },
 }
 PARK_PROMPT_VERSIONS = frozenset(
     {
@@ -784,11 +790,11 @@ PARK_PROMPT_VERSIONS = frozenset(
         "definition-only-v13",
         "definition-only-v14",
         "definition-only-v15",
+        "definition-only-v16",
     }
 )
 GENERATED_BASE_PROMPT_VERSIONS = frozenset(
     {
-        "v16",
         "v17",
         "definition-genprompt",
         "definition-control-genprompt",
@@ -882,7 +888,7 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v5/definition-control-v5/visual-control-v5/definition-genprompt-v5/definition-control-genprompt-v5/genprompt-control-v5/"
             "definition-only-v6/definition-only-v7/definition-control-v7/visual-control-v7/definition-genprompt-v7/definition-control-genprompt-v7/genprompt-control-v7/"
             "definition-only-v8/definition-control-v8/visual-control-v8/definition-genprompt-v8/definition-control-genprompt-v8/genprompt-control-v8/"
-            "definition-only-v9/definition-only-v10/definition-only-v11/definition-only-v12/definition-only-v13/definition-only-v14/definition-only-v15, "
+            "definition-only-v9/definition-only-v10/definition-only-v11/definition-only-v12/definition-only-v13/definition-only-v14/definition-only-v15/definition-only-v16, "
             "Context-oriented is a deprecated alias for Experiential-oriented."
         ),
     )
@@ -925,7 +931,8 @@ def parse_args() -> argparse.Namespace:
             "definition-only-v12 copies the v11 definition-only prompt set in prompts/research_conditions_v12, "
             "definition-only-v13 copies the v12 definition-only prompt set in prompts/research_conditions_v13, "
             "v14/definition-only-v14 use prompts/research_conditions_v14, "
-            "and v15/definition-only-v15 use prompts/research_conditions_v15."
+            "v15/definition-only-v15 use prompts/research_conditions_v15, "
+            "and v16/definition-only-v16 use prompts/research_conditions_v16."
         ),
     )
     parser.add_argument(

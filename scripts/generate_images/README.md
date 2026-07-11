@@ -169,11 +169,11 @@ python3 scripts/generate_images/generate_from_csv.py \
   --dry-run
 ```
 
-Use the v15 prompt set from `prompts/research_conditions_v15/*/definition-only.txt`. It also defaults to 3 rollout API calls per selected product-orientation pair:
+Use the v16 prompt set from `prompts/research_conditions_v16/*/definition-only.txt`. It also defaults to 3 rollout API calls per selected product-orientation pair:
 
 ```bash
 OPENAI_API_KEY="sk-xxx" python3 scripts/generate_images/generate_from_csv.py \
-  --prompt-version v15 \
+  --prompt-version v16 \
   --selection-mode sequential \
   --limit 14
 ```

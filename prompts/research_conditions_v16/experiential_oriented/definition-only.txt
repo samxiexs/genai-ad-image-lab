@@ -1,0 +1,15 @@
+Generate a controlled advertising image emphasizing experiential value for a consumer research experiment, using the provided white-background product image as the product reference. Follow the definition and explanation below. If Symbolic is true, keep real source-image branding visible; if false, naturally remove or obscure branding so the product appears unbranded. Use a square 1:1 aspect ratio for the final image, and do not add any new readable text inside the image.
+
+Experiential-oriented Definition:
+For this Experiential-oriented image, "experiential" refers to the image created for the brand, not to a fixed product class. Experiential needs are defined as desires for products that provide sensory pleasure, variety, and/or cognitive stimulation. A brand with an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety.
+
+Experiential-oriented Explanation:
+Experiential positioning conveys the brand's effect on sensory satisfaction or cognitive stimulation. Experiential needs are desires for products that provide sensory pleasure, variety, and/or cognitive stimulation, and an experiential concept is designed to fulfill these internally generated needs for stimulation and/or variety. Accordingly, experiential positioning highlights the experiential and fantasy aspects associated with consumption. Depict a product-grounded consumption episode from a participant-centred perspective, such as a first-person or close-to-user view, so that the image supports mental simulation of engaging with the product. When participation with other people is an ordinary part of the product's use, they may appear as co-participants in the same experience; their activity should make the sensory, affective, or cognitive experience more concrete rather than turn the image into an identity or status display.
+
+Product metadata:
+* Title: {ori_title}
+* Brand: {creative_id_brand}
+* Category: {level_one_category_name}
+* Symbolic: {symbolic}
+* Price: {creative_id_price}
+* Promotion: {creative_id_promotion}
