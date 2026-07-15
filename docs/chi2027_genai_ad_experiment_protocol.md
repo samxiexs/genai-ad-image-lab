@@ -182,47 +182,81 @@ M1--M3 are single-item, theory-grounded process indicators in the nine-image ver
 
 ## 6. Study 2: causal effect of AI disclosure after image exposure
 
-### 6.1 Why a post-exposure randomized disclosure design
+### 6.1 Design logic
 
-Khatiwada et al.'s CHI news study first measured content evaluations without source disclosure, then elicited reflections after LLM disclosure [R18]. That ordering is useful because early labels can alter initial content judgments. However, a simple pre/post comparison cannot distinguish disclosure from repetition or reflection. Study 2 therefore adds a randomized, equal-time reflection control.
+Khatiwada et al.'s CHI news study first measured content evaluations without source disclosure, then elicited reflections after LLM disclosure [R18]. We retain that logic but prespecify two alternative implementation routes:
+
+**Route A: post-exposure pre/post disclosure.** Participants first evaluate the nine images without knowing the AI provenance, then receive either a truthful AI disclosure or an equal-time neutral reflection, and re-evaluate the same images. This estimates whether adding provenance information **after an initial impression changes evaluation**.
+
+**Route B: direct between-group comparison at first exposure.** Before seeing the first image, participants are randomly assigned to an AI-disclosed or no-provenance-information group and evaluate the nine images once. This estimates whether evaluations differ when consumers **know versus do not know the AI provenance from the outset**.
+
+The two routes must be selected before preregistration; researchers must not choose the route after viewing results. The same participant must not take part in both routes. If resources permit, run them with independent samples as Study 2A (post-exposure disclosure) and Study 2B (first-exposure between-group comparison). Their effects should not be pooled as one confirmatory causal estimand because they answer different questions.
 
 ### 6.2 Design and sample
 
-Use the validated GenAI images only in a mixed `3 strategy (within participant) x 3 product exemplars (within participant) x 2 product orientation (between participant) x 2 symbolic affordance (between participant) x 2 post-exposure message (between participant)` design. `Time` (before versus after disclosure/reflection) is also within participant. Each participant completes both measurement phases for the same `3 products x 3 strategies = 9` images from one product-type cell.
+Both routes use the validated GenAI images, the same 12 products, and the same mixed product-cell assignment: `3 strategy (within participant) x 3 product exemplars (within participant) x 2 product orientation (between participant) x 2 symbolic affordance (between participant)`. Each participant is assigned to one product-type cell and evaluates all `3 products x 3 strategies = 9` images. The routes differ only in when provenance information appears and whether a second measurement phase occurs.
+
+**Route A: post-exposure pre/post disclosure (recommended for reproducing R18's timing logic)**
 
 | Assignment | Valid participants | What each participant does |
 | --- | ---: | --- |
-| U-LS x AI disclosure | 30 | completes pre/post D1/D2 ratings for all 9 images in the cell |
-| U-LS x neutral reflection | 30 | completes two D1/D2 rounds for all 9 images in the cell |
-| U-HS x AI disclosure | 30 | completes pre/post D1/D2 ratings for all 9 images in the cell |
-| U-HS x neutral reflection | 30 | completes two D1/D2 rounds for all 9 images in the cell |
-| H-LS x AI disclosure | 30 | completes pre/post D1/D2 ratings for all 9 images in the cell |
-| H-LS x neutral reflection | 30 | completes two D1/D2 rounds for all 9 images in the cell |
-| H-HS x AI disclosure | 30 | completes pre/post D1/D2 ratings for all 9 images in the cell |
-| H-HS x neutral reflection | 30 | completes two D1/D2 rounds for all 9 images in the cell |
-| **Study 2 total** |  | **240** |
+| U-LS x AI disclosure | 30 | rates 9 images before disclosure, receives AI disclosure, rates the same 9 again |
+| U-LS x neutral reflection | 30 | rates 9 images, receives neutral reflection, rates the same 9 again |
+| U-HS x AI disclosure | 30 | same as above |
+| U-HS x neutral reflection | 30 | same as above |
+| H-LS x AI disclosure | 30 | same as above |
+| H-LS x neutral reflection | 30 | same as above |
+| H-HS x AI disclosure | 30 | same as above |
+| H-HS x neutral reflection | 30 | same as above |
+| **Route A total** |  | **240** |
 
-At the provisional `N=240`, every `product type x post-exposure message` cell has 30 independent participants; every concrete `product x strategy` image within that cell has 30 paired pre/post ratings in each message condition. The primary disclosure test pools over product cells and tests `time x disclosure` and `time x disclosure x strategy`, exploiting each participant's within-person comparison across the three strategies. `Time x disclosure x strategy x product-attribute` moderation is exploratory. As in Study 1, confirm the final number by simulation using the pilot's repeated-measure correlation, disclosure effect size, and anticipated exclusions. Increase the per-cell sample if either the primary `time x disclosure` or strategy-moderation test fails to reach preregistered 80% power.
+**Route B: direct first-exposure between-group comparison**
+
+| Assignment | Valid participants | What each participant does |
+| --- | ---: | --- |
+| U-LS x AI disclosed | 30 | sees the provenance message before the first image, then rates all 9 once |
+| U-LS x no provenance disclosure | 30 | sees no provenance message, then rates all 9 once |
+| U-HS x AI disclosed | 30 | same as above |
+| U-HS x no provenance disclosure | 30 | same as above |
+| H-LS x AI disclosed | 30 | same as above |
+| H-LS x no provenance disclosure | 30 | same as above |
+| H-HS x AI disclosed | 30 | same as above |
+| H-HS x no provenance disclosure | 30 | same as above |
+| **Route B total** |  | **240** |
+
+`N=240` is the provisional valid sample for each route, not the combined sample. If both routes are run, total recruitment is `N=480`. If the budget allows only 240 participants, select one route before preregistration rather than splitting the sample and retaining 30 participants per cell. For either route, use pilot repeated-measure correlations, the expected disclosure effect, and anticipated exclusions in the power simulation; increase the per-cell sample if the primary test fails to reach preregistered 80% power.
 
 ### 6.3 Exact messages
 
-After the pre-message measures, randomly assign one message. Both screens have the same layout, minimum reading time, and a “continue” action.
+Both routes use the same layout, minimum reading time, and “continue” action. Only the timing of the provenance information differs.
 
-**AI-disclosure message**
+**Route A: post-exposure AI-disclosure message**
 
 > **English:** The nine advertisement images you just evaluated were created with a generative-AI system from de-branded product reference images and research-defined visual instructions. They are research stimuli, not commercial product claims.
 >
 > **Chinese:** 您刚才评价的九张广告图片均由生成式 AI 系统基于去品牌化的产品参考图和研究定义的视觉指令生成。它们是研究材料，并不构成商业产品承诺。
 
-**Equal-time neutral-reflection control**
+**Route A: equal-time neutral-reflection control**
 
 > **English:** Please take a moment to look again at the advertisement images you just evaluated. The next questions ask for your current impressions of them.
 >
 > **Chinese:** 请花一点时间再次查看您刚才评价的广告图片。接下来的问题将询问您目前对它们的印象。
 
-All participants are truthfully told in the debrief that the GenAI images were made with generative AI. The control does not receive a false human-authorship claim.
+**Route B: AI-disclosed before first exposure**
+
+> **English:** The nine advertisement images you are about to evaluate were created with a generative-AI system from de-branded product reference images and research-defined visual instructions. They are research stimuli, not commercial product claims.
+
+> **Chinese:** 接下来您将看到的九张广告图片均由生成式 AI 系统基于去品牌化的产品参考图和研究定义的视觉指令生成。它们是研究材料，并不构成商业产品承诺。
+
+**Route B: no-provenance-information control**
+
+The no-disclosure group receives no statement about AI, human authorship, or image provenance. It sees only the common task instruction: “You will now view and evaluate the advertisement images one at a time.” This compares knowing versus not knowing AI provenance, rather than AI attribution versus a false human-authorship claim.
+
+All participants are truthfully told in the debrief that the GenAI images were made with generative AI. No route uses a false human-authorship statement.
 
 ### 6.4 Procedure and outcomes
+
+**Route A: post-exposure pre/post disclosure**
 
 1. Complete consent and eligibility checks as in Study 1. Randomly assign a participant to one product-type cell; the participant evaluates all `3 products x 3 strategies = 9` images in that cell.
 2. **Pre-message phase:** present the nine images one at a time in the same constrained-randomisation manner as Study 1. After each image, collect the preregistered two-item short forms of D1/D2 and C2. Do not mention AI.
@@ -230,11 +264,7 @@ All participants are truthfully told in the debrief that the GenAI images were m
 4. **Post-message phase:** present the same nine images again using a different constrained randomisation order. After each, recollect the two-item D1/D2 short forms. Do not recollect Y1/Y2, because repeated purchase questions may themselves prompt deliberation; if retained, they are preregistered exploratory single-item outcomes only.
 5. Collect D3/D4, C3 familiarity for the three product exemplars, C4, attention, demographics, then disclose the truth.
 
-The primary Study 2 outcomes are changes in D1 (advertisement trust) and D2 (perceived authenticity). To make 18 image exposures feasible, Study 2 uses preregistered two-item D1/D2 short forms; it does not claim these are the full three-item scales and does not treat repeated Y1/Y2 as confirmatory outcomes.
-
-### 6.5 Analysis
-
-Use a mixed model for each primary outcome:
+Fit the Route A model separately for each primary outcome:
 
 ```text
 Y ~ time * disclosure * strategy
@@ -242,7 +272,26 @@ Y ~ time * disclosure * strategy
     + (1 | participant) + (1 | product_exemplar)
 ```
 
-`time x disclosure` estimates the causal effect of being told the image is AI-generated above and beyond revisiting it. `time x disclosure x strategy` tests whether that effect differs for Product-, Experiential-, and Symbolic-oriented images. `phase_position` controls the first through ninth image in each phase; the second phase uses an independent constrained order. Report pre-message balance, difference-in-differences estimates, 95% CIs, and Holm-adjusted tests across D1/D2. D3 is exploratory process evidence; it is not conditioned on in the primary outcome model.
+`time x disclosure` is the causal effect of adding the AI label relative to mere re-viewing/reflection; `time x disclosure x strategy` tests whether that effect differs across the three visual strategies. `phase_position` controls the first through ninth image in each phase; the second phase uses an independent constrained order. The primary outcomes are D1/D2 changes, with Holm adjustment across them.
+
+**Route B: direct first-exposure between-group comparison**
+
+1. Complete consent and eligibility checks as in Study 1. Randomly assign the participant first to a product-type cell and then to the AI-disclosed or no-provenance-information condition.
+2. The AI-disclosed group sees the provenance message before the first image; the control group sees only the common task instruction.
+3. Both groups evaluate the same nine images once in a constrained-randomised order. After each image, collect the two-item D1/D2 short forms, the C1 route choice, and required image-level controls. There is no second measurement phase.
+4. Collect D3/D4, C3 familiarity for the three product exemplars, C4, attention, demographics, then disclose the truth.
+
+Fit the Route B model separately for each primary outcome:
+
+```text
+Y ~ disclosure * strategy
+    + product_orientation + symbolic_affordance + presentation_position
+    + (1 | participant) + (1 | product_exemplar)
+```
+
+Here, `disclosure` is between participants and `strategy` is within participant. The `disclosure` coefficient is the direct difference between knowing and not knowing AI provenance at first exposure; `disclosure x strategy` tests whether that difference varies across Product-, Experiential-, and Symbolic-oriented images. `presentation_position` controls the first through ninth image. D3 is exploratory process evidence and is not included as a primary-outcome covariate.
+
+Route A and Route B should not be pooled into one confirmatory coefficient: Route A estimates a **change after adding provenance to an existing impression**, whereas Route B estimates a **first-exposure difference between known and undisclosed provenance**. If both routes are run, report them separately; any cross-route comparison is exploratory.
 
 ## 7. Preregistration, data quality, and ethics
 
@@ -262,7 +311,7 @@ Release, subject to image and retail-source rights: de-branded source images whe
 | Experiential visual route | Participant-centred, product-grounded consumption depiction; M2 | MacInnis & Price [R6]; Elder & Krishna [R7] |
 | Symbolic mechanism | M3 product--self connection | Escalas [R5] |
 | Main ad outcomes | Y1 Aad and Y2 purchase consideration | MacKenzie et al. [R8]; Spears & Singh [R10] |
-| AI provenance | initial uninformed source inference, then truthful disclosure versus equal-time reflection | Khatiwada et al. [R18]; Koning & Voorveld [R16] |
+| AI provenance | either post-exposure truthful disclosure versus equal-time reflection (Route A) or first-exposure AI disclosure versus no provenance information (Route B) | Khatiwada et al. [R18]; Koning & Voorveld [R16] |
 | Trust/authenticity after disclosure | D1/D2 repeated outcomes | MacKenzie & Lutz [R9]; Morhart et al. [R17]; Brüns & Meißner [R19] |
 | Stimulus sampling and power | multiple product exemplars; within-participant strategy comparison; mixed model and simulation | Westfall et al. [R23] |
 | Translation | bilingual adaptation, back-translation, cognitive interviews, CFA | Brislin [R22] |
