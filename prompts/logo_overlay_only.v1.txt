@@ -1,0 +1,21 @@
+PIXEL-LOCKED IMAGE EDIT — NOT A REGENERATION.
+
+The supplied image is a finished 1024×1024 advertising image. Treat it as an immutable base layer. Make exactly one localized edit: add the official logo specified below in the upper-left corner. Do not redesign, restyle, reinterpret, enhance, clean up, or regenerate the image.
+
+Logo to add:
+* Canonical logo: {logo_brand}
+* Product brand metadata for identification only: {creative_id_brand}
+
+Placement and appearance:
+* Place the logo wholly in the upper-left corner, with its nearest edges about 4% of the canvas width from the top and left edges.
+* Keep the logo small and subordinate: its bounding box must be no wider than 14% of the canvas and no taller than 8% of the canvas.
+* Render the exact official logo/wordmark only. Preserve its canonical spelling, symbol, letterforms, capitalization, proportions, and brand colors. Do not translate it, paraphrase it, add a slogan, or render the slash-separated CSV brand name as text.
+* Use a flat, clean logo overlay with the minimum contrast needed to remain legible over the existing upper-left pixels. Do not add a badge, box, banner, backing plate, border, watermark, drop shadow, glow, reflection, texture, or decorative element.
+
+Hard preservation constraints:
+* Preserve the original image composition, crop, aspect ratio, camera angle, scene, subjects, people, products, product geometry, existing packaging and markings, background, props, lighting, shadows, colors, focus, texture, and all existing text exactly as supplied.
+* Do not move, remove, add, replace, sharpen, blur, recolor, resize, retouch, or reinterpret any object or any existing text/logo.
+* Apart from the pixels occupied by the new logo itself, all pixels must remain visually identical to the input image.
+* Add no new readable text of any kind except characters that are an inseparable part of the specified official logo.
+
+Success criterion: the output must look exactly like the input image with only one small, correctly rendered brand logo added at the upper-left corner.

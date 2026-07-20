@@ -1,3 +1,89 @@
+python3 scripts/generate_images/generate_from_csv.py
+  --csv data/experiment/Experiment-Test0709-symbolic-logo-edit.csv
+  --prompt-file prompts/logo_overlay_only.v1.txt
+  --prompt-version v16
+  --selection-mode sequential
+  --limit 33
+  --model-provider api111
+  --rollouts 1
+  --run-dir outputs/final_experiment_v16_symbolic_logo_0720
+  --orientation Symbolic-oriented
+  --retries 3
+  --timeout 180
+  --api-key "sk-NdGPMocXmyy9DvnIAJ24ueoeHguPkWZvUJFean0C1LBENTUD"
+  --sleep 1
+  --no-progresspython3 scripts/generate_images/generate_from_csv.py
+  --csv data/experiment/Experiment-Test0709-symbolic-logo-edit.csv
+  --prompt-file prompts/logo_overlay_only.v1.txt
+  --prompt-version v16
+  --selection-mode sequential
+  --limit 33
+  --model-provider api111
+  --rollouts 1
+  --run-dir outputs/final_experiment_v16_symbolic_logo_0720
+  --orientation Symbolic-oriented
+  --retries 3
+  --timeout 180
+  --api-key "sk-NdGPMocXmyy9DvnIAJ24ueoeHguPkWZvUJFean0C1LBENTUD"
+  --sleep 1
+  --no-progresspython3 scripts/generate_images/generate_from_csv.py
+  --csv data/experiment/Experiment-Test0709-symbolic-logo-edit.csv
+  --prompt-file prompts/logo_overlay_only.v1.txt
+  --prompt-version v16
+  --selection-mode sequential
+  --limit 33
+  --model-provider api111
+  --rollouts 1
+  --run-dir outputs/final_experiment_v16_symbolic_logo_0720
+  --orientation Symbolic-oriented
+  --retries 3
+  --timeout 180
+  --api-key "sk-NdGPMocXmyy9DvnIAJ24ueoeHguPkWZvUJFean0C1LBENTUD"
+  --sleep 1
+  --no-progresspython3 scripts/generate_images/generate_from_csv.py
+  --csv data/experiment/Experiment-Test0709-symbolic-logo-edit.csv
+  --prompt-file prompts/logo_overlay_only.v1.txt
+  --prompt-version v16
+  --selection-mode sequential
+  --limit 33
+  --model-provider api111
+  --rollouts 1
+  --run-dir outputs/final_experiment_v16_symbolic_logo_0720
+  --orientation Symbolic-oriented
+  --retries 3
+  --timeout 180
+  --api-key "sk-NdGPMocXmyy9DvnIAJ24ueoeHguPkWZvUJFean0C1LBENTUD"
+  --sleep 1
+  --no-progresspython3 scripts/generate_images/generate_from_csv.py
+  --csv data/experiment/Experiment-Test0709-symbolic-logo-edit.csv
+  --prompt-file prompts/logo_overlay_only.v1.txt
+  --prompt-version v16
+  --selection-mode sequential
+  --limit 33
+  --model-provider api111
+  --rollouts 1
+  --run-dir outputs/final_experiment_v16_symbolic_logo_0720
+  --orientation Symbolic-oriented
+  --retries 3
+  --timeout 180
+  --api-key "sk-NdGPMocXmyy9DvnIAJ24ueoeHguPkWZvUJFean0C1LBENTUD"
+  --sleep 1
+  --no-progresspython3 scripts/generate_images/generate_from_csv.py
+  --csv data/experiment/Experiment-Test0709-symbolic-logo-edit.csv
+  --prompt-file prompts/logo_overlay_only.v1.txt
+  --prompt-version v16
+  --selection-mode sequential
+  --limit 33
+  --model-provider api111
+  --rollouts 1
+  --run-dir outputs/final_experiment_v16_symbolic_logo_0720
+  --orientation Symbolic-oriented
+  --retries 3
+  --timeout 180
+  --api-key "sk-NdGPMocXmyy9DvnIAJ24ueoeHguPkWZvUJFean0C1LBENTUD"
+  --sleep 1
+  --no-progress
+
 # CHI 2027 protocol: Theory-grounded GenAI advertising images
 
 ## Status, purpose, and non-negotiable design choices
@@ -24,12 +110,12 @@ The conceptual roots are Park, Jaworski, and MacInnis's functional/symbolic/expe
 
 The four cells are defined as follows.
 
-| Cell | Construct definition | Required pretest pattern |
-| --- | --- | --- |
-| U-LS | primarily practical/problem-solving; weak identity-signalling affordance | utilitarian > hedonic; symbolic affordance low |
-| U-HS | primarily practical/problem-solving; meaningful identity/role/group affordance | utilitarian > hedonic; symbolic affordance high |
-| H-LS | primarily pleasure, stimulation, or enjoyment; weak identity-signalling affordance | hedonic > utilitarian; symbolic affordance low |
-| H-HS | primarily pleasure/stimulation; meaningful identity/role/group affordance | hedonic > utilitarian; symbolic affordance high |
+| Cell | Construct definition                                                               | Required pretest pattern                        |
+| ---- | ---------------------------------------------------------------------------------- | ----------------------------------------------- |
+| U-LS | primarily practical/problem-solving; weak identity-signalling affordance           | utilitarian > hedonic; symbolic affordance low  |
+| U-HS | primarily practical/problem-solving; meaningful identity/role/group affordance     | utilitarian > hedonic; symbolic affordance high |
+| H-LS | primarily pleasure, stimulation, or enjoyment; weak identity-signalling affordance | hedonic > utilitarian; symbolic affordance low  |
+| H-HS | primarily pleasure/stimulation; meaningful identity/role/group affordance          | hedonic > utilitarian; symbolic affordance high |
 
 This deliberately allows U-HS and H-HS products: Bhat and Reddy found functional and symbolic positioning to be separable rather than opposite [R4].
 
@@ -41,11 +127,11 @@ For each product x orientation, generate at least three candidates under a fixed
 
 All three prompt conditions must share the following controls: square format, identical source-product reference, no readable text, no invented performance claims, no price, no brand cue, and comparable product prominence. The only intentional difference is the theory-grounded visual strategy.
 
-| Strategy | Intended dominant reading | Prompt implementation boundary | Theory |
-| --- | --- | --- | --- |
-| Product-oriented | What consumption problem the product helps solve and how it can be understood or used | product-centred, inspectable product/task relations; no unsupported benefit claims | functional brand concept [R1]; functionality/usability [R2] |
-| Experiential-oriented | What engaging with the product may feel like | product-grounded consumption episode, close-to-user/participant-centred view; no status/identity as the dominant meaning | experiential brand concept [R1]; imagery and embodied simulation [R6, R7] |
-| Symbolic-oriented | What the product communicates about a person, role, or group | product-identity relation through design/display/context; no generic luxury/status stereotype | symbolic brand concept [R1]; symbolic positioning [R4] |
+| Strategy              | Intended dominant reading                                                             | Prompt implementation boundary                                                                                           | Theory                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| Product-oriented      | What consumption problem the product helps solve and how it can be understood or used | product-centred, inspectable product/task relations; no unsupported benefit claims                                       | functional brand concept [R1]; functionality/usability [R2]               |
+| Experiential-oriented | What engaging with the product may feel like                                          | product-grounded consumption episode, close-to-user/participant-centred view; no status/identity as the dominant meaning | experiential brand concept [R1]; imagery and embodied simulation [R6, R7] |
+| Symbolic-oriented     | What the product communicates about a person, role, or group                          | product-identity relation through design/display/context; no generic luxury/status stereotype                            | symbolic brand concept [R1]; symbolic positioning [R4]                    |
 
 ### 1.3 Separate validation sample and acceptance rules
 
@@ -72,36 +158,36 @@ For each multi-item construct that is administered in full: test the product-cla
 
 ### Table 1. Product pretest and stimulus-validation measures
 
-| ID / role | Construct and source basis | English participant item (adapted) | Chinese participant item | Items and scoring |
-| --- | --- | --- | --- | --- |
-| P1 / product classification | **Utilitarian orientation**; adapted to product category from the HED/UT framework [R3] | “This type of product is mainly useful for accomplishing practical tasks.”; “This type of product helps solve everyday consumption problems.”; “The practical performance of this type of product matters most.” | “这类产品主要用于完成实际任务。”；“这类产品有助于解决日常消费中的实际问题。”；“这类产品最重要的是其实用表现。” | 3 items; mean. Expected higher in U cells. |
-| P2 / product classification | **Hedonic orientation**; HED/UT framework [R3] | “This type of product is mainly chosen for enjoyment.”; “Using this type of product can be pleasurable or stimulating.”; “The experience of this type of product matters most.” | “这类产品主要是为了获得愉悦而选择的。”；“使用这类产品能够带来愉悦或刺激。”；“这类产品最重要的是使用体验。” | 3 items; mean. Expected higher in H cells. |
-| P3 / product classification | **Symbolic affordance**; symbolic positioning and personality-expression dimension [R1, R4] | “Choosing this type of product can express something about its user.”; “This type of product can be connected with a desired role, lifestyle, or group.”; “Others may infer something about a user from this type of product.”; “This type of product can help people present a desired self-image.” | “选择这类产品能够表达使用者的一些特征。”；“这类产品可以与理想的角色、生活方式或群体联系起来。”；“他人可能会从这类产品推断使用者的某些特征。”；“这类产品可以帮助人们呈现理想的自我形象。” | 4 items; mean. Expected higher in HS cells. |
-| P4 / matching control | Familiarity; adapted from consumer product-presentation studies [R12] | “I am familiar with this type of product.” | “我熟悉这类产品。” | 1 item; matching check, not a primary covariate. |
-| P5 / matching control | Expected price level; price is a product-evaluation cue [R11] | “I expect this type of product to be expensive.” | “我预计这类产品价格较高。” | 1 item; matching check. |
-| V1 / stimulus manipulation | **Functional/Product-oriented reading**; functional concept [R1] and product diagnosticity [R11] | “This image primarily helps me understand what practical problem the product addresses.” | “这张图片主要帮助我理解该产品解决什么实际问题。” | 1 item; compare the three route means. |
-| V2 / stimulus manipulation | **Experiential reading**; experiential concept [R1], imagery [R6], and sensory/behavioral experience [R13] | “This image primarily conveys what engaging with the product may feel like.” | “这张图片主要传达与该产品互动时可能是什么感受。” | 1 item; compare the three route means. |
-| V3 / stimulus manipulation | **Symbolic reading**; symbolic concept [R1, R4] | “This image primarily conveys what the product says about a person, role, or group.” | “这张图片主要传达该产品体现了某个人、角色或群体的什么特征。” | 1 item; compare the three route means. |
-| V4 / stimulus quality | Product fidelity; grounded generation evaluation [R20, R21] | “The advertised product appears to be the same product as the reference product.”; “The image preserves the product’s recognizable design.” | “广告中的产品看起来与参考产品是同一产品。”；“该图片保留了产品可识别的设计特征。” | 2 items; mean; eligibility only. |
-| V5 / stimulus quality | Perceived visual quality, adapted from human-preference dimensions for text-to-image generation [R21] | “The image is visually coherent.”; “The image looks like a plausible advertisement.” | “该图片在视觉上是连贯的。”；“该图片看起来像一则可信的广告。” | 2 items; mean; balance check, not an outcome. |
+| ID / role                   | Construct and source basis                                                                                       | English participant item (adapted)                                                                                                                                                                                                                                                                           | Chinese participant item                                                                                                                                                                         | Items and scoring                                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| P1 / product classification | **Utilitarian orientation**; adapted to product category from the HED/UT framework [R3]                    | “This type of product is mainly useful for accomplishing practical tasks.”; “This type of product helps solve everyday consumption problems.”; “The practical performance of this type of product matters most.”                                                                                       | “这类产品主要用于完成实际任务。”；“这类产品有助于解决日常消费中的实际问题。”；“这类产品最重要的是其实用表现。”                                                                             | 3 items; mean. Expected higher in U cells.       |
+| P2 / product classification | **Hedonic orientation**; HED/UT framework [R3]                                                             | “This type of product is mainly chosen for enjoyment.”; “Using this type of product can be pleasurable or stimulating.”; “The experience of this type of product matters most.”                                                                                                                        | “这类产品主要是为了获得愉悦而选择的。”；“使用这类产品能够带来愉悦或刺激。”；“这类产品最重要的是使用体验。”                                                                                 | 3 items; mean. Expected higher in H cells.       |
+| P3 / product classification | **Symbolic affordance**; symbolic positioning and personality-expression dimension [R1, R4]                | “Choosing this type of product can express something about its user.”; “This type of product can be connected with a desired role, lifestyle, or group.”; “Others may infer something about a user from this type of product.”; “This type of product can help people present a desired self-image.” | “选择这类产品能够表达使用者的一些特征。”；“这类产品可以与理想的角色、生活方式或群体联系起来。”；“他人可能会从这类产品推断使用者的某些特征。”；“这类产品可以帮助人们呈现理想的自我形象。” | 4 items; mean. Expected higher in HS cells.      |
+| P4 / matching control       | Familiarity; adapted from consumer product-presentation studies [R12]                                            | “I am familiar with this type of product.”                                                                                                                                                                                                                                                                 | “我熟悉这类产品。”                                                                                                                                                                             | 1 item; matching check, not a primary covariate. |
+| P5 / matching control       | Expected price level; price is a product-evaluation cue [R11]                                                    | “I expect this type of product to be expensive.”                                                                                                                                                                                                                                                           | “我预计这类产品价格较高。”                                                                                                                                                                     | 1 item; matching check.                          |
+| V1 / stimulus manipulation  | **Functional/Product-oriented reading**; functional concept [R1] and product diagnosticity [R11]           | “This image primarily helps me understand what practical problem the product addresses.”                                                                                                                                                                                                                   | “这张图片主要帮助我理解该产品解决什么实际问题。”                                                                                                                                               | 1 item; compare the three route means.           |
+| V2 / stimulus manipulation  | **Experiential reading**; experiential concept [R1], imagery [R6], and sensory/behavioral experience [R13] | “This image primarily conveys what engaging with the product may feel like.”                                                                                                                                                                                                                               | “这张图片主要传达与该产品互动时可能是什么感受。”                                                                                                                                               | 1 item; compare the three route means.           |
+| V3 / stimulus manipulation  | **Symbolic reading**; symbolic concept [R1, R4]                                                            | “This image primarily conveys what the product says about a person, role, or group.”                                                                                                                                                                                                                       | “这张图片主要传达该产品体现了某个人、角色或群体的什么特征。”                                                                                                                                   | 1 item; compare the three route means.           |
+| V4 / stimulus quality       | Product fidelity; grounded generation evaluation [R20, R21]                                                      | “The advertised product appears to be the same product as the reference product.”; “The image preserves the product’s recognizable design.”                                                                                                                                                             | “广告中的产品看起来与参考产品是同一产品。”；“该图片保留了产品可识别的设计特征。”                                                                                                             | 2 items; mean; eligibility only.                 |
+| V5 / stimulus quality       | Perceived visual quality, adapted from human-preference dimensions for text-to-image generation [R21]            | “The image is visually coherent.”; “The image looks like a plausible advertisement.”                                                                                                                                                                                                                     | “该图片在视觉上是连贯的。”；“该图片看起来像一则可信的广告。”                                                                                                                                 | 2 items; mean; balance check, not an outcome.    |
 
 ### Table 2. Main-study outcomes, mechanisms, and controls
 
-| ID / role | Construct and source basis | English participant item (adapted) | Chinese participant item | Items and scoring |
-| --- | --- | --- | --- | --- |
-| Y1 / co-primary outcome | **Attitude toward the advertisement (Aad)** [R8, R9] | “Overall, I have a favorable opinion of this advertisement.”; “I find this advertisement appealing.”; “I react positively to this advertisement.” | “总体而言，我对这则广告持正面看法。”；“我觉得这则广告有吸引力。”；“我对这则广告的反应是积极的。” | Item bank has 3 items. Study 1 nine-image short form uses the first 2, mean; pilot the two-item correlation. Co-primary; Holm-adjust with Y2. |
-| Y2 / co-primary outcome | **Purchase consideration**; purchase-intention framework [R10] | “I would consider this product if I needed this type of product.”; “I would be willing to learn more before deciding whether to buy it.”; “This advertisement makes me more likely to consider purchasing the product.” | “如果我需要这类产品，我会考虑它。”；“在决定是否购买前，我愿意进一步了解它。”；“这则广告提高了我考虑购买该产品的可能性。” | Item bank has 3 items. Study 1 nine-image short form uses items 1 and 3, mean; pilot the two-item correlation. Co-primary; Holm-adjust with Y1. |
-| M1 / proposed Product route | **Perceived diagnosticity**; consumer product evaluation [R11, R12] | “This image gives me useful information for evaluating the product.”; “This image helps me understand how the product could be used.”; “This image helps me judge whether the product would suit my needs.” | “这张图片为我评估该产品提供了有用信息。”；“这张图片帮助我理解该产品可能如何使用。”；“这张图片帮助我判断该产品是否适合我的需要。” | Item bank has 3 items. Study 1 nine-image short form uses item 1 only as a process indicator; no scale reliability or causal-mediation claim. |
-| M2 / proposed Experiential route | **Mental simulation / anticipated experience**; imagery, visual-depiction, and brand-experience research [R6, R7, R13] | “While viewing the image, I could imagine myself using or consuming the product.”; “The image made the product-use experience easy to picture.”; “The image gave me a concrete sense of what engagement with the product could feel like.” | “观看图片时，我能想象自己在使用或消费该产品。”；“这张图片让我很容易想象产品的使用体验。”；“这张图片让我具体感到与该产品互动可能是什么体验。” | Item bank has 3 items. Study 1 nine-image short form uses item 1 only as a process indicator; no scale reliability or causal-mediation claim. |
-| M3 / proposed Symbolic route | **Product--self connection**; self-brand connection and symbolic consumption [R4, R5] | “This product could fit the kind of person I want to be.”; “Using this product could help express something meaningful about me.”; “I can see a connection between this product and a desired identity, role, or group.” | “该产品可能契合我想成为的那类人。”；“使用该产品可能有助于表达对我有意义的某些特征。”；“我能看到该产品与理想身份、角色或群体之间的联系。” | Item bank has 3 items. Study 1 nine-image short form uses item 3 only as a process indicator; no scale reliability or causal-mediation claim. |
-| C1 / manipulation check | Dominant route reading | “Which aspect did this image emphasize most?” Response options: “what practical problem the product addresses”; “what using or consuming it may feel like”; “what it says about a person, role, or group.” | “这张图片最突出的是哪一方面？”选项：“产品解决什么实际问题”；“使用或消费它可能是什么感受”；“它体现某个人、角色或群体的什么特征”。 | One forced-choice item after each image. Validation study retains V1--V3 route ratings; Study 1 uses this low-burden check. |
-| C2 / provenance inference | **Inferred AI authorship**; source-inference item adapted from AI-mediated-content evaluation [R18] | “Before being told anything about its origin, how likely did you think this image was made with generative AI?” | “在获知来源之前，您认为这张图片由生成式 AI 制作的可能性有多大？” | 1 = Very unlikely / 极不可能 to 7 = Very likely / 极有可能. Exploratory outcome. |
-| C3 / control | Category familiarity; product-presentation research treats prior familiarity as a relevant boundary/control [R12] | “Before this study, how familiar were you with this type of product?” | “在参加本研究前，您对这类产品有多熟悉？” | 1 = Not at all / 完全不熟悉 to 7 = Extremely / 非常熟悉. Descriptive and sensitivity covariate only. |
-| C4 / control | General attitude to AI; short Chinese adaptation of the positive and negative GAAIS dimensions [R15] | **Positive:** “AI can bring important benefits to society.”; “I would be comfortable using AI in everyday life.”; “AI can improve the quality of services people receive.” **Negative:** “I feel uneasy about AI becoming widespread.”; “AI creates risks that outweigh its benefits.”; “I tend to distrust AI-supported decisions.” | **正向：**“AI 能为社会带来重要益处。”；“我愿意在日常生活中使用 AI。”；“AI 能改善人们获得服务的质量。” **负向：**“AI 的广泛使用让我感到不安。”；“AI 带来的风险大于其益处。”；“我倾向于不信任 AI 辅助的决策。” | 3 positive + 3 negative items; two separate means, no reverse-coded grand mean. Sensitivity controls only; test the two-factor CFA in Chinese. |
-| D1 / Study 2 outcome | **Trust in the advertisement**; advertising-pretesting trust/credibility tradition [R9, R16] | “I regard this advertisement as trustworthy.”; “I consider the information conveyed by this advertisement credible.”; “I would rely on this advertisement when forming an initial impression of the product.” | “我认为这则广告值得信赖。”；“我认为这则广告传达的信息可信。”；“在形成对该产品的初步印象时，我愿意参考这则广告。” | Item bank has 3 items. Study 2 uses items 1--2, mean, before and after the disclosure/control message; pilot their correlation and report item-level robustness. |
-| D2 / Study 2 outcome | **Perceived authenticity of the advertisement**; adapted from brand-authenticity research and GenAI-brand evidence [R17, R19] | “This advertisement feels genuine rather than fabricated.”; “The way this product is presented feels authentic.”; “This advertisement seems true to a plausible product-use context.” | “这则广告给人的感觉是真实的，而非拼凑出来的。”；“该产品的呈现方式让我觉得可信真实。”；“这则广告与合理的产品使用情境相符。” | Item bank has 3 items. Study 2 uses items 1--2, mean, before and after; pilot their correlation and report item-level robustness. |
-| D3 / Study 2 process | **Attitudinal persuasion knowledge**; persuasion-knowledge model [R14] | “The way this advertisement was made seems appropriate.”; “The production method behind this advertisement seems fair to viewers.”; “Knowing how this advertisement was made changes how critically I evaluate it.” | “这则广告的制作方式是恰当的。”；“这则广告背后的制作方式对观看者是公平的。”；“了解广告的制作方式会改变我对它进行批判性评价的程度。” | 3 items; report separately; the third is not reverse-coded. Mechanism-exploratory. |
-| D4 / disclosure manipulation check | Disclosure recall; provenance-disclosure studies [R16, R18] | “What did the message say about how the image was made?” | “提示信息如何说明该图片的制作方式？” | Multiple choice: generative AI / no source information / human photographer / do not remember. Exclude only from a preregistered per-protocol sensitivity analysis, not the ITT primary analysis. |
+| ID / role                          | Construct and source basis                                                                                                          | English participant item (adapted)                                                                                                                                                                                                                                                                                                                           | Chinese participant item                                                                                                                                                                                                             | Items and scoring                                                                                                                                                                                 |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Y1 / co-primary outcome            | **Attitude toward the advertisement (Aad)** [R8, R9]                                                                          | “Overall, I have a favorable opinion of this advertisement.”; “I find this advertisement appealing.”; “I react positively to this advertisement.”                                                                                                                                                                                                      | “总体而言，我对这则广告持正面看法。”；“我觉得这则广告有吸引力。”；“我对这则广告的反应是积极的。”                                                                                                                               | Item bank has 3 items. Study 1 nine-image short form uses the first 2, mean; pilot the two-item correlation. Co-primary; Holm-adjust with Y2.                                                     |
+| Y2 / co-primary outcome            | **Purchase consideration**; purchase-intention framework [R10]                                                                | “I would consider this product if I needed this type of product.”; “I would be willing to learn more before deciding whether to buy it.”; “This advertisement makes me more likely to consider purchasing the product.”                                                                                                                                | “如果我需要这类产品，我会考虑它。”；“在决定是否购买前，我愿意进一步了解它。”；“这则广告提高了我考虑购买该产品的可能性。”                                                                                                       | Item bank has 3 items. Study 1 nine-image short form uses items 1 and 3, mean; pilot the two-item correlation. Co-primary; Holm-adjust with Y1.                                                   |
+| M1 / proposed Product route        | **Perceived diagnosticity**; consumer product evaluation [R11, R12]                                                           | “This image gives me useful information for evaluating the product.”; “This image helps me understand how the product could be used.”; “This image helps me judge whether the product would suit my needs.”                                                                                                                                            | “这张图片为我评估该产品提供了有用信息。”；“这张图片帮助我理解该产品可能如何使用。”；“这张图片帮助我判断该产品是否适合我的需要。”                                                                                               | Item bank has 3 items. Study 1 nine-image short form uses item 1 only as a process indicator; no scale reliability or causal-mediation claim.                                                     |
+| M2 / proposed Experiential route   | **Mental simulation / anticipated experience**; imagery, visual-depiction, and brand-experience research [R6, R7, R13]        | “While viewing the image, I could imagine myself using or consuming the product.”; “The image made the product-use experience easy to picture.”; “The image gave me a concrete sense of what engagement with the product could feel like.”                                                                                                             | “观看图片时，我能想象自己在使用或消费该产品。”；“这张图片让我很容易想象产品的使用体验。”；“这张图片让我具体感到与该产品互动可能是什么体验。”                                                                                   | Item bank has 3 items. Study 1 nine-image short form uses item 1 only as a process indicator; no scale reliability or causal-mediation claim.                                                     |
+| M3 / proposed Symbolic route       | **Product--self connection**; self-brand connection and symbolic consumption [R4, R5]                                         | “This product could fit the kind of person I want to be.”; “Using this product could help express something meaningful about me.”; “I can see a connection between this product and a desired identity, role, or group.”                                                                                                                               | “该产品可能契合我想成为的那类人。”；“使用该产品可能有助于表达对我有意义的某些特征。”；“我能看到该产品与理想身份、角色或群体之间的联系。”                                                                                       | Item bank has 3 items. Study 1 nine-image short form uses item 3 only as a process indicator; no scale reliability or causal-mediation claim.                                                     |
+| C1 / manipulation check            | Dominant route reading                                                                                                              | “Which aspect did this image emphasize most?” Response options: “what practical problem the product addresses”; “what using or consuming it may feel like”; “what it says about a person, role, or group.”                                                                                                                                           | “这张图片最突出的是哪一方面？”选项：“产品解决什么实际问题”；“使用或消费它可能是什么感受”；“它体现某个人、角色或群体的什么特征”。                                                                                             | One forced-choice item after each image. Validation study retains V1--V3 route ratings; Study 1 uses this low-burden check.                                                                       |
+| C2 / provenance inference          | **Inferred AI authorship**; source-inference item adapted from AI-mediated-content evaluation [R18]                           | “Before being told anything about its origin, how likely did you think this image was made with generative AI?”                                                                                                                                                                                                                                            | “在获知来源之前，您认为这张图片由生成式 AI 制作的可能性有多大？”                                                                                                                                                                   | 1 = Very unlikely / 极不可能 to 7 = Very likely / 极有可能. Exploratory outcome.                                                                                                                  |
+| C3 / control                       | Category familiarity; product-presentation research treats prior familiarity as a relevant boundary/control [R12]                   | “Before this study, how familiar were you with this type of product?”                                                                                                                                                                                                                                                                                      | “在参加本研究前，您对这类产品有多熟悉？”                                                                                                                                                                                           | 1 = Not at all / 完全不熟悉 to 7 = Extremely / 非常熟悉. Descriptive and sensitivity covariate only.                                                                                              |
+| C4 / control                       | General attitude to AI; short Chinese adaptation of the positive and negative GAAIS dimensions [R15]                                | **Positive:** “AI can bring important benefits to society.”; “I would be comfortable using AI in everyday life.”; “AI can improve the quality of services people receive.” **Negative:** “I feel uneasy about AI becoming widespread.”; “AI creates risks that outweigh its benefits.”; “I tend to distrust AI-supported decisions.” | **正向：**“AI 能为社会带来重要益处。”；“我愿意在日常生活中使用 AI。”；“AI 能改善人们获得服务的质量。” **负向：**“AI 的广泛使用让我感到不安。”；“AI 带来的风险大于其益处。”；“我倾向于不信任 AI 辅助的决策。” | 3 positive + 3 negative items; two separate means, no reverse-coded grand mean. Sensitivity controls only; test the two-factor CFA in Chinese.                                                    |
+| D1 / Study 2 outcome               | **Trust in the advertisement**; advertising-pretesting trust/credibility tradition [R9, R16]                                  | “I regard this advertisement as trustworthy.”; “I consider the information conveyed by this advertisement credible.”; “I would rely on this advertisement when forming an initial impression of the product.”                                                                                                                                          | “我认为这则广告值得信赖。”；“我认为这则广告传达的信息可信。”；“在形成对该产品的初步印象时，我愿意参考这则广告。”                                                                                                               | Item bank has 3 items. Study 2 uses items 1--2, mean, before and after the disclosure/control message; pilot their correlation and report item-level robustness.                                  |
+| D2 / Study 2 outcome               | **Perceived authenticity of the advertisement**; adapted from brand-authenticity research and GenAI-brand evidence [R17, R19] | “This advertisement feels genuine rather than fabricated.”; “The way this product is presented feels authentic.”; “This advertisement seems true to a plausible product-use context.”                                                                                                                                                                  | “这则广告给人的感觉是真实的，而非拼凑出来的。”；“该产品的呈现方式让我觉得可信真实。”；“这则广告与合理的产品使用情境相符。”                                                                                                     | Item bank has 3 items. Study 2 uses items 1--2, mean, before and after; pilot their correlation and report item-level robustness.                                                                 |
+| D3 / Study 2 process               | **Attitudinal persuasion knowledge**; persuasion-knowledge model [R14]                                                        | “The way this advertisement was made seems appropriate.”; “The production method behind this advertisement seems fair to viewers.”; “Knowing how this advertisement was made changes how critically I evaluate it.”                                                                                                                                    | “这则广告的制作方式是恰当的。”；“这则广告背后的制作方式对观看者是公平的。”；“了解广告的制作方式会改变我对它进行批判性评价的程度。”                                                                                             | 3 items; report separately; the third is not reverse-coded. Mechanism-exploratory.                                                                                                                |
+| D4 / disclosure manipulation check | Disclosure recall; provenance-disclosure studies [R16, R18]                                                                         | “What did the message say about how the image was made?”                                                                                                                                                                                                                                                                                                   | “提示信息如何说明该图片的制作方式？”                                                                                                                                                                                               | Multiple choice: generative AI / no source information / human photographer / do not remember. Exclude only from a preregistered per-protocol sensitivity analysis, not the ITT primary analysis. |
 
 ## 3. Translation, adaptation, and measurement validation
 
@@ -143,13 +229,13 @@ The three strategy effects are tested on the same two co-primary outcomes (Y1, Y
 
 Study 1 uses a mixed `3 strategy (within participant) x 3 product exemplars (within participant) x 2 utilitarian/hedonic (between participant) x 2 symbolic affordance (between participant)` design. Each participant is randomly assigned to one product-attribute cell, then evaluates all three product exemplars retained in that cell. For each exemplar, the participant sees its Product-oriented, Experiential-oriented, and Symbolic-oriented image, for nine image evaluations in total. Thus, strategy and concrete-product comparisons are both made within person, whereas product type remains a between-participant attribute.
 
-| Assignment | Valid participants | What each participant does |
-| --- | ---: | --- |
-| U-LS product cell | 60 | evaluates `3 products x 3 strategies = 9` images |
-| U-HS product cell | 60 | evaluates `3 products x 3 strategies = 9` images |
-| H-LS product cell | 60 | evaluates `3 products x 3 strategies = 9` images |
-| H-HS product cell | 60 | evaluates `3 products x 3 strategies = 9` images |
-| **Study 1 total** | **240** | **nine image evaluations per participant** |
+| Assignment              | Valid participants | What each participant does                        |
+| ----------------------- | -----------------: | ------------------------------------------------- |
+| U-LS product cell       |                 60 | evaluates`3 products x 3 strategies = 9` images |
+| U-HS product cell       |                 60 | evaluates`3 products x 3 strategies = 9` images |
+| H-LS product cell       |                 60 | evaluates`3 products x 3 strategies = 9` images |
+| H-HS product cell       |                 60 | evaluates`3 products x 3 strategies = 9` images |
+| **Study 1 total** |      **240** | **nine image evaluations per participant**  |
 
 The provisional 240-person target yields 60 independent ratings for every `concrete product x strategy` image and 180 image-level ratings for every `product type x strategy` combination (three products x 60 participants). The nine image ratings within a participant are correlated and must never be treated as nine independent people. This reduction is justified by fully crossing the three exemplars and three strategies within each participant; it is not a substitute for power analysis. Before recruitment, confirm the final number by simulation using the actual twelve products, pilot-estimated repeated-measure correlations, alpha `.05`, the smallest H1--H3 strategy-by-product-attribute contrast, and anticipated exclusions. The target is acceptable only if that simulation reaches the preregistered power criterion (recommended: 80% for this resource-constrained main study); otherwise increase the per-cell sample. Product exemplars remain a sampled source of variation, so simulation and mixed modelling remain necessary [R23]. The raw white-background source-image baseline is omitted from the core study; if it is later needed, run it as a separate calibration study rather than adding a fourth repeated exposure here.
 
@@ -198,31 +284,31 @@ Both routes use the validated GenAI images, the same 12 products, and the same m
 
 **Route A: post-exposure pre/post disclosure (recommended for reproducing R18's timing logic)**
 
-| Assignment | Valid participants | What each participant does |
-| --- | ---: | --- |
-| U-LS x AI disclosure | 30 | rates 9 images before disclosure, receives AI disclosure, rates the same 9 again |
-| U-LS x neutral reflection | 30 | rates 9 images, receives neutral reflection, rates the same 9 again |
-| U-HS x AI disclosure | 30 | same as above |
-| U-HS x neutral reflection | 30 | same as above |
-| H-LS x AI disclosure | 30 | same as above |
-| H-LS x neutral reflection | 30 | same as above |
-| H-HS x AI disclosure | 30 | same as above |
-| H-HS x neutral reflection | 30 | same as above |
-| **Route A total** |  | **240** |
+| Assignment                | Valid participants | What each participant does                                                       |
+| ------------------------- | -----------------: | -------------------------------------------------------------------------------- |
+| U-LS x AI disclosure      |                 30 | rates 9 images before disclosure, receives AI disclosure, rates the same 9 again |
+| U-LS x neutral reflection |                 30 | rates 9 images, receives neutral reflection, rates the same 9 again              |
+| U-HS x AI disclosure      |                 30 | same as above                                                                    |
+| U-HS x neutral reflection |                 30 | same as above                                                                    |
+| H-LS x AI disclosure      |                 30 | same as above                                                                    |
+| H-LS x neutral reflection |                 30 | same as above                                                                    |
+| H-HS x AI disclosure      |                 30 | same as above                                                                    |
+| H-HS x neutral reflection |                 30 | same as above                                                                    |
+| **Route A total**   |                    | **240**                                                                    |
 
 **Route B: direct first-exposure between-group comparison**
 
-| Assignment | Valid participants | What each participant does |
-| --- | ---: | --- |
-| U-LS x AI disclosed | 30 | sees the provenance message before the first image, then rates all 9 once |
-| U-LS x no provenance disclosure | 30 | sees no provenance message, then rates all 9 once |
-| U-HS x AI disclosed | 30 | same as above |
-| U-HS x no provenance disclosure | 30 | same as above |
-| H-LS x AI disclosed | 30 | same as above |
-| H-LS x no provenance disclosure | 30 | same as above |
-| H-HS x AI disclosed | 30 | same as above |
-| H-HS x no provenance disclosure | 30 | same as above |
-| **Route B total** |  | **240** |
+| Assignment                      | Valid participants | What each participant does                                                |
+| ------------------------------- | -----------------: | ------------------------------------------------------------------------- |
+| U-LS x AI disclosed             |                 30 | sees the provenance message before the first image, then rates all 9 once |
+| U-LS x no provenance disclosure |                 30 | sees no provenance message, then rates all 9 once                         |
+| U-HS x AI disclosed             |                 30 | same as above                                                             |
+| U-HS x no provenance disclosure |                 30 | same as above                                                             |
+| H-LS x AI disclosed             |                 30 | same as above                                                             |
+| H-LS x no provenance disclosure |                 30 | same as above                                                             |
+| H-HS x AI disclosed             |                 30 | same as above                                                             |
+| H-HS x no provenance disclosure |                 30 | same as above                                                             |
+| **Route B total**         |                    | **240**                                                             |
 
 `N=240` is the provisional valid sample for each route, not the combined sample. If both routes are run, total recruitment is `N=480`. If the budget allows only 240 participants, select one route before preregistration rather than splitting the sample and retaining 30 participants per cell. For either route, use pilot repeated-measure correlations, the expected disclosure effect, and anticipated exclusions in the power simulation; increase the per-cell sample if the primary test fails to reach preregistered 80% power.
 
@@ -303,18 +389,18 @@ Release, subject to image and retail-source rights: de-branded source images whe
 
 ## 8. Traceability matrix
 
-| Element | Operationalization in this protocol | Evidence basis |
-| --- | --- | --- |
-| Three visual strategies | Dominant functional, experiential, or symbolic reading of an otherwise controlled product image | Park et al. [R1]; Homburg et al. [R2] |
-| Utilitarian/hedonic product classification | P1/P2 product-category pretest, not researcher labels | Voss et al. [R3] |
-| Symbolic affordance | P3 identity/role/group/presentation pretest | Park et al. [R1]; Bhat & Reddy [R4] |
-| Experiential visual route | Participant-centred, product-grounded consumption depiction; M2 | MacInnis & Price [R6]; Elder & Krishna [R7] |
-| Symbolic mechanism | M3 product--self connection | Escalas [R5] |
-| Main ad outcomes | Y1 Aad and Y2 purchase consideration | MacKenzie et al. [R8]; Spears & Singh [R10] |
-| AI provenance | either post-exposure truthful disclosure versus equal-time reflection (Route A) or first-exposure AI disclosure versus no provenance information (Route B) | Khatiwada et al. [R18]; Koning & Voorveld [R16] |
-| Trust/authenticity after disclosure | D1/D2 repeated outcomes | MacKenzie & Lutz [R9]; Morhart et al. [R17]; Brüns & Meißner [R19] |
-| Stimulus sampling and power | multiple product exemplars; within-participant strategy comparison; mixed model and simulation | Westfall et al. [R23] |
-| Translation | bilingual adaptation, back-translation, cognitive interviews, CFA | Brislin [R22] |
+| Element                                    | Operationalization in this protocol                                                                                                                        | Evidence basis                                                       |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Three visual strategies                    | Dominant functional, experiential, or symbolic reading of an otherwise controlled product image                                                            | Park et al. [R1]; Homburg et al. [R2]                                |
+| Utilitarian/hedonic product classification | P1/P2 product-category pretest, not researcher labels                                                                                                      | Voss et al. [R3]                                                     |
+| Symbolic affordance                        | P3 identity/role/group/presentation pretest                                                                                                                | Park et al. [R1]; Bhat & Reddy [R4]                                  |
+| Experiential visual route                  | Participant-centred, product-grounded consumption depiction; M2                                                                                            | MacInnis & Price [R6]; Elder & Krishna [R7]                          |
+| Symbolic mechanism                         | M3 product--self connection                                                                                                                                | Escalas [R5]                                                         |
+| Main ad outcomes                           | Y1 Aad and Y2 purchase consideration                                                                                                                       | MacKenzie et al. [R8]; Spears & Singh [R10]                          |
+| AI provenance                              | either post-exposure truthful disclosure versus equal-time reflection (Route A) or first-exposure AI disclosure versus no provenance information (Route B) | Khatiwada et al. [R18]; Koning & Voorveld [R16]                      |
+| Trust/authenticity after disclosure        | D1/D2 repeated outcomes                                                                                                                                    | MacKenzie & Lutz [R9]; Morhart et al. [R17]; Brüns & Meißner [R19] |
+| Stimulus sampling and power                | multiple product exemplars; within-participant strategy comparison; mixed model and simulation                                                             | Westfall et al. [R23]                                                |
+| Translation                                | bilingual adaptation, back-translation, cognitive interviews, CFA                                                                                          | Brislin [R22]                                                        |
 
 ## References
 
@@ -345,7 +431,7 @@ Release, subject to image and retail-source rights: de-branded source images whe
 
 **Supplied study used as a methodological analogue**
 
-- **[R18]** Khatiwada, P., Pappu, V., Bagozzi, B. E., & Mauriello, M. L. (2026). *When AI rewrites the news: How sentiment, framing, and LLM disclosure shape perceptions*. In *Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems*. Supplied project PDF: [`local_only/When AI Rewrites the News How Sentiment, Framing, and LLM Disclosure Shape Perceptions.pdf`](../local_only/When%20AI%20Rewrites%20the%20News%20How%20Sentiment%2C%20Framing%2C%20and%20LLM%20Disclosure%20Shape%20Perceptions.pdf).
+- **[R18]** Khatiwada, P., Pappu, V., Bagozzi, B. E., & Mauriello, M. L. (2026). *When AI rewrites the news: How sentiment, framing, and LLM disclosure shape perceptions*. In *Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems*. Supplied project PDF: [`local_only/When AI Rewrites the News How Sentiment, Framing, and LLM Disclosure Shape Perceptions.pdf`](<../local_only/When%20AI%20Rewrites%20the%20News%20How%20Sentiment%2C%20Framing%2C%20and%20LLM%20Disclosure%20Shape%20Perceptions.pdf>).
 
 ### Evidence-status note
 
