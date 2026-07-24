@@ -30,6 +30,397 @@
 | 产品保真度（Product fidelity, PF）                   | Liu & Chilton (2022),*CHI*. https://doi.org/10.1145/3491102.3501825；Ruiz et al. (2023), *CVPR*, 22500–22510. https://doi.org/10.1109/CVPR52729.2023.02155                                                                                               | prompt/image faithfulness and subject-identity preservation concepts; no consumer-scale item                                   | prompt/图片忠实度与主体身份保持概念；没有消费者量表原题项                | The advertised product appears to be the same product as the reference product; the image preserves recognizable design features.                                                                                                                                                                                                                                         | 广告中的产品看起来与参考产品是同一产品；该图片保留了产品可识别的设计特征。                                                                                                                                                        | **刺激 QC/纳入资格。** 不是消费者 DV。                                                                                               |
 | 感知视觉质量（Perceived visual quality, VQ）         | Otani et al. (2023),*CVPR*, 14277–14286. https://doi.org/10.1109/CVPR52729.2023.01372                                                                                                                                                                      | image-quality and human-evaluation task concepts; no matching consumer-ad scale                                                | 图像质量与人类评价任务概念；无完全对应的消费者广告量表                   | The image is visually coherent; the image looks like a plausible advertisement.                                                                                                                                                                                                                                                                                           | 该图片在视觉上是连贯的；该图片看起来像一则可信的广告。                                                                                                                                                                            | **刺激 QC/条件平衡。** 不作为主结果。                                                                                                |
 
+# Meeting Notes 7\.18
+
+Study 0:
+
+## Study 0A：产品分类与筛选
+
+### Study 0A 的产品分类结果
+
+- Hedonic score = H1–H5 平均值；
+- Utilitarian score = U1–U5 平均值；
+- Symbolic affordance score = SAP1–SAP4 平均值；
+- 依据 H/U 相对差异以及 symbolic affordance 高低，筛选进入四个产品 cell：
+
+---
+
+## Study 0B：AI 产品图片刺激验证
+
+### Study 0B 的核心筛选逻辑
+
+进入正式实验的图片至少应满足：
+
+- 目标 perceived meaning  维度显著高于另外两个维度；
+- 产品清晰可识别；
+- 没有明显 AI artifacts；
+- image quality 和 realism 达到最低质量阈值；
+- 不因某一策略系统性具有极端更高或更低的视觉质量。
+
+不必要求 F/E/S 三种图片的 aesthetic appeal 完全相等，因为美感可能是策略效果的一部分；重点是排除明显失败刺激。
+
+---
+
+# 正式实验：按问卷顺序
+
+---
+
+**可探索的mediator: **
+
+## 如果是直接接着survey的结果做interview:
+
+## Study 2
+
+从 Study 1 抽取18–24人进行 stimulated\-recall interviews：
+
+- A/B组都包括；
+- aligned、mixed、misaligned interpretations；
+- 高／低 fit；
+- 高／低 authenticity 和 trust；
+- 不同 image choices。
+
+这样访谈会围绕实验中真正需要解释的异质性和异常结果展开
+
+如果是同时做quantitative和qualitative:
+
+![image<span data-type=](Images_attachments/image.png)\.png" />
+
+Experiment
+
+## 定义：
+
+### H/U 的理论来源\-消费行为的两种基础原因
+
+- In an early attempt to measure multiple dimensions of product/brand attitudes, Batra and Ahtola \(1990, p\. 159, emphasis added\)  state, **"consumers purchase goods and services and perform consumption behaviors for two basic reasons:** \(1\) consummatory affective \(hedonic\) gratification \(from sensory attributes\), and \(2\) instrumental, utilitarian reasons\."
+- *Consumers’ choices of products and services are driven by hedonic and utilitarian considerations \(Dhar and Wertenbroch 2000; Vieira, Rafael, and Agnihotri 2022\)\.*
+- Consumers typically purchase hedonic products to obtain pleasure\-related outcomes and utilitarian products to accomplish functional or practical tasks \(Chitturi et al\., 2008\)\.
+- Significant research has been conducted to examine the factors driving purchases and much of it has found that hedonic purchases are linked to experiences, and are perceived as more emotional in nature while utilitarian purchases have a more rational appeal \(Adaval 2001; Babin, Darden, and Grif n 1994; Holbrook and Hirschman 1982; Kronrof and Danziger 2013\)\.
+
+### product type——hedonic goods / utilitarian goods 怎么被定义 （Choi, Baksh and Cheong, 2025\) ）
+
+- As people purchase goods and services mainly to fulfill a sensory gratification or a practical need, consumers are always consciously and subconsciously classifying products as either primarily hedonic or utilitarian \(Batra and Ahtola 1990; Dhar and Wertenbroch 2000; Shao and Li 2021\)\.
+- Furthermore, past literature notes that all products, regardless of their relative importance, have some level of symbolic meaning for their consumers \(Levy 1959\)\. Therefore, as it tends to be an important factor in uencing overall consumer attitudes toward the brand as well as their purchase intentions, it is important to classify products on a hedonic\-utilitarian dimension \(Voss, Spangenberg, and Grohmann 2003\)\.
+- Products are often categorized as primarily hedonic or utilitarian \(Hirschman \& Holbrook, 1982\)\.
+- Therefore, hedonic goods are defined as “ones whose consumption is primarily characterized by an affective and sensory experience of aesthetic or sensual pleasure, fantasy or fun” \(Dhar and Wertenbroch 2000, p\. 61\)\. Utilitarian goods are “ones whose consumption is more cognitively driven, instrumental, and goal\-oriented, and accomplishes a functional or practical task” \(Dhar and Wertenbroch 2000, p\. 61\)\.
+
+### Hedonic and utilitarian properties are distinct but not mutually exclusive \(**Kousi, Halkias and Kokkinaki, 2023\)**
+
+- Hedonic and utilitarian properties are distinct but not mutually exclusive \(Batra \& Ahtola, 1991\) and can simultaneously coexist in a purchase \(Khan et al\., 2005\)\.
+- Importantly, the distinction between hedonic and utilitarian products is not absolute, as hedonic products may possess utilitarian benefits and utilitarian products may possess hedonic benefits \(Okada, 2005\)\. Therefore, the perception of hedonic and utilitarian products tends to be malleable and sensitive to** how a product’s attributes and benefits are presented **\(Botti \& McGill, 2011; Kivetz \& Zheng, 2017\)\.
+
+# Way to measure H/U
+
+![Screenshot 2026<span data-type=](<Images_attachments/Screenshot%202026-06-18%20at%2012.31.25.png>)\-06\-18 at 12\.31\.25\.png" />
+
+![Screenshot 2026<span data-type=](<Images_attachments/Screenshot%202026-06-18%20at%2012.36.49.png>)\-06\-18 at 12\.36\.49\.png" />
+
+*Voss, Spangenberg, and Grohmann \(2003\)*
+
+*hedonic/utilitarian \(HED/UT\) scale*
+
+Choi, Baksh and Cheong \(2025\)
+
+## A\. Utilitarian product candidates
+
+## B\. Hedonic product candidates
+
+自己整理的H/U products
+
+**探讨变量关系： **
+
+![Screenshot 2026<span data-type=](<Images_attachments/Screenshot%202026-06-15%20at%2010.16.32.png>)\-06\-15 at 10\.16\.32\.png" />
+
+**探讨变量关系的心理机制：**
+
+![Screenshot 2026<span data-type=](<Images_attachments/Screenshot%202026-06-15%20at%2010.17.17.png>)\-06\-15 at 10\.17\.17\.png" />
+
+---
+
+# 可能的研究问题
+
+本研究关注产品本身的主导意义与 AI 生成图片所呈现的视觉意义之间的互动，并考察这种互动如何影响消费者对产品的评价和购买意向。
+
+### RQ1
+
+> **How do functional, experiential, and symbolic AI\-generated visual cues influence consumers’ product attitude and purchase intention?**
+>
+> image\-level cue 的主效应。
+
+### RQ2
+
+> **How does product\-level hedonic/utilitarian orientation shape the effects of AI\-generated visual cues on consumer responses?**
+>
+> utilitarian 和 hedonic 产品是否会对 functional / experiential / symbolic cue 有不同反应？
+
+### RQ3
+
+> **How does AI disclosure influence consumers’ responses to AI\-generated product images?**
+>
+> 对应 disclosure / non\-disclosure。
+
+基于可能的研究问题推断可能需要的量表:
+
+**Human**
+
+**Computational validation**
+
+**Purpose: computational stimulus validation**
+
+1. **Prompt–image alignment**
+
+   - CLIP similarity / CLIPScore
+   - Purpose: assess whether each AI\-generated image matches its generation prompt\.
+2. **Cue\-specific semantic validation**
+
+   - CLIP similarity between each image and three cue descriptions: functional, experiential, symbolic
+   - Purpose: check whether the image is computationally closer to its intended cue than to the other two cues\.
+3. **Image quality / artifact screening**
+
+   - BRISQUE / NIQE / MUSIQ
+   - Purpose: screen out low\-quality, distorted, or visually unstable AI\-generated images before human pretesting\.
+
+Then write:
+
+> Computational validation will be used only for stimulus screening and selection\. Final manipulation validity will be confirmed through human\-rated pretests and manipulation checks\.
+
+# 具体相关量表总结
+
+## Product\-level H/U orientation
+
+Voss, Spangenberg and Grohmann \(2003\) HED/UT Scale
+
+**Journal:** *Journal of Marketing Research*
+
+题干
+
+> Please evaluate the following product category: **\[product name\]**\.
+> For each pair of words, please indicate which word better describes this product category\.
+>
+> 7\-point semantic differential scale:
+
+HED/UT scale 测的是：
+
+> “hedonic and utilitarian dimensions of consumer attitudes toward product categories”
+
+### Hedonic dimension
+
+### Utilitarian dimension
+
+**计算方式: **
+
+**判断产品：**
+
+---
+
+## Image\-level functional/symbolic cue
+
+首选量表：Homburg, Schwemmle and Kuehnl \(2015\) Product Design Scale
+
+**Journal:** *Journal of Marketing*
+
+> Homburg et al\. 开发并验证了 product design scale，包含 **aesthetics, functionality, symbolism** 三个维度。
+
+#### Functional cue check
+
+Functional image cue was adapted from product design functionality scales, which capture consumers’ perception of what a product is supposed to do \(Homburg et al\., 2015\) and whether it communicates functionality and utility \(Candi et al\., 2017\)\.
+
+Based on the image, please indicate your agreement with the following statements\.
+
+7\-point Likert scale: 1 = Strongly disagree, 7 = Strongly agree
+
+#### Symbolic cue check
+
+Homburg et al\. \(2015\) define symbolism as
+
+- “The symbolic dimension refers to the perceived message a product communicates regarding a consumer’s self\-image to both the consumer and others on the basis of visual elements\.”
+- “It can also be used to express personal values and dispositions or to form one’s own identity\.”
+- “Symbolism is an essential dimension because aesthetics and functionality alone do not fully capture product design\.”
+
+Candi et al\.\(2017\) state
+
+- “Symbolic design involves how a product resonates with consumers’ self\-image, personality, or values \(Seva \& Helander, 2009\); how it helps communicate status, gender, and social roles \(Debevec \& Iyer, 1986; Douglas \& Isherwood, 1979; Solomon, 1983\); or how it signals group membership \(Belk, 1988\)\.”
+
+Bhat and Reddy \(1998\) report that brand symbolism includes “prestige” and “personality expression\.”
+
+## Image\-level experiential cue
+
+#### Image\-level experiential cue
+
+Park et al\., \(1986\)“Experiential needs are defined as desires for products that provide sensory pleasure感官愉悦, variety新鲜感 / 不单调, and/or cognitive stimulation让人觉得有趣、被刺激、想探索\.”
+
+> 没有直接做experiential作为design的量表,以下是两个最接近的研究:
+>
+> 1. Homburg et al \(2015\) 做的是 **product design scale**，他们的三维是 **aesthetics, functionality, symbolism**。这三个更像消费者从产品外观中直接读取的设计属性：好不好看、能不能用、代表什么身份。Homburg et al\. 也明确把 symbolism 当作 HED/UT scale 没有覆盖的重要维度。Journal of Marketing
+>
+> 但 experiential 更难被当作一个稳定的 product appearance attribute，因为它通常涉及：
+>
+> - 使用过程；
+> - 感官反应；
+> - 身体/情境互动；
+> - 时间过程；
+> - 消费者想象；
+> - 情绪和认知刺激。
+>
+> 所以它更常出现在 **brand experience**, **customer experience**, **experiential value**, **mental imagery** 这些文献里，而不是作为 product design scale 的一个并列维度
+>
+> 2. 最接近 Park 的 experiential concept 的后续顶刊量表，是 **Brakus, Schmitt and Zarantonello \(2009\), “Brand Experience,” *****Journal of Marketing***。这篇引用量非常高\(9491\)
+>
+> 他们不是沿用 functional / symbolic / experiential 三分法，而是把 **brand experience** 定义为：
+>
+> “sensations, feelings, cognitions, and behavioral responses evoked by brand\-related stimuli that are part of a brand’s design and identity, packaging, communications, and environments\.”
+>
+> 并开发了四个维度的 brand experience scale：
+>
+> sensory, affective, intellectual, and behavioral\.
+>
+> 这其实和 Park 的 experiential needs 有明显对应：
+>
+> 但：Brakus et al\. 测的是 **brand experience**，不是 product image cue，也不是 product type。量表问题都是围绕着品牌
+
+![截屏2026<span data-type=](<Images_attachments/截屏2026-06-21%2023.05.15.png>)\-06\-21 23\.05\.15\.png" />
+
+总结成量表:
+
+---
+
+## Consumer response
+
+#### 3\.1 Product attitude
+
+Kempf and Smith \(1998\) / MacKenzie, Lutz and Belch \(1986\)
+
+**Journal:** *Journal of Marketing Research*
+
+> 消费者看到 LLM\-generated product image 后，对产品本身形成的整体评价。
+
+**题干**
+
+> Based on the image, my attitude toward this product is:
+
+7\-point semantic differential scale:
+
+#### 3\.2 Purchase intention
+
+Homburg et al\. \(2015\); Dodds, Monroe and Grewal \(1991\)
+
+**Journal: ***Journal of Marketing; Journal of Marketing Research*
+
+**题干**
+
+> Based on the image, please indicate your agreement with the following statements\.
+
+7\-point Likert scale:
+
+#### 3\.3  Attitude toward image / ad \(考虑是否需要\)
+
+MacKenzie, Lutz and Belch \(1986\); Kempf and Smith \(1998\)
+
+> 把图片明确设计成 advertisement / product ad的话可以考虑保留\.意义是消费者看到image之后对广告的第一反应\. 问卷太长或者与control重复的话就不需要了
+
+---
+
+## Control
+
+### 4\.1 Product familiarity
+
+来源：Alba and Hutchinson \(1987\); Kent and Allen \(1994\)
+
+**Journal:** *Journal of Consumer Research* / *Journal of Marketing*
+
+题干：
+
+> Please indicate your familiarity with this product category\.
+
+**题项**
+
+7\-point semantic differential scale:
+
+### 4\.2 Product involvement
+
+来源：Zaichkowsky \(1985\) Personal Involvement Inventory
+
+**Journal:** *Journal of Consumer Research*
+
+题干：
+
+> To me, this product category is:
+
+7\-point semantic differential scale:
+
+### 4\.3  Aesthetic appeal / visual appeal
+
+Homburg et al\. \(2015\) Aesthetics dimension
+
+**Journal:** *Journal of Marketing*
+
+题干：
+
+> Please evaluate the visual appeal of the image\.
+
+7\-point Likert scale:
+
+### 4\.4 Processing fluency / image fluency
+
+来源：Lee and Labroo \(2004\); Maier and Dost \(2018\)
+
+**Journal:** *Journal of Marketing Research* / *Journal of Retailing and Consumer Services*
+
+**题项**
+
+7\-point Likert scale:
+
+### 4\.5  Image realism / AI image quality
+
+**首选量表：** Visual Verity questionnaire 但是不是很好的期刊
+**Item source:** Aziz et al\. \(2024\), *Visual Verity in AI\-Generated Imagery: Computational Metrics and Human\-Centric Analysis*
+**Supplementary marketing source:** Hartmann, Exner and Domdey \(2025\), *International Journal of Research in Marketing*
+
+> Visual Verity was developed to assess human perceptions of AI\-generated images across photorealism, image quality, and text\-image alignment\. In this study, PR1–PR5 are taken from the Photorealism Assessment section, and IQ1–IQ5 are taken from the Image Quality section\. Hartmann, Exner and Domdey \(2025\) are used only as a supplementary marketing source to justify why realism and quality are relevant controls in AI\-generated visual marketing research\.
+
+#### 4\.5\.1 Perceived photorealism / image realism
+
+Based on the image, please indicate your agreement with the following statements\.
+
+Original Visual Verity scale: 1–5 Likert scale
+
+Adapted scale in this study: 1 = Strongly disagree, 7 = Strongly agree
+
+#### 4\.5\.2 Perceived image quality
+
+Based on the image, please indicate your agreement with the following statements\.
+
+Original Visual Verity scale: 1–5 Likert scale
+
+Adapted scale in this study: 1 = Strongly disagree, 7 = Strongly agree
+
+# 实验流程
+
+## References for Measures
+
+Alba, J\. W\. and Hutchinson, J\. W\. \(1987\) ‘Dimensions of Consumer Expertise’, *Journal of Consumer Research*, 13\(4\), pp\. 411–454\.
+
+Aziz, A\. et al\. \(2024\) ‘Visual Verity in AI\-Generated Imagery: Computational Metrics and Human\-Centric Analysis’\.
+
+Brakus, J\. J\., Schmitt, B\. H\. and Zarantonello, L\. \(2009\) ‘Brand Experience: What Is It? How Is It Measured? Does It Affect Loyalty?’, *Journal of Marketing*, 73\(3\), pp\. 52–68\.
+
+Dodds, W\. B\., Monroe, K\. B\. and Grewal, D\. \(1991\) ‘Effects of Price, Brand, and Store Information on Buyers’ Product Evaluations’, *Journal of Marketing Research*, 28\(3\), pp\. 307–319\.
+
+Homburg, C\., Schwemmle, M\. and Kuehnl, C\. \(2015\) ‘New Product Design: Concept, Measurement, and Consequences’, *Journal of Marketing*, 79\(3\), pp\. 41–56\.
+
+Kempf, D\. S\. and Smith, R\. E\. \(1998\) ‘Consumer Processing of Product Trial and the Influence of Prior Advertising: A Structural Modeling Approach’, *Journal of Marketing Research*, 35\(3\), pp\. 325–338\.
+
+Kent, R\. J\. and Allen, C\. T\. \(1994\) ‘Competitive Interference Effects in Consumer Memory for Advertising: The Role of Brand Familiarity’, *Journal of Marketing*, 58\(3\), pp\. 97–105\.
+
+MacKenzie, S\. B\., Lutz, R\. J\. and Belch, G\. E\. \(1986\) ‘The Role of Attitude toward the Ad as a Mediator of Advertising Effectiveness: A Test of Competing Explanations’, *Journal of Marketing Research*, 23\(2\), pp\. 130–143\.
+
+Voss, K\. E\., Spangenberg, E\. R\. and Grohmann, B\. \(2003\) ‘Measuring the Hedonic and Utilitarian Dimensions of Consumer Attitude’, *Journal of Marketing Research*, 40\(3\), pp\. 310–320\.
+
+Zaichkowsky, J\. L\. \(1985\) ‘Measuring the Involvement Construct’, *Journal of Consumer Research*, 12\(3\), pp\. 341–352\.
+
+# CHI的论文总结\(各维度\)
+
+### 操纵 AI 输出风格 → 看用户感知变化。
+
 ## 2）完整 Study 表：呈现给被试的文本与完整选项
 
 | Study / 页面                                          | 呈现时点与被试看到的文本                                                                                                                                                                                                                    | 题目与完整选项                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | 编程与计分规则                                                                                                                                     |
